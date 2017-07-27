@@ -1,0 +1,29 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: ip-generate --project-directory=/home/dsoldi/cernbox/L0TP/eth1DE4_versione27/ethlink --output-directory=/home/dsoldi/cernbox/L0TP/eth1DE4_versione27/TemperatureSensor --report-file=bsf:/home/dsoldi/cernbox/L0TP/eth1DE4_versione27/TemperatureSensor/TemperatureSensor.bsf --system-info=DEVICE_FAMILY="Stratix IV" --system-info=DEVICE=EP4SGX530KH40C2 --system-info=DEVICE_SPEEDGRADE=2 --component-file=/home/dsoldi/cernbox/L0TP/eth1DE4_versione27/ethlink/TemperatureSensor.qsys --remove-qsys-generate-warning
+Progress: Loading ethlink/TemperatureSensor.qsys
+Progress: Reading input file
+Progress: Adding temp_sense_0 [altera_temp_sense 14.1]
+Progress: Parameterizing module temp_sense_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: ip-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: ip-generate --project-directory=/home/dsoldi/cernbox/L0TP/eth1DE4_versione27/ethlink --output-directory=/home/dsoldi/cernbox/L0TP/eth1DE4_versione27/TemperatureSensor/synthesis --file-set=QUARTUS_SYNTH --report-file=html:/home/dsoldi/cernbox/L0TP/eth1DE4_versione27/TemperatureSensor/TemperatureSensor.html --report-file=sopcinfo:/home/dsoldi/cernbox/L0TP/eth1DE4_versione27/ethlink/TemperatureSensor.sopcinfo --report-file=cmp:/home/dsoldi/cernbox/L0TP/eth1DE4_versione27/TemperatureSensor/TemperatureSensor.cmp --report-file=qip:/home/dsoldi/cernbox/L0TP/eth1DE4_versione27/TemperatureSensor/synthesis/TemperatureSensor.qip --report-file=svd:/home/dsoldi/cernbox/L0TP/eth1DE4_versione27/TemperatureSensor/synthesis/TemperatureSensor.svd --report-file=regmap:/home/dsoldi/cernbox/L0TP/eth1DE4_versione27/TemperatureSensor/synthesis/TemperatureSensor.regmap --report-file=xml:/home/dsoldi/cernbox/L0TP/eth1DE4_versione27/TemperatureSensor/TemperatureSensor.xml --report-file=debuginfo:/home/dsoldi/cernbox/L0TP/eth1DE4_versione27/TemperatureSensor/synthesis/TemperatureSensor.debuginfo --system-info=DEVICE_FAMILY="Stratix IV" --system-info=DEVICE=EP4SGX530KH40C2 --system-info=DEVICE_SPEEDGRADE=2 --component-file=/home/dsoldi/cernbox/L0TP/eth1DE4_versione27/ethlink/TemperatureSensor.qsys --remove-qsys-generate-warning --language=VHDL
+Progress: Loading ethlink/TemperatureSensor.qsys
+Progress: Reading input file
+Progress: Adding temp_sense_0 [altera_temp_sense 14.1]
+Progress: Parameterizing module temp_sense_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: TemperatureSensor: Generating TemperatureSensor "TemperatureSensor" for QUARTUS_SYNTH
+Info: temp_sense_0: Generating top-level entity TemperatureSensor_temp_sense_0.
+Info: temp_sense_0: "TemperatureSensor" instantiated altera_temp_sense "temp_sense_0"
+Info: TemperatureSensor: Done "TemperatureSensor" with 2 modules, 2 files
+Info: ip-generate succeeded.
+Info: Finished: Create HDL design files for synthesis

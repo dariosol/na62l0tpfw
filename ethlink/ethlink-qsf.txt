@@ -1,0 +1,109 @@
+#
+# ethlink assignments  
+#
+set_global_assignment -name TOP_LEVEL_ENTITY top
+
+#
+# HDL Message Level 3 (all messages)
+#
+set_global_assignment -name HDL_MESSAGE_LEVEL LEVEL3
+
+#
+# Warning Message OFF
+# 
+# Warning (10812): VHDL warning at (...): sensitivity list already contains allnets
+#
+set_global_assignment -name HDL_MESSAGE_OFF 10812
+
+#
+# ENET 0..3 --> RGMII output max delay D5+D6 
+#
+#set_instance_assignment -name D2_DELAY 7 -to ENET_RX_D[*][*] -disable
+#set_instance_assignment -name D3_DELAY 7 -to ENET_RX_D[*][*] -disable
+# note: D2+D3 automatically calculated/inserted by fitter using SDC_FILE topHw.sdc
+set_instance_assignment -name D5_DELAY 15 -to ENET_TX_D[*][*]
+set_instance_assignment -name D6_DELAY 6 -to ENET_TX_D[*][*]
+# note: D5+D6 set to max value
+#set_instance_assignment -name D2_DELAY 7 -to ENET_RX_DV[*] -disable
+#set_instance_assignment -name D3_DELAY 7 -to ENET_RX_DV[*] -disable
+# note: D2+D3 automatically calculated/inserted by fitter using SDC_FILE topHw.sdc
+set_instance_assignment -name D5_DELAY 15 -to ENET_TX_EN[*]
+set_instance_assignment -name D6_DELAY 6 -to ENET_TX_EN[*]
+# note: D5+D6 set to max value
+
+#
+# Max toggle rate for all i/o (not used)
+#
+#set_instance_assignment -name IO_MAXIMUM_TOGGLE_RATE "200 MHz" -to *
+
+#
+# search paths
+#
+set_global_assignment -name SEARCH_PATH ../mac/sopc
+set_global_assignment -name SEARCH_PATH "../mac/sgmii/triple_speed_ethernet-library"
+set_global_assignment -name SEARCH_PATH ./
+
+#
+# File list
+#
+set_global_assignment -name VHDL_FILE ./altscfifo128.vhd
+set_global_assignment -name VHDL_FILE ./trigfifo128.vhd
+set_global_assignment -name VHDL_FILE ./altscfifo64_8192.vhd
+set_global_assignment -name VHDL_FILE ./outfifo64.vhd
+set_global_assignment -name VHDL_FILE ./top.vhd
+set_global_assignment -name VHDL_FILE ./ethlink.vhd
+set_global_assignment -name VHDL_FILE ../mac/mdio/MDIOdrv1.vhd
+set_global_assignment -name VHDL_FILE ../mac/sopc/n2top1.vhd
+set_global_assignment -name SDC_FILE ../mac/mac_sgmii_rgmii.sdc
+set_global_assignment -name VHDL_FILE ../mac/sgmii/sgmii1.vhd
+set_global_assignment -name VHDL_FILE ./altiobuf1.vhd
+set_global_assignment -name VHDL_FILE ./pll_refclk.vhd
+set_global_assignment -name VHDL_FILE ./altpll_refclk.vhd
+set_global_assignment -name VHDL_FILE ../mac/sgmii/alttse1.vhd
+set_global_assignment -name VHDL_FILE ../mac/rgmii/rgmii1.vhd
+set_global_assignment -name VHDL_FILE ../mac/rgmii/altddin1.vhd
+set_global_assignment -name VHDL_FILE ../mac/rgmii/altddout1.vhd
+set_global_assignment -name VHDL_FILE ../mac/rgmii/ddin1.vhd
+set_global_assignment -name VHDL_FILE ../mac/rgmii/ddout1.vhd
+set_global_assignment -name VHDL_FILE ../mac/altdcfifo2.vhd
+set_global_assignment -name VHDL_FILE ../mac/altdcfiforx1.vhd
+set_global_assignment -name VHDL_FILE ../mac/altdcfiforx2.vhd
+set_global_assignment -name VHDL_FILE ../mac/altdpram1_8_8.vhd
+set_global_assignment -name VHDL_FILE ../mac/altdpram1_16_8.vhd
+set_global_assignment -name VHDL_FILE ../mac/altdpram1_32_8.vhd
+set_global_assignment -name VHDL_FILE ../mac/altdpram1_64_8.vhd
+set_global_assignment -name VHDL_FILE ../mac/altdpram2.vhd
+set_global_assignment -name VHDL_FILE ../mac/altrxdatabuf1.vhd
+set_global_assignment -name VHDL_FILE ../mac/altrxtagbuf1.vhd
+set_global_assignment -name VHDL_FILE ../mac/cmdctrl.vhd
+set_global_assignment -name VHDL_FILE ../mac/crc32.vhd
+set_global_assignment -name VHDL_FILE ../mac/dcfifo2.vhd
+set_global_assignment -name VHDL_FILE ../mac/dcfiforx1.vhd
+set_global_assignment -name VHDL_FILE ../mac/dcfiforx2.vhd
+set_global_assignment -name VHDL_FILE ../mac/dpram1.vhd
+set_global_assignment -name VHDL_FILE ../mac/dpram2.vhd
+set_global_assignment -name VHDL_FILE ../mac/framegen.vhd
+set_global_assignment -name VHDL_FILE ../mac/globals.vhd
+set_global_assignment -name VHDL_FILE ../mac/mac_gmii.vhd
+set_global_assignment -name VHDL_FILE ../mac/mac_rgmii.vhd
+set_global_assignment -name VHDL_FILE ../mac/mac_sgmii.vhd
+set_global_assignment -name VHDL_FILE ../mac/maclut.vhd
+set_global_assignment -name VHDL_FILE ../mac/pkg_crc32_d8.vhd
+set_global_assignment -name VHDL_FILE ../mac/regfile1.vhd
+set_global_assignment -name VHDL_FILE ../mac/regsync1.vhd
+set_global_assignment -name VHDL_FILE ../mac/rxdatabuf1.vhd
+set_global_assignment -name VHDL_FILE ../mac/rxframe1.vhd
+set_global_assignment -name VHDL_FILE ../mac/rxport1.vhd
+set_global_assignment -name VHDL_FILE ../mac/rxtagbuf1.vhd
+set_global_assignment -name VHDL_FILE ../mac/scfiforeg1.vhd
+set_global_assignment -name VHDL_FILE ../mac/syncrst1.vhd
+set_global_assignment -name VHDL_FILE ../mac/txframe1.vhd
+set_global_assignment -name VHDL_FILE ../mac/txport1.vhd
+set_global_assignment -name VHDL_FILE ../mac/txrxint.vhd
+set_global_assignment -name VHDL_FILE ../mac/userlib.vhd
+
+
+
+
+
+

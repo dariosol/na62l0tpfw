@@ -1,0 +1,214 @@
+Flow report for top
+Thu Jul 27 18:42:52 2017
+Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Standard Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Flow Summary
+  3. Flow Settings
+  4. Flow Non-Default Global Settings
+  5. Flow Elapsed Time
+  6. Flow OS Summary
+  7. Flow Log
+  8. Flow Messages
+  9. Flow Suppressed Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2016  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Intel and sold by Intel or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+
+
+
++-------------------------------------------------------------------------------------+
+; Flow Summary                                                                        ;
++-----------------------------------+-------------------------------------------------+
+; Flow Status                       ; Successful - Thu Jul 27 18:42:12 2017           ;
+; Quartus Prime Version             ; 16.1.0 Build 196 10/24/2016 SJ Standard Edition ;
+; Revision Name                     ; top                                             ;
+; Top-level Entity Name             ; top                                             ;
+; Family                            ; Stratix IV                                      ;
+; Device                            ; EP4SGX530KH40C2                                 ;
+; Timing Models                     ; Final                                           ;
+; Logic utilization                 ; 19 %                                            ;
+;     Combinational ALUTs           ; 62,454 / 424,960 ( 15 % )                       ;
+;     Memory ALUTs                  ; 269 / 212,480 ( < 1 % )                         ;
+;     Dedicated logic registers     ; 49,852 / 424,960 ( 12 % )                       ;
+; Total registers                   ; 49940                                           ;
+; Total pins                        ; 249 / 888 ( 28 % )                              ;
+; Total virtual pins                ; 0                                               ;
+; Total block memory bits           ; 11,139,792 / 21,233,664 ( 52 % )                ;
+; DSP block 18-bit elements         ; 4 / 1,024 ( < 1 % )                             ;
+; Total GXB Receiver Channel PCS    ; 0 / 24 ( 0 % )                                  ;
+; Total GXB Receiver Channel PMA    ; 0 / 36 ( 0 % )                                  ;
+; Total GXB Transmitter Channel PCS ; 0 / 24 ( 0 % )                                  ;
+; Total GXB Transmitter Channel PMA ; 0 / 36 ( 0 % )                                  ;
+; Total PLLs                        ; 3 / 8 ( 38 % )                                  ;
+; Total DLLs                        ; 0 / 4 ( 0 % )                                   ;
++-----------------------------------+-------------------------------------------------+
+
+
++-----------------------------------------+
+; Flow Settings                           ;
++-------------------+---------------------+
+; Option            ; Setting             ;
++-------------------+---------------------+
+; Start date & time ; 07/27/2017 18:13:55 ;
+; Main task         ; Compilation         ;
+; Revision Name     ; top                 ;
++-------------------+---------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                                                                                                       ;
++---------------------------------------------------+---------------------------------------------------------------------------------------------+---------------+-------------------+------------------+
+; Assignment Name                                   ; Value                                                                                       ; Default Value ; Entity Name       ; Section Id       ;
++---------------------------------------------------+---------------------------------------------------------------------------------------------+---------------+-------------------+------------------+
+; COMPILER_SIGNATURE_ID                             ; 242211435188808.150117203504247                                                             ; --            ; --                ; --               ;
+; DRC_DETAIL_MESSAGE_LIMIT                          ; 50                                                                                          ; 10            ; --                ; --               ;
+; DRC_VIOLATION_MESSAGE_LIMIT                       ; 100                                                                                         ; 30            ; --                ; --               ;
+; ECO_OPTIMIZE_TIMING                               ; On                                                                                          ; Off           ; --                ; --               ;
+; EDA_OUTPUT_DATA_FORMAT                            ; None                                                                                        ; --            ; --                ; eda_simulation   ;
+; ENABLE_SIGNALTAP                                  ; On                                                                                          ; --            ; --                ; --               ;
+; FITTER_EFFORT                                     ; Standard Fit                                                                                ; Auto Fit      ; --                ; --               ;
+; HDL_MESSAGE_LEVEL                                 ; Level3                                                                                      ; Level2        ; --                ; --               ;
+; HDL_MESSAGE_OFF                                   ; 10812                                                                                       ; --            ; --                ; --               ;
+; IOBANK_VCCIO                                      ; 2.5V                                                                                        ; --            ; --                ; 6C               ;
+; IOBANK_VCCIO                                      ; 1.8V                                                                                        ; --            ; --                ; 8B               ;
+; IOBANK_VCCIO                                      ; 2.5V                                                                                        ; --            ; --                ; 8C               ;
+; IOBANK_VCCIO                                      ; 1.8V                                                                                        ; --            ; --                ; 4A               ;
+; IOBANK_VCCIO                                      ; 2.5V                                                                                        ; --            ; --                ; 2C               ;
+; IOBANK_VCCIO                                      ; 2.5V                                                                                        ; --            ; --                ; 6A               ;
+; IOBANK_VCCIO                                      ; 1.8V                                                                                        ; --            ; --                ; 4B               ;
+; IOBANK_VCCIO                                      ; 2.5V                                                                                        ; --            ; --                ; 2A               ;
+; IOBANK_VCCIO                                      ; 1.8V                                                                                        ; --            ; --                ; 8A               ;
+; IOBANK_VCCIO                                      ; 3.0V                                                                                        ; --            ; --                ; 5C               ;
+; IOBANK_VCCIO                                      ; 1.8V                                                                                        ; --            ; --                ; 7C               ;
+; IOBANK_VCCIO                                      ; 2.5V                                                                                        ; --            ; --                ; 1A               ;
+; IOBANK_VCCIO                                      ; 2.5V                                                                                        ; --            ; --                ; 1C               ;
+; IOBANK_VCCIO                                      ; 1.8V                                                                                        ; --            ; --                ; 3C               ;
+; IOBANK_VCCIO                                      ; 1.8V                                                                                        ; --            ; --                ; 3B               ;
+; IOBANK_VCCIO                                      ; 1.8V                                                                                        ; --            ; --                ; 7B               ;
+; IOBANK_VCCIO                                      ; 3.0V                                                                                        ; --            ; --                ; 5A               ;
+; IOBANK_VCCIO                                      ; 1.8V                                                                                        ; --            ; --                ; 3A               ;
+; IOBANK_VCCIO                                      ; 1.8V                                                                                        ; --            ; --                ; 7A               ;
+; IOBANK_VCCIO                                      ; 1.8V                                                                                        ; --            ; --                ; 4C               ;
+; MAX_CORE_JUNCTION_TEMP                            ; 85                                                                                          ; --            ; --                ; --               ;
+; MIN_CORE_JUNCTION_TEMP                            ; 0                                                                                           ; --            ; --                ; --               ;
+; MISC_FILE                                         ; ../TemperatureSensor/TemperatureSensor/synthesis/../TemperatureSensor.cmp                   ; --            ; --                ; --               ;
+; MISC_FILE                                         ; ../TemperatureSensor/TemperatureSensor/synthesis/../../TemperatureSensor.qsys               ; --            ; --                ; --               ;
+; MISC_FILE                                         ; altpll_refclk2.cmp                                                                          ; --            ; --                ; --               ;
+; MISC_FILE                                         ; altpll_refclk2.ppf                                                                          ; --            ; --                ; --               ;
+; MISC_FILE                                         ; ../mac/altfifoMTPnum.cmp                                                                    ; --            ; --                ; --               ;
+; MISC_FILE                                         ; ../mac/altsendfifo.cmp                                                                      ; --            ; --                ; --               ;
+; MISC_FILE                                         ; ../mac/altram2trigger.cmp                                                                   ; --            ; --                ; --               ;
+; MISC_FILE                                         ; ../mac/altfifopackets.cmp                                                                   ; --            ; --                ; --               ;
+; MISC_FILE                                         ; ../mac/altFIFODELAY.cmp                                                                     ; --            ; --                ; --               ;
+; MISC_FILE                                         ; ../mac/altFIFOtstmp.cmp                                                                     ; --            ; --                ; --               ;
+; MISC_FILE                                         ; ../mac/altsendram.cmp                                                                       ; --            ; --                ; --               ;
+; MISC_FILE                                         ; ../mac/altfifodetectorfarm.cmp                                                              ; --            ; --                ; --               ;
+; MISC_FILE                                         ; ../mac/altlatencyram_2.cmp                                                                  ; --            ; --                ; --               ;
+; MISC_FILE                                         ; ../mac/altfifo2trigger.cmp                                                                  ; --            ; --                ; --               ;
+; MISC_FILE                                         ; altpll40MHz.cmp                                                                             ; --            ; --                ; --               ;
+; MISC_FILE                                         ; altpll40MHz.ppf                                                                             ; --            ; --                ; --               ;
+; NUM_PARALLEL_PROCESSORS                           ; 4                                                                                           ; --            ; --                ; --               ;
+; PARTITION_COLOR                                   ; -- (Not supported for targeted family)                                                      ; --            ; --                ; Top              ;
+; PARTITION_FITTER_PRESERVATION_LEVEL               ; -- (Not supported for targeted family)                                                      ; --            ; --                ; Top              ;
+; PARTITION_NETLIST_TYPE                            ; -- (Not supported for targeted family)                                                      ; --            ; --                ; Top              ;
+; PHYSICAL_SYNTHESIS_ASYNCHRONOUS_SIGNAL_PIPELINING ; On                                                                                          ; Off           ; --                ; --               ;
+; POWER_BOARD_THERMAL_MODEL                         ; None (CONSERVATIVE)                                                                         ; --            ; --                ; --               ;
+; POWER_PRESET_COOLING_SOLUTION                     ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW                                                       ; --            ; --                ; --               ;
+; ROUTER_CLOCKING_TOPOLOGY_ANALYSIS                 ; On                                                                                          ; Off           ; --                ; --               ;
+; SEARCH_PATH                                       ; ../mac/sopc                                                                                 ; --            ; --                ; --               ;
+; SEARCH_PATH                                       ; ../mac/sgmii/triple_speed_ethernet-library                                                  ; --            ; --                ; --               ;
+; SEARCH_PATH                                       ; ./                                                                                          ; --            ; --                ; --               ;
+; SLD_FILE                                          ; ../TemperatureSensor/TemperatureSensor/synthesis/TemperatureSensor.debuginfo                ; --            ; --                ; --               ;
+; SLD_FILE                                          ; db/LKrCalibration_auto_stripped.stp                                                         ; --            ; --                ; --               ;
+; SLD_INFO                                          ; QSYS_NAME TemperatureSensor HAS_SOPCINFO 1 GENERATION_ID 1485767536                         ; --            ; TemperatureSensor ; --               ;
+; SLD_NODE_CREATOR_ID                               ; 110                                                                                         ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_ENTITY_NAME                              ; sld_signaltap                                                                               ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_RAM_BLOCK_TYPE=AUTO                                                                     ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_NODE_INFO=805334528                                                                     ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_POWER_UP_TRIGGER=0                                                                      ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_STORAGE_QUALIFIER_INVERSION_MASK_LENGTH=0                                               ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_SEGMENT_SIZE=128                                                                        ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_ATTRIBUTE_MEM_MODE=OFF                                                                  ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_STATE_FLOW_USE_GENERATED=0                                                              ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_STATE_BITS=11                                                                           ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_BUFFER_FULL_STOP=1                                                                      ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_CURRENT_RESOURCE_WIDTH=1                                                                ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_INCREMENTAL_ROUTING=1                                                                   ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_TRIGGER_LEVEL=1                                                                         ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_SAMPLE_DEPTH=128                                                                        ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_TRIGGER_IN_ENABLED=0                                                                    ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_ADVANCED_TRIGGER_ENTITY=basic,1,                                                        ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_TRIGGER_LEVEL_PIPELINE=1                                                                ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_ENABLE_ADVANCED_TRIGGER=0                                                               ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_DATA_BITS=17                                                                            ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_TRIGGER_BITS=17                                                                         ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_STORAGE_QUALIFIER_BITS=17                                                               ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_INVERSION_MASK=000000000000000000000000000000000000000000000000000000000000000000000000 ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_INVERSION_MASK_LENGTH=72                                                                ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_TRIGGER_PIPELINE=0                                                                      ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_RAM_PIPELINE=0                                                                          ; --            ; --                ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                     ; SLD_COUNTER_PIPELINE=0                                                                      ; --            ; --                ; auto_signaltap_0 ;
+; SMART_RECOMPILE                                   ; On                                                                                          ; Off           ; --                ; --               ;
+; SOPCINFO_FILE                                     ; ../TemperatureSensor/TemperatureSensor/synthesis/../../TemperatureSensor.sopcinfo           ; --            ; --                ; --               ;
+; SYNTHESIS_ONLY_QIP                                ; On                                                                                          ; --            ; --                ; --               ;
+; USE_SIGNALTAP_FILE                                ; LKrCalibration.stp                                                                          ; --            ; --                ; --               ;
++---------------------------------------------------+---------------------------------------------------------------------------------------------+---------------+-------------------+------------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------+
+; Flow Elapsed Time                                                                                                             ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Analysis & Synthesis      ; 00:07:11     ; 1.0                     ; 2729 MB             ; 00:07:37                           ;
+; Fitter                    ; 00:19:54     ; 1.3                     ; 4145 MB             ; 00:41:35                           ;
+; Assembler                 ; 00:00:32     ; 1.0                     ; 1803 MB             ; 00:00:32                           ;
+; TimeQuest Timing Analyzer ; 00:00:37     ; 1.6                     ; 2441 MB             ; 00:00:57                           ;
+; Total                     ; 00:28:14     ; --                      ; --                  ; 00:50:41                           ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+
+
++---------------------------------------------------------------------------------------------+
+; Flow OS Summary                                                                             ;
++---------------------------+------------------+--------------+--------------+----------------+
+; Module Name               ; Machine Hostname ; OS Name      ; OS Version   ; Processor type ;
++---------------------------+------------------+--------------+--------------+----------------+
+; Analysis & Synthesis      ; na62l0tpdev      ; CentOS Linux ; CentOS Linux ; x86_64         ;
+; Fitter                    ; na62l0tpdev      ; CentOS Linux ; CentOS Linux ; x86_64         ;
+; Assembler                 ; na62l0tpdev      ; CentOS Linux ; CentOS Linux ; x86_64         ;
+; TimeQuest Timing Analyzer ; na62l0tpdev      ; CentOS Linux ; CentOS Linux ; x86_64         ;
++---------------------------+------------------+--------------+--------------+----------------+
+
+
+------------
+; Flow Log ;
+------------
+quartus_map --read_settings_files=on --write_settings_files=off top -c top
+quartus_fit --read_settings_files=off --write_settings_files=off top -c top
+quartus_asm --read_settings_files=off --write_settings_files=off top -c top
+quartus_sta top -c top
+
+
+

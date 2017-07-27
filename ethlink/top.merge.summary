@@ -1,0 +1,20 @@
+Partition Merge Status : Successful - Wed Oct 01 18:04:17 2014
+Quartus II 64-Bit Version : 13.0.0 Build 156 04/24/2013 SJ Full Version
+Revision Name : top
+Top-level Entity Name : top
+Family : Stratix IV
+Logic utilization : N/A
+    Combinational ALUTs : 30,345
+    Memory ALUTs : 0
+    Dedicated logic registers : 25,906
+Total registers : 25994
+Total pins : 233
+Total virtual pins : 0
+Total block memory bits : 4,482,785
+DSP block 18-bit elements : 4
+Total GXB Receiver Channel PCS : 0
+Total GXB Receiver Channel PMA : 0
+Total GXB Transmitter Channel PCS : 0
+Total GXB Transmitter Channel PMA : 0
+Total PLLs : 10
+Total DLLs : 0

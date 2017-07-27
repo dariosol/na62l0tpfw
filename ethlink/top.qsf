@@ -1,0 +1,1022 @@
+#######################################################################################
+#
+# file: pin-DE4.txt (begin)
+#
+#######################################################################################
+
+#
+# DE4 development board: DEVICE EP4SGX230KF40C2  
+#
+set_global_assignment -name FAMILY "Stratix IV"
+set_global_assignment -name DEVICE EP4SGX530KH40C2
+
+#
+# IOBANK_VCCIO  
+#
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
+
+set_global_assignment -name IOBANK_VCCIO 2.5V -section_id 1A
+set_global_assignment -name IOBANK_VCCIO 2.5V -section_id 1C
+
+set_global_assignment -name IOBANK_VCCIO 2.5V -section_id 2A
+set_global_assignment -name IOBANK_VCCIO 2.5V -section_id 2C
+
+set_global_assignment -name IOBANK_VCCIO 1.8V -section_id 3A
+set_global_assignment -name IOBANK_VCCIO 1.8V -section_id 3B
+set_global_assignment -name IOBANK_VCCIO 1.8V -section_id 3C
+
+set_global_assignment -name IOBANK_VCCIO 1.8V -section_id 4A
+set_global_assignment -name IOBANK_VCCIO 1.8V -section_id 4B
+set_global_assignment -name IOBANK_VCCIO 1.8V -section_id 4C
+
+set_global_assignment -name IOBANK_VCCIO 3.0V -section_id 5A
+set_global_assignment -name IOBANK_VCCIO 3.0V -section_id 5C
+#NOTE: StratixIV I/O standards --> "The 3.3-V I/O standard 
+#      is supported using bank supply voltage (VCCIO) at 3.0V".
+
+set_global_assignment -name IOBANK_VCCIO 2.5V -section_id 6A
+set_global_assignment -name IOBANK_VCCIO 2.5V -section_id 6C
+
+set_global_assignment -name IOBANK_VCCIO 1.8V -section_id 7A
+set_global_assignment -name IOBANK_VCCIO 1.8V -section_id 7B
+set_global_assignment -name IOBANK_VCCIO 1.8V -section_id 7C
+
+set_global_assignment -name IOBANK_VCCIO 1.8V -section_id 8A
+set_global_assignment -name IOBANK_VCCIO 1.8V -section_id 8B
+set_global_assignment -name IOBANK_VCCIO 2.5V -section_id 8C
+
+#
+# Free running clocks
+#
+set_location_assignment PIN_AC35 -to OSC_50_B2
+set_location_assignment PIN_AV22 -to OSC_50_B3
+set_location_assignment PIN_AV19 -to OSC_50_B4
+set_location_assignment PIN_AC6 -to OSC_50_B5
+set_location_assignment PIN_AB6 -to OSC_50_B6
+set_location_assignment PIN_A19 -to OSC_50_B7
+set_instance_assignment -name IO_STANDARD "2.5 V" -to OSC_50_B2
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OSC_50_B3
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OSC_50_B4
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to OSC_50_B5
+set_instance_assignment -name IO_STANDARD "2.5 V" -to OSC_50_B6
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OSC_50_B7
+
+set_location_assignment PIN_A21 -to GCLKIN
+set_instance_assignment -name IO_STANDARD "1.8 V" -to GCLKIN
+#Note: Clock source select SW7
+
+set_location_assignment PIN_AH19 -to GCLKOUT_FPGA
+set_instance_assignment -name IO_STANDARD "1.8 V" -to GCLKOUT_FPGA
+#Note: single ended output
+
+set_location_assignment PIN_B22 -to PLL_CLKIN_p
+set_location_assignment PIN_A22 -to PLL_CLKIN_n
+set_instance_assignment -name IO_STANDARD LVDS -to PLL_CLKIN_p
+#Note: Bank 8C --> external rterm 100ohm
+
+set_location_assignment PIN_B23 -to SMA_CLKIN_p
+set_location_assignment PIN_A23 -to SMA_CLKIN_n
+set_instance_assignment -name IO_STANDARD LVDS -to SMA_CLKIN_p
+#Note: Bank 8C --> external rterm 100ohm + SMA 50ohm single ended x 2
+
+#
+# GX REFCLK
+#
+# Note: all GX_TRANSCEIVER REFCLK inputs are configured as LVDS I/O standard;
+#       all unused REFCLK inputs are connected to GND 
+#
+#
+set_location_assignment PIN_AN38 -to PCIE_REFCLK_p
+set_location_assignment PIN_AN39 -to PCIE_REFCLK_n
+set_instance_assignment -name IO_STANDARD LVDS -to PCIE_REFCLK_p
+set_location_assignment PIN_AL38 -to REFCLK_L1_NOT_USED_p
+set_location_assignment PIN_AL39 -to REFCLK_L1_NOT_USED_n
+set_instance_assignment -name IO_STANDARD LVDS -to REFCLK_L1_NOT_USED_p
+#Note: Bank QL0 --> REFCLK_L1 not used (gnd)
+
+set_location_assignment PIN_AA38 -to REFCLK_L2_NOT_USED_p
+set_location_assignment PIN_AA39 -to REFCLK_L2_NOT_USED_n
+set_instance_assignment -name IO_STANDARD LVDS -to REFCLK_L2_NOT_USED_p
+set_location_assignment PIN_W38 -to REFCLK_L3_NOT_USED_p
+set_location_assignment PIN_W39 -to REFCLK_L3_NOT_USED_n
+set_instance_assignment -name IO_STANDARD LVDS -to REFCLK_L3_NOT_USED_p
+#Note: Bank QL1 --> REFCLK_L2/_L3 not used (gnd)
+
+set_location_assignment PIN_J38 -to HSMA_REFCLK_p
+set_location_assignment PIN_J39 -to HSMA_REFCLK_n
+set_instance_assignment -name IO_STANDARD LVDS -to HSMA_REFCLK_p
+set_location_assignment PIN_G38 -to REFCLK_L5_NOT_USED_p
+set_location_assignment PIN_G39 -to REFCLK_L5_NOT_USED_n
+set_instance_assignment -name IO_STANDARD LVDS -to REFCLK_L5_NOT_USED_p
+#Note: Bank QL2 --> REFCLK_L5 not used (gnd)
+
+set_location_assignment PIN_AN2 -to SATA_REFCLK_p
+set_location_assignment PIN_AN1 -to SATA_REFCLK_n
+set_instance_assignment -name IO_STANDARD LVDS -to SATA_REFCLK_p
+set_location_assignment PIN_AL2 -to REFCLK_R1_NOT_USED_p
+set_location_assignment PIN_AL1 -to REFCLK_R1_NOT_USED_n
+set_instance_assignment -name IO_STANDARD LVDS -to REFCLK_R1_NOT_USED_p
+#Note: Bank QR0 --> REFCLK_R1 not used (gnd)
+
+set_location_assignment PIN_AA2 -to HSMB_REFCLK_p
+set_location_assignment PIN_AA1 -to HSMB_REFCLK_n
+set_instance_assignment -name IO_STANDARD LVDS -to HSMB_REFCLK_p
+set_location_assignment PIN_W2 -to SMA_GXBCLK_p
+set_location_assignment PIN_W1 -to SMA_GXBCLK_n
+set_instance_assignment -name IO_STANDARD LVDS -to SMA_GXBCLK_p
+#Note: Bank QR1 --> all REFCLK connected
+
+set_location_assignment PIN_J2 -to REFCLK_R4_NOT_USED_p
+set_location_assignment PIN_J1 -to REFCLK_R4_NOT_USED_n
+set_instance_assignment -name IO_STANDARD LVDS -to REFCLK_R4_NOT_USED_p
+set_location_assignment PIN_G2 -to REFCLK_R5_NOT_USED_p
+set_location_assignment PIN_G1 -to REFCLK_R5_NOT_USED_n
+set_instance_assignment -name IO_STANDARD LVDS -to REFCLK_R5_NOT_USED_p
+#Note: Bank QR2 --> REFCLK_R4/_R5 not used (gnd)
+
+#
+# CPU_RESET button
+#
+set_location_assignment PIN_V34 -to CPU_RESET_n
+
+#
+# ENET interface
+#
+set_location_assignment PIN_T30 -to ETH_TX_p[0]
+set_location_assignment PIN_T31 -to ETH_TX_n[0]
+set_location_assignment PIN_U31 -to ETH_RX_p[0]
+set_location_assignment PIN_V31 -to ETH_RX_n[0]
+set_location_assignment PIN_R30 -to ETH_MDC[0]
+set_location_assignment PIN_W32 -to ETH_MDIO[0]
+set_location_assignment PIN_B20 -to ETH_INT_n[0]
+#set_location_assignment PIN_V29  -to ETH_RST_n[0]
+
+set_location_assignment PIN_R32 -to ETH_TX_p[1]
+set_location_assignment PIN_R33 -to ETH_TX_n[1]
+set_location_assignment PIN_N33 -to ETH_RX_p[1]
+set_location_assignment PIN_N34 -to ETH_RX_n[1]
+set_location_assignment PIN_J6 -to ETH_MDC[1]
+set_location_assignment PIN_J5 -to ETH_MDIO[1]
+set_location_assignment PIN_AG30 -to ETH_INT_n[1]
+#set_location_assignment PIN_V29  -to ETH_RST_n[1]
+
+set_location_assignment PIN_M32 -to ETH_TX_p[2]
+set_location_assignment PIN_L32 -to ETH_TX_n[2]
+set_location_assignment PIN_K34 -to ETH_RX_p[2]
+set_location_assignment PIN_K35 -to ETH_RX_n[2]
+set_location_assignment PIN_K6 -to ETH_MDC[2]
+set_location_assignment PIN_K5 -to ETH_MDIO[2]
+set_location_assignment PIN_AE30 -to ETH_INT_n[2]
+#set_location_assignment PIN_V29  -to ETH_RST_n[2]
+
+set_location_assignment PIN_P31 -to ETH_TX_p[3]
+set_location_assignment PIN_P32 -to ETH_TX_n[3]
+set_location_assignment PIN_J34 -to ETH_RX_p[3]
+set_location_assignment PIN_J35 -to ETH_RX_n[3]
+set_location_assignment PIN_N7 -to ETH_MDC[3]
+set_location_assignment PIN_N8 -to ETH_MDIO[3]
+set_location_assignment PIN_AE31 -to ETH_INT_n[3]
+#set_location_assignment PIN_V29  -to ETH_RST_n[3]
+
+# eth common reset
+set_location_assignment PIN_V29 -to ETH_RST_n
+
+# eth sgmii I/O (LVDS)
+set_instance_assignment -name IO_STANDARD LVDS -to ETH_RX_p[0]
+set_instance_assignment -name IO_STANDARD LVDS -to ETH_RX_p[1]
+set_instance_assignment -name IO_STANDARD LVDS -to ETH_RX_p[2]
+set_instance_assignment -name IO_STANDARD LVDS -to ETH_RX_p[3]
+set_instance_assignment -name INPUT_TERMINATION DIFFERENTIAL -to ETH_RX_p[0]
+set_instance_assignment -name INPUT_TERMINATION DIFFERENTIAL -to ETH_RX_p[1]
+set_instance_assignment -name INPUT_TERMINATION DIFFERENTIAL -to ETH_RX_p[2]
+set_instance_assignment -name INPUT_TERMINATION DIFFERENTIAL -to ETH_RX_p[3]
+
+set_instance_assignment -name IO_STANDARD LVDS -to ETH_TX_p[0]
+set_instance_assignment -name IO_STANDARD LVDS -to ETH_TX_p[1]
+set_instance_assignment -name IO_STANDARD LVDS -to ETH_TX_p[2]
+set_instance_assignment -name IO_STANDARD LVDS -to ETH_TX_p[3]
+
+#
+# USER DIP SWITCH (SW6, BANK 5C, LVCMOS/TTL 3.3V supported using VCCIO = 3.0V)
+#
+# Note: dip switch pullups connected to 3.0V --> SW-ON = GND, SW-OFF = VCC
+#
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to SW[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to SW[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to SW[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to SW[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to SW[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to SW[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to SW[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to SW[7]
+set_location_assignment PIN_AB13 -to SW[0]
+set_location_assignment PIN_AB12 -to SW[1]
+set_location_assignment PIN_AB11 -to SW[2]
+set_location_assignment PIN_AB10 -to SW[3]
+set_location_assignment PIN_AB9 -to SW[4]
+set_location_assignment PIN_AC8 -to SW[5]
+set_location_assignment PIN_AH6 -to SW[6]
+set_location_assignment PIN_AG6 -to SW[7]
+
+#
+# HSMC_NET (dual gigabit ethernet board, RGMII mode, J20 HSMC Port A) 
+#
+#
+
+#
+# ENET 0
+#
+set_location_assignment PIN_AP33 -to ENET_RST_n[0]
+
+set_location_assignment PIN_AL32 -to ENET_TX_EN[0]
+set_location_assignment PIN_AK32 -to ENET_TX_ER[0]
+set_location_assignment PIN_AH28 -to ENET_GTX_CLK[0]
+set_location_assignment PIN_AD30 -to ENET_TX_D[0][7]
+set_location_assignment PIN_AK31 -to ENET_TX_D[0][6]
+set_location_assignment PIN_AK29 -to ENET_TX_D[0][5]
+set_location_assignment PIN_AH27 -to ENET_TX_D[0][4]
+set_location_assignment PIN_AR35 -to ENET_TX_D[0][3]
+set_location_assignment PIN_AP35 -to ENET_TX_D[0][2]
+set_location_assignment PIN_AU31 -to ENET_TX_D[0][1]
+set_location_assignment PIN_AG27 -to ENET_TX_D[0][0]
+
+set_location_assignment PIN_AJ29 -to ENET_RX_DV[0]
+set_location_assignment PIN_AD31 -to ENET_RX_ER[0]
+set_location_assignment PIN_AU32 -to ENET_RX_CLK[0]
+set_location_assignment PIN_AR31 -to ENET_RX_D[0][7]
+set_location_assignment PIN_AU33 -to ENET_RX_D[0][6]
+set_location_assignment PIN_AU34 -to ENET_RX_D[0][5]
+set_location_assignment PIN_AT30 -to ENET_RX_D[0][4]
+set_location_assignment PIN_AV34 -to ENET_RX_D[0][3]
+set_location_assignment PIN_AC28 -to ENET_RX_D[0][2]
+set_location_assignment PIN_AT32 -to ENET_RX_D[0][1]
+set_location_assignment PIN_AC29 -to ENET_RX_D[0][0]
+
+set_location_assignment PIN_AJ31 -to ENET_MDC[0]
+set_location_assignment PIN_AL31 -to ENET_MDIO[0]
+
+#
+# ENET 1
+#
+set_location_assignment PIN_AM31 -to ENET_RST_n[1]
+
+set_location_assignment PIN_AF26 -to ENET_TX_EN[1]
+set_location_assignment PIN_AE26 -to ENET_TX_ER[1]
+set_location_assignment PIN_AG28 -to ENET_GTX_CLK[1]
+set_location_assignment PIN_AM35 -to ENET_TX_D[1][7]
+set_location_assignment PIN_AM34 -to ENET_TX_D[1][6]
+set_location_assignment PIN_AE29 -to ENET_TX_D[1][5]
+set_location_assignment PIN_AG32 -to ENET_TX_D[1][4]
+set_location_assignment PIN_AP34 -to ENET_TX_D[1][3]
+set_location_assignment PIN_AN33 -to ENET_TX_D[1][2]
+set_location_assignment PIN_AE28 -to ENET_TX_D[1][1]
+set_location_assignment PIN_AG31 -to ENET_TX_D[1][0]
+
+set_location_assignment PIN_AK34 -to ENET_RX_DV[1]
+set_location_assignment PIN_AP30 -to ENET_RX_ER[1]
+set_location_assignment PIN_AK35 -to ENET_RX_CLK[1]
+set_location_assignment PIN_AB28 -to ENET_RX_D[1][7]
+set_location_assignment PIN_AD27 -to ENET_RX_D[1][6]
+set_location_assignment PIN_AB31 -to ENET_RX_D[1][5]
+set_location_assignment PIN_AJ35 -to ENET_RX_D[1][4]
+set_location_assignment PIN_AE27 -to ENET_RX_D[1][3]
+set_location_assignment PIN_AH35 -to ENET_RX_D[1][2]
+set_location_assignment PIN_AB30 -to ENET_RX_D[1][1]
+set_location_assignment PIN_AJ34 -to ENET_RX_D[1][0]
+
+set_location_assignment PIN_AN31 -to ENET_MDC[1]
+set_location_assignment PIN_AG29 -to ENET_MDIO[1]
+
+#
+# HSMC_NET (dual gigabit ethernet board, RGMII mode, J21 HSMC Port B) 
+#
+#
+
+#
+# ENET 2
+#
+set_location_assignment PIN_U5 -to ENET_RST_n[2]
+
+set_location_assignment PIN_P8 -to ENET_TX_EN[2]
+set_location_assignment PIN_N9 -to ENET_TX_ER[2]
+set_location_assignment PIN_J8 -to ENET_GTX_CLK[2]
+set_location_assignment PIN_M11 -to ENET_TX_D[2][7]
+set_location_assignment PIN_U10 -to ENET_TX_D[2][6]
+set_location_assignment PIN_M7 -to ENET_TX_D[2][5]
+set_location_assignment PIN_R8 -to ENET_TX_D[2][4]
+set_location_assignment PIN_P6 -to ENET_TX_D[2][3]
+set_location_assignment PIN_R7 -to ENET_TX_D[2][2]
+set_location_assignment PIN_R5 -to ENET_TX_D[2][1]
+set_location_assignment PIN_R9 -to ENET_TX_D[2][0]
+
+set_location_assignment PIN_M8 -to ENET_RX_DV[2]
+set_location_assignment PIN_L11 -to ENET_RX_ER[2]
+set_location_assignment PIN_L5 -to ENET_RX_CLK[2]
+set_location_assignment PIN_G8 -to ENET_RX_D[2][7]
+set_location_assignment PIN_F9 -to ENET_RX_D[2][6]
+set_location_assignment PIN_N6 -to ENET_RX_D[2][5]
+set_location_assignment PIN_F8 -to ENET_RX_D[2][4]
+set_location_assignment PIN_N5 -to ENET_RX_D[2][3]
+set_location_assignment PIN_M10 -to ENET_RX_D[2][2]
+set_location_assignment PIN_M6 -to ENET_RX_D[2][1]
+set_location_assignment PIN_L10 -to ENET_RX_D[2][0]
+
+set_location_assignment PIN_V10 -to ENET_MDC[2]
+set_location_assignment PIN_T9 -to ENET_MDIO[2]
+
+#
+# ENET 3
+#
+set_location_assignment PIN_G5 -to ENET_RST_n[3]
+
+set_location_assignment PIN_T12 -to ENET_TX_EN[3]
+set_location_assignment PIN_T13 -to ENET_TX_ER[3]
+set_location_assignment PIN_K8 -to ENET_GTX_CLK[3]
+set_location_assignment PIN_E10 -to ENET_TX_D[3][7]
+set_location_assignment PIN_F10 -to ENET_TX_D[3][6]
+set_location_assignment PIN_R11 -to ENET_TX_D[3][5]
+set_location_assignment PIN_P13 -to ENET_TX_D[3][4]
+set_location_assignment PIN_F6 -to ENET_TX_D[3][3]
+set_location_assignment PIN_G6 -to ENET_TX_D[3][2]
+set_location_assignment PIN_R12 -to ENET_TX_D[3][1]
+set_location_assignment PIN_R13 -to ENET_TX_D[3][0]
+
+set_location_assignment PIN_D8 -to ENET_RX_DV[3]
+set_location_assignment PIN_C7 -to ENET_RX_ER[3]
+set_location_assignment PIN_C8 -to ENET_RX_CLK[3]
+set_location_assignment PIN_J9 -to ENET_RX_D[3][7]
+set_location_assignment PIN_N11 -to ENET_RX_D[3][6]
+set_location_assignment PIN_J10 -to ENET_RX_D[3][5]
+set_location_assignment PIN_C9 -to ENET_RX_D[3][4]
+set_location_assignment PIN_N10 -to ENET_RX_D[3][3]
+set_location_assignment PIN_C10 -to ENET_RX_D[3][2]
+set_location_assignment PIN_K10 -to ENET_RX_D[3][1]
+set_location_assignment PIN_D9 -to ENET_RX_D[3][0]
+
+set_location_assignment PIN_F5 -to ENET_MDC[3]
+set_location_assignment PIN_H7 -to ENET_MDIO[3]
+
+#
+# RS232_UART (DB9-F connector J30)
+#
+set_location_assignment PIN_AH32 -to UART_RXD
+set_location_assignment PIN_AH33 -to UART_CTS
+set_location_assignment PIN_AN34 -to UART_TXD
+set_location_assignment PIN_AN35 -to UART_RTS
+#
+# Note: the original DE4 schematic names for control signals RTS/CTS have been swapped
+#       (all signals refer to DE4 side)
+#  
+# J30.2 UART_TXD PIN_AN34 output
+# J30.3 UART_RXD PIN_AH32 input 
+# J30.7 UART_CTS PIN_AH33 input
+# J30.8 UART_RTS PIN_AN35 output 
+#  
+
+#######################################################################################
+#
+# file: pin-DE4.txt (end)
+#
+#######################################################################################
+
+#######################################################################################
+#######################################################################################
+
+#######################################################################################
+#
+# file: ethlink-qsf.txt (begin)
+#
+#######################################################################################
+set_location_assignment PIN_W28 -to Led1
+set_location_assignment PIN_AT9 -to ECRST
+set_location_assignment PIN_AG13 -to BCRST
+
+set_location_assignment PIN_AW5 -to CHOKE0
+set_location_assignment PIN_AW4 -to CHOKE1
+set_location_assignment PIN_AV8 -to CHOKE2
+set_location_assignment PIN_AU10 -to CHOKE3
+set_location_assignment PIN_AP8 -to CHOKE4
+set_location_assignment PIN_AU6 -to CHOKE5
+set_location_assignment PIN_AU7 -to CHOKE6
+set_location_assignment PIN_AP6 -to CHOKE7
+set_location_assignment PIN_AN7 -to CHOKE8
+set_location_assignment PIN_AL6 -to CHOKE9
+set_location_assignment PIN_AL5 -to CHOKE10
+set_location_assignment PIN_AK9 -to CHOKE11
+set_location_assignment PIN_AJ10 -to CHOKE12
+set_location_assignment PIN_AH8 -to CHOKE13
+
+
+
+set_location_assignment PIN_AW8 -to ERROR0
+set_location_assignment PIN_AV10 -to ERROR1
+set_location_assignment PIN_AW10 -to ERROR2
+set_location_assignment PIN_AU8 -to ERROR3
+set_location_assignment PIN_AT10 -to ERROR4
+set_location_assignment PIN_AT6 -to ERROR5
+set_location_assignment PIN_AR5 -to ERROR6
+set_location_assignment PIN_AT7 -to ERROR7
+set_location_assignment PIN_AN6 -to ERROR8
+set_location_assignment PIN_AM6 -to ERROR9
+set_location_assignment PIN_AL9 -to ERROR10
+set_location_assignment PIN_AJ6 -to ERROR11
+set_location_assignment PIN_AH11 -to ERROR12
+set_location_assignment PIN_AH9 -to ERROR13
+
+
+set_location_assignment PIN_AR8 -to from_NIM
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to from_NIM
+
+set_location_assignment PIN_AU9 -to DetectorNim0
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to DetectorNim0
+set_location_assignment PIN_AE5 -to DetectorNim1
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to DetectorNim1
+set_location_assignment PIN_AN9 -to DetectorNim2
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to DetectorNim2
+set_location_assignment PIN_AP9 -to DetectorNim3
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to DetectorNim3
+set_location_assignment PIN_AV5 -to DetectorNim4
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to DetectorNim4
+
+
+
+
+
+#Pin For FAKE Trigger developing:
+set_location_assignment PIN_R29 -to Led2
+set_location_assignment PIN_P29 -to Led3
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to BCRST
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to ECRST
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to CHOKE0
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to CHOKE1
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to CHOKE2
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to CHOKE3
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to CHOKE4
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to CHOKE5
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to CHOKE6
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to CHOKE7
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to CHOKE8
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to CHOKE9
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to CHOKE10
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to CHOKE11
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to CHOKE12
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to CHOKE13
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to ERROR0
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to ERROR1
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to ERROR2
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to ERROR3
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to ERROR4
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to ERROR5
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to ERROR6
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to ERROR7
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to ERROR8
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to ERROR9
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to ERROR10
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to ERROR11
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to ERROR12
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to ERROR13
+
+#set_location_assignment PIN_AH5 -to BCRST_fake
+#set_location_assignment PIN_AG5 -to ECRST_fake
+
+
+#============================================================
+# 3-Ports High-Speed USB OTG
+#============================================================
+set_location_assignment PIN_AF16 -to OTG_D[0]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[0]
+set_location_assignment PIN_AJ14 -to OTG_D[1]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[1]
+set_location_assignment PIN_AD15 -to OTG_D[2]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[2]
+set_location_assignment PIN_AE15 -to OTG_D[3]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[3]
+set_location_assignment PIN_AE16 -to OTG_D[4]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[4]
+set_location_assignment PIN_AH14 -to OTG_D[5]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[5]
+set_location_assignment PIN_AM13 -to OTG_D[6]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[6]
+set_location_assignment PIN_AN15 -to OTG_D[7]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[7]
+set_location_assignment PIN_AP15 -to OTG_D[8]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[8]
+set_location_assignment PIN_AG18 -to OTG_D[9]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[9]
+set_location_assignment PIN_AG19 -to OTG_D[10]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[10]
+set_location_assignment PIN_AM19 -to OTG_D[11]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[11]
+set_location_assignment PIN_AN19 -to OTG_D[12]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[12]
+set_location_assignment PIN_AV16 -to OTG_D[13]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[13]
+set_location_assignment PIN_AT17 -to OTG_D[14]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[14]
+set_location_assignment PIN_AV17 -to OTG_D[15]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[15]
+set_location_assignment PIN_AU17 -to OTG_D[16]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[16]
+set_location_assignment PIN_AW18 -to OTG_D[17]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[17]
+set_location_assignment PIN_AT18 -to OTG_D[18]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[18]
+set_location_assignment PIN_AU18 -to OTG_D[19]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[19]
+set_location_assignment PIN_AR19 -to OTG_D[20]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[20]
+set_location_assignment PIN_AW20 -to OTG_D[21]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[21]
+set_location_assignment PIN_AW21 -to OTG_D[22]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[22]
+set_location_assignment PIN_AF19 -to OTG_D[23]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[23]
+set_location_assignment PIN_AE19 -to OTG_D[24]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[24]
+set_location_assignment PIN_AE18 -to OTG_D[25]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[25]
+set_location_assignment PIN_AD19 -to OTG_D[26]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[26]
+set_location_assignment PIN_G13 -to OTG_D[27]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[27]
+set_location_assignment PIN_M16 -to OTG_D[28]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[28]
+set_location_assignment PIN_M27 -to OTG_D[29]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[29]
+set_location_assignment PIN_K27 -to OTG_D[30]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[30]
+set_location_assignment PIN_L26 -to OTG_D[31]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_D[31]
+set_location_assignment PIN_K26 -to OTG_A[1]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_A[1]
+set_location_assignment PIN_P25 -to OTG_A[2]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_A[2]
+set_location_assignment PIN_N25 -to OTG_A[3]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_A[3]
+set_location_assignment PIN_R24 -to OTG_A[4]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_A[4]
+set_location_assignment PIN_P24 -to OTG_A[5]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_A[5]
+set_location_assignment PIN_M25 -to OTG_A[6]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_A[6]
+set_location_assignment PIN_L25 -to OTG_A[7]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_A[7]
+set_location_assignment PIN_N23 -to OTG_A[8]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_A[8]
+set_location_assignment PIN_K28 -to OTG_A[9]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_A[9]
+set_location_assignment PIN_A29 -to OTG_A[10]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_A[10]
+set_location_assignment PIN_J27 -to OTG_A[11]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_A[11]
+set_location_assignment PIN_G26 -to OTG_A[12]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_A[12]
+set_location_assignment PIN_F26 -to OTG_A[13]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_A[13]
+set_location_assignment PIN_G28 -to OTG_A[14]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_A[14]
+set_location_assignment PIN_B26 -to OTG_A[15]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_A[15]
+set_location_assignment PIN_D17 -to OTG_A[16]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_A[16]
+set_location_assignment PIN_F16 -to OTG_A[17]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_A[17]
+set_location_assignment PIN_P19 -to OTG_CS_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_CS_n
+set_location_assignment PIN_AH20 -to OTG_DC_DACK
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_DC_DACK
+set_location_assignment PIN_AP21 -to OTG_DC_DREQ
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_DC_DREQ
+set_location_assignment PIN_AT22 -to OTG_DC_IRQ
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_DC_IRQ
+set_location_assignment PIN_AT21 -to OTG_HC_DACK
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_HC_DACK
+set_location_assignment PIN_AN21 -to OTG_HC_DREQ
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_HC_DREQ
+set_location_assignment PIN_AJ20 -to OTG_HC_IRQ
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_HC_IRQ
+set_location_assignment PIN_N19 -to OTG_OE_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_OE_n
+set_location_assignment PIN_AU22 -to OTG_RESET_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_RESET_n
+set_location_assignment PIN_AR22 -to OTG_WE_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to OTG_WE_n
+set_location_assignment PIN_AP10 -to LTU0
+set_location_assignment PIN_AE10 -to LTU1
+set_location_assignment PIN_AE13 -to LTU2
+set_location_assignment PIN_AF13 -to LTU3
+set_location_assignment PIN_AH10 -to LTU4
+set_location_assignment PIN_AG12 -to LTU5
+set_location_assignment PIN_AE12 -to LTU_TRIGGER
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to LTU_TRIGGER
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to LTU5
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to LTU4
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to LTU3
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to LTU2
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to LTU1
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to LTU0
+set_location_assignment PIN_J7 -to sw0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+# ethlink assignments  
+#
+set_global_assignment -name TOP_LEVEL_ENTITY top
+
+#
+# HDL Message Level 3 (all messages)
+#
+set_global_assignment -name HDL_MESSAGE_LEVEL LEVEL3
+
+#
+# Warning Message OFF
+# 
+# Warning (10812): VHDL warning at (...): sensitivity list already contains allnets
+#
+set_global_assignment -name HDL_MESSAGE_OFF 10812
+
+#
+# ENET 0..3 --> RGMII output max delay D5+D6 
+#
+#set_instance_assignment -name D2_DELAY 7 -to ENET_RX_D[*][*] -disable
+#set_instance_assignment -name D3_DELAY 7 -to ENET_RX_D[*][*] -disable
+# note: D2+D3 automatically calculated/inserted by fitter using SDC_FILE topHw.sdc
+set_instance_assignment -name D5_DELAY 15 -to ENET_TX_D[*][*]
+set_instance_assignment -name D6_DELAY 6 -to ENET_TX_D[*][*]
+# note: D5+D6 set to max value
+#set_instance_assignment -name D2_DELAY 7 -to ENET_RX_DV[*] -disable
+#set_instance_assignment -name D3_DELAY 7 -to ENET_RX_DV[*] -disable
+# note: D2+D3 automatically calculated/inserted by fitter using SDC_FILE topHw.sdc
+set_instance_assignment -name D5_DELAY 15 -to ENET_TX_EN[*]
+set_instance_assignment -name D6_DELAY 6 -to ENET_TX_EN[*]
+# note: D5+D6 set to max value
+
+#
+# Max toggle rate for all i/o (not used)
+#
+#set_instance_assignment -name IO_MAXIMUM_TOGGLE_RATE "200 MHz" -to *
+
+#
+# search paths
+#
+set_global_assignment -name SEARCH_PATH ../mac/sopc
+set_global_assignment -name SEARCH_PATH "../mac/sgmii/triple_speed_ethernet-library"
+set_global_assignment -name SEARCH_PATH ./
+
+#
+# File list
+#
+
+#######################################################################################
+#
+# file: ethlink-qsf.txt (end)
+#
+#######################################################################################
+
+
+
+
+
+
+set_global_assignment -name LAST_QUARTUS_VERSION "16.1.0 Standard Edition"
+set_global_assignment -name TIMEQUEST_MULTICORNER_ANALYSIS ON
+set_global_assignment -name TIMEQUEST_DO_CCPP_REMOVAL ON
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
+set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
+set_global_assignment -name EDA_SIMULATION_TOOL "<None>"
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT NONE -section_id eda_simulation
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_global_assignment -name ENABLE_SIGNALTAP ON
+set_global_assignment -name USE_SIGNALTAP_FILE LKrCalibration.stp
+set_global_assignment -name SMART_RECOMPILE ON
+set_global_assignment -name FITTER_EARLY_TIMING_ESTIMATE_MODE REALISTIC
+set_global_assignment -name PHYSICAL_SYNTHESIS_COMBO_LOGIC OFF
+set_global_assignment -name PHYSICAL_SYNTHESIS_REGISTER_RETIMING OFF
+set_global_assignment -name OPTIMIZE_HOLD_TIMING "ALL PATHS"
+set_global_assignment -name OPTIMIZE_MULTI_CORNER_TIMING ON
+set_global_assignment -name FITTER_EFFORT "STANDARD FIT"
+set_global_assignment -name ROUTER_CLOCKING_TOPOLOGY_ANALYSIS ON
+set_global_assignment -name ECO_OPTIMIZE_TIMING ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_ASYNCHRONOUS_SIGNAL_PIPELINING ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_EFFORT NORMAL
+set_global_assignment -name DRC_VIOLATION_MESSAGE_LIMIT 100
+set_global_assignment -name DRC_DETAIL_MESSAGE_LIMIT 50
+set_global_assignment -name OPTIMIZATION_TECHNIQUE BALANCED
+set_global_assignment -name SYNTH_TIMING_DRIVEN_SYNTHESIS ON
+set_global_assignment -name RTLV_GROUP_COMB_LOGIC_IN_CLOUD OFF
+set_global_assignment -name NUM_PARALLEL_PROCESSORS 4
+set_location_assignment PIN_AW6 -to TTCrxReset
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to TTCrxReset
+set_location_assignment PIN_AT8 -to QPLL_ERROR
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to QPLL_ERROR
+set_location_assignment PIN_AT5 -to QPLL_LOCKED
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to QPLL_LOCKED
+set_location_assignment PIN_AW7 -to QPLL_RESET
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to QPLL_RESET
+set_location_assignment PIN_AN10 -to TTC_BCNT[11]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to TTC_BCNT[11]
+set_location_assignment PIN_AM5 -to TTC_BCNT[10]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to TTC_BCNT[10]
+set_location_assignment PIN_AM10 -to TTC_BCNT[9]
+set_location_assignment PIN_AL10 -to TTC_BCNT[8]
+set_location_assignment PIN_AM8 -to TTC_BCNT[7]
+set_location_assignment PIN_AL8 -to TTC_BCNT[6]
+set_location_assignment PIN_AK8 -to TTC_BCNT[5]
+set_location_assignment PIN_AJ11 -to TTC_BCNT[4]
+set_location_assignment PIN_AK7 -to TTC_BCNT[3]
+set_location_assignment PIN_AJ5 -to TTC_BCNT[2]
+set_location_assignment PIN_AH12 -to TTC_BCNT[1]
+set_location_assignment PIN_AG10 -to TTC_BCNT[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to TTC_BCNT[9]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to TTC_BCNT[8]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to TTC_BCNT[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to TTC_BCNT[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to TTC_BCNT[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to TTC_BCNT[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to TTC_BCNT[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to TTC_BCNT[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to TTC_BCNT[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to TTC_BCNT[0]
+set_location_assignment PIN_AP7 -to TTC_BCNTSTR
+set_location_assignment PIN_AF6 -to TTC_BRCST[7]
+set_location_assignment PIN_AV7 -to TTC_READY
+set_location_assignment PIN_AP5 -to TTC_SCL
+set_location_assignment PIN_AN5 -to TTC_SDA
+set_location_assignment PIN_AF10 -to TTC_L1ACCEPT
+set_location_assignment PIN_AF11 -to TTC_EVCNTHSTR
+set_location_assignment PIN_AG9 -to TTC_EVCNTLSTR
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to TTC_EVCNTHSTR
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to TTC_EVCNTLSTR
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to TTC_L1ACCEPT
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to TTC_READY
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to TTC_SCL
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to TTC_SDA
+set_global_assignment -name SLD_NODE_CREATOR_ID 110 -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_ENTITY_NAME sld_signaltap -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_clk -to "altpll_refclk2:PLL125_inst|c0" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_RAM_BLOCK_TYPE=AUTO" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_NODE_INFO=805334528" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_POWER_UP_TRIGGER=0" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_STORAGE_QUALIFIER_INVERSION_MASK_LENGTH=0" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_SEGMENT_SIZE=128" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_ATTRIBUTE_MEM_MODE=OFF" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_STATE_FLOW_USE_GENERATED=0" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_STATE_BITS=11" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_BUFFER_FULL_STOP=1" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_CURRENT_RESOURCE_WIDTH=1" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_INCREMENTAL_ROUTING=1" -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[0] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[2] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[5] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[7] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[9] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[10] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[20] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[21] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[24] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[27] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[29] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[31] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_TRIGGER_LEVEL=1" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_SAMPLE_DEPTH=128" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_TRIGGER_IN_ENABLED=0" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_ADVANCED_TRIGGER_ENTITY=basic,1," -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_TRIGGER_LEVEL_PIPELINE=1" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_ENABLE_ADVANCED_TRIGGER=0" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[0] -to DetectorNim0 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[1] -to DetectorNim1 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[2] -to DetectorNim2 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[3] -to DetectorNim3 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[4] -to DetectorNim4 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[5] -to LKrNIMCalib -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[6] -to LTU0 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[7] -to LTU1 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[8] -to LTU2 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[9] -to LTU3 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[10] -to LTU4 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[11] -to LTU5 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[12] -to LTU_TRIGGER -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[13] -to "NIMInterface:CDC_inst2|CAlibnimOut" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[14] -to "NIMInterface:CDC_inst2|CalibNimIn" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[15] -to "USBinterface:usbinterface_inst|s_activateNIMCalib" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[16] -to "ethlink:ethlink_inst|allregs.dout.clk125.calibration_nim" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[0] -to DetectorNim0 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[1] -to DetectorNim1 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[2] -to DetectorNim2 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[3] -to DetectorNim3 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[4] -to DetectorNim4 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[5] -to LKrNIMCalib -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[6] -to LTU0 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[7] -to LTU1 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[8] -to LTU2 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[9] -to LTU3 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[10] -to LTU4 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[11] -to LTU5 -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[12] -to LTU_TRIGGER -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[13] -to "NIMInterface:CDC_inst2|CAlibnimOut" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[14] -to "NIMInterface:CDC_inst2|CalibNimIn" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[15] -to "USBinterface:usbinterface_inst|s_activateNIMCalib" -section_id auto_signaltap_0
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[16] -to "ethlink:ethlink_inst|allregs.dout.clk125.calibration_nim" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_DATA_BITS=17" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_TRIGGER_BITS=17" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_STORAGE_QUALIFIER_BITS=17" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_INVERSION_MASK=000000000000000000000000000000000000000000000000000000000000000000000000" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_INVERSION_MASK_LENGTH=72" -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[1] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[3] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[4] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[6] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[8] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[11] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[12] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[13] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[14] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[15] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[16] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[17] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[18] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[19] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[22] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[23] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[25] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[26] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[28] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[30] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_global_assignment -name QIP_FILE ../TemperatureSensor/TemperatureSensor/synthesis/TemperatureSensor.qip
+set_global_assignment -name SOURCE_FILE ../TemperatureSensor/TemperatureSensor/TemperatureSensor.cmp
+set_global_assignment -name SOURCE_FILE ../TemperatureSensor/TemperatureSensor.cmp
+set_global_assignment -name VHDL_FILE TriggerLUT.vhd
+set_global_assignment -name VHDL_FILE ../random/randomuniform.vhd
+set_global_assignment -name VHDL_FILE ../random/randomgaussian.vhd
+set_global_assignment -name VHDL_FILE ../random/adder.vhd
+set_global_assignment -name VHDL_FILE alttriggerLUT.vhd
+set_global_assignment -name VHDL_FILE generator.vhd
+set_global_assignment -name VHDL_FILE NIMInterface.vhd
+set_global_assignment -name VHDL_FILE ../mac/latencyram_2.vhd
+set_global_assignment -name VHDL_FILE fifo2trigger.vhd
+set_global_assignment -name VHDL_FILE fifo1trigger.vhd
+set_global_assignment -name VHDL_FILE ../mac/sendfifo.vhd
+set_global_assignment -name VHDL_FILE ../mac/ram2trigger.vhd
+set_global_assignment -name VHDL_FILE ../mac/ram1trigger.vhd
+set_global_assignment -name VHDL_FILE ../mac/calibfifo.vhd
+set_global_assignment -name VHDL_FILE ../mac/altsendfifo.vhd
+set_global_assignment -name SOURCE_FILE ../mac/altsendfifo.cmp
+set_global_assignment -name SOURCE_FILE ../mac/altRamOfMasks.cmp
+set_global_assignment -name VHDL_FILE ../mac/altram2trigger.vhd
+set_global_assignment -name SOURCE_FILE ../mac/altram2trigger.cmp
+set_global_assignment -name VHDL_FILE ../mac/altram1trigger.vhd
+set_global_assignment -name SOURCE_FILE ../mac/altram1trigger.cmp
+set_global_assignment -name VHDL_FILE ../mac/altlatencyram_2.vhd
+set_global_assignment -name SOURCE_FILE ../mac/altlatencyram_2.cmp
+set_global_assignment -name VHDL_FILE ../mac/altlatencyram.vhd
+set_global_assignment -name SOURCE_FILE ../mac/altlatencyram.cmp
+set_global_assignment -name VHDL_FILE ../mac/altfifo2trigger.vhd
+set_global_assignment -name SOURCE_FILE ../mac/altfifo2trigger.cmp
+set_global_assignment -name VHDL_FILE ../mac/altfifo1trigger.vhd
+set_global_assignment -name SOURCE_FILE ../mac/altfifo1trigger.cmp
+set_global_assignment -name VHDL_FILE ../mac/altcalibfifo.vhd
+set_global_assignment -name VERILOG_FILE usb_portmux/usb_portmux.v
+set_global_assignment -name SYSTEMVERILOG_FILE usb_portmux/usb_control_rsp_xbar_mux.sv
+set_global_assignment -name SYSTEMVERILOG_FILE usb_portmux/usb_control_rsp_xbar_demux.sv
+set_global_assignment -name VERILOG_FILE usb_portmux/usb_control_mem.v
+set_global_assignment -name SYSTEMVERILOG_FILE usb_portmux/usb_control_irq_mapper.sv
+set_global_assignment -name SYSTEMVERILOG_FILE usb_portmux/usb_control_id_router.sv
+set_global_assignment -name VERILOG_FILE usb_portmux/usb_control_cpu_test_bench.v
+set_global_assignment -name VERILOG_FILE usb_portmux/usb_control_cpu_mult_cell.v
+set_global_assignment -name VERILOG_FILE usb_portmux/usb_control_cpu.v
+set_global_assignment -name SYSTEMVERILOG_FILE usb_portmux/usb_control_cmd_xbar_demux.sv
+set_global_assignment -name SYSTEMVERILOG_FILE usb_portmux/usb_control_addr_router.sv
+set_global_assignment -name VERILOG_FILE usb_portmux/usb_control.v
+set_global_assignment -name VERILOG_FILE usb_portmux/portmux_export.v
+set_global_assignment -name VERILOG_FILE usb_portmux/isp1761_if.v
+set_global_assignment -name VERILOG_FILE usb_portmux/altera_reset_synchronizer.v
+set_global_assignment -name VERILOG_FILE usb_portmux/altera_reset_controller.v
+set_global_assignment -name SYSTEMVERILOG_FILE usb_portmux/altera_merlin_slave_translator.sv
+set_global_assignment -name SYSTEMVERILOG_FILE usb_portmux/altera_merlin_slave_agent.sv
+set_global_assignment -name SYSTEMVERILOG_FILE usb_portmux/altera_merlin_master_translator.sv
+set_global_assignment -name SYSTEMVERILOG_FILE usb_portmux/altera_merlin_master_agent.sv
+set_global_assignment -name SYSTEMVERILOG_FILE usb_portmux/altera_merlin_burst_uncompressor.sv
+set_global_assignment -name SYSTEMVERILOG_FILE usb_portmux/altera_merlin_arbitrator.sv
+set_global_assignment -name VERILOG_FILE usb_portmux/altera_avalon_sc_fifo.v
+set_global_assignment -name VHDL_FILE Trigger.vhd
+set_global_assignment -name VHDL_FILE CrossDomain.vhd
+set_global_assignment -name VHDL_FILE altTTC.vhd
+set_global_assignment -name VHDL_FILE altpll40MHz.vhd
+set_global_assignment -name SOURCE_FILE altpll40MHz.cmp
+set_global_assignment -name VHDL_FILE altpll_refclk2.vhd
+set_global_assignment -name VHDL_FILE ethlink.vhd
+set_global_assignment -name VHDL_FILE ../mac/mac_globals.vhd
+set_global_assignment -name VHDL_FILE altscfifo128.vhd
+set_global_assignment -name VHDL_FILE trigfifo128.vhd
+set_global_assignment -name VHDL_FILE altscfifo64_8192.vhd
+set_global_assignment -name VHDL_FILE outfifo64.vhd
+set_global_assignment -name VHDL_FILE top.vhd
+set_global_assignment -name VHDL_FILE ../mac/mdio/MDIOdrv1.vhd
+set_global_assignment -name VHDL_FILE ../mac/sopc/n2top1.vhd
+set_global_assignment -name SDC_FILE ../mac/mac_sgmii_rgmii.sdc
+set_global_assignment -name VHDL_FILE ../mac/sgmii/sgmii1.vhd
+set_global_assignment -name VHDL_FILE ./altiobuf1.vhd
+set_global_assignment -name VHDL_FILE ./pll_refclk.vhd
+set_global_assignment -name VHDL_FILE ./altpll_refclk.vhd
+set_global_assignment -name VHDL_FILE ../mac/sgmii/alttse1.vhd
+set_global_assignment -name VHDL_FILE ../mac/rgmii/rgmii1.vhd
+set_global_assignment -name VHDL_FILE ../mac/rgmii/altddin1.vhd
+set_global_assignment -name VHDL_FILE ../mac/rgmii/altddout1.vhd
+set_global_assignment -name VHDL_FILE ../mac/rgmii/ddin1.vhd
+set_global_assignment -name VHDL_FILE ../mac/rgmii/ddout1.vhd
+set_global_assignment -name VHDL_FILE ../mac/altdcfifo2.vhd
+set_global_assignment -name VHDL_FILE ../mac/altdcfiforx1.vhd
+set_global_assignment -name VHDL_FILE ../mac/altdcfiforx2.vhd
+set_global_assignment -name VHDL_FILE ../mac/altdpram1_8_8.vhd
+set_global_assignment -name VHDL_FILE ../mac/altdpram1_64_8.vhd
+set_global_assignment -name VHDL_FILE ../mac/altdpram2.vhd
+set_global_assignment -name VHDL_FILE ../mac/altrxdatabuf1.vhd
+set_global_assignment -name VHDL_FILE ../mac/altrxtagbuf1.vhd
+set_global_assignment -name VHDL_FILE ../mac/cmdctrl.vhd
+set_global_assignment -name VHDL_FILE ../mac/crc32.vhd
+set_global_assignment -name VHDL_FILE ../mac/dcfifo2.vhd
+set_global_assignment -name VHDL_FILE ../mac/dcfiforx1.vhd
+set_global_assignment -name VHDL_FILE ../mac/dcfiforx2.vhd
+set_global_assignment -name VHDL_FILE ../mac/dpram1.vhd
+set_global_assignment -name VHDL_FILE ../mac/dpram2.vhd
+set_global_assignment -name VHDL_FILE ../mac/framegen.vhd
+set_global_assignment -name VHDL_FILE ../mac/mac_gmii.vhd
+set_global_assignment -name VHDL_FILE ../mac/mac_rgmii.vhd
+set_global_assignment -name VHDL_FILE ../mac/mac_sgmii.vhd
+set_global_assignment -name VHDL_FILE ../mac/maclut.vhd
+set_global_assignment -name VHDL_FILE ../mac/pkg_crc32_d8.vhd
+set_global_assignment -name VHDL_FILE ../mac/regfile1.vhd
+set_global_assignment -name VHDL_FILE ../mac/regsync1.vhd
+set_global_assignment -name VHDL_FILE ../mac/rxdatabuf1.vhd
+set_global_assignment -name VHDL_FILE ../mac/rxframe1.vhd
+set_global_assignment -name VHDL_FILE ../mac/rxport1.vhd
+set_global_assignment -name VHDL_FILE ../mac/rxtagbuf1.vhd
+set_global_assignment -name VHDL_FILE ../mac/scfiforeg1.vhd
+set_global_assignment -name VHDL_FILE ../mac/syncrst1.vhd
+set_global_assignment -name VHDL_FILE ../mac/txframe1.vhd
+set_global_assignment -name VHDL_FILE ../mac/txport1.vhd
+set_global_assignment -name VHDL_FILE ../mac/txrxint.vhd
+set_global_assignment -name VHDL_FILE ../mac/userlib.vhd
+set_global_assignment -name VHDL_FILE ../mac/globals.vhd
+set_global_assignment -name SIGNALTAP_FILE stp1.stp
+set_global_assignment -name SIGNALTAP_FILE signaltap04.stp
+set_global_assignment -name VHDL_FILE CounterTstmp.vhd
+set_global_assignment -name QIP_FILE altpll_refclk2.qip
+set_global_assignment -name SIGNALTAP_FILE signaltap_error_mac.stp
+set_global_assignment -name CDF_FILE ../../ControlFPGA_v.2.0/output_files/Chain2.cdf
+set_global_assignment -name QIP_FILE ../mac/altfifoMTPnum.qip
+set_global_assignment -name VHDL_FILE ../mac/fifoMTPnum.vhd
+set_global_assignment -name CDF_FILE ../../ControlFPGA_v.2.0/output_files/Chain1.cdf
+set_global_assignment -name CDF_FILE Chain1.cdf
+set_global_assignment -name QIP_FILE ../mac/altsendfifo.qip
+set_global_assignment -name QIP_FILE ../mac/altram2trigger.qip
+set_global_assignment -name QIP_FILE ../mac/altfifopackets.qip
+set_global_assignment -name VHDL_FILE ../mac/fifopackets.vhd
+set_global_assignment -name SIGNALTAP_FILE finetimeERROR.stp
+set_global_assignment -name QIP_FILE ../mac/altFIFODELAY.qip
+set_global_assignment -name VHDL_FILE ../mac/fifoDELAY.vhd
+set_global_assignment -name SIGNALTAP_FILE ../stp1.stp
+set_global_assignment -name CDF_FILE ../mac/Chain1.cdf
+set_global_assignment -name QIP_FILE ../mac/altFIFOtstmp.qip
+set_global_assignment -name QIP_FILE ../mac/altsendram.qip
+set_global_assignment -name QIP_FILE ../mac/altfifodetectorfarm.qip
+set_global_assignment -name VHDL_FILE ../mac/sendram.vhd
+set_global_assignment -name VHDL_FILE ../mac/fifodetectorfarm.vhd
+set_global_assignment -name SIGNALTAP_FILE Versione17.stp
+set_global_assignment -name CDF_FILE ../../eth1DE4_versione14.2/ethlink/Chain3.cdf
+set_global_assignment -name CDF_FILE Chain9.cdf
+set_global_assignment -name SOURCE_FILE USBInterface2.0
+set_global_assignment -name VHDL_FILE USBInterface2.0.vhd
+set_global_assignment -name CDF_FILE ../../../Trigger/ControlFPGA/output_files/Chain1.cdf
+set_global_assignment -name VHDL_FILE pulser.vhd
+set_global_assignment -name QIP_FILE ../mac/altlatencyram_2.qip
+set_global_assignment -name QIP_FILE ../mac/altfifo2trigger.qip
+set_global_assignment -name QIP_FILE altpll40MHz.qip
+set_global_assignment -name SIGNALTAP_FILE LKrCalibration.stp
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_TRIGGER_PIPELINE=0" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_RAM_PIPELINE=0" -section_id auto_signaltap_0
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_COUNTER_PIPELINE=0" -section_id auto_signaltap_0
+set_global_assignment -name SLD_FILE db/LKrCalibration_auto_stripped.stp
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

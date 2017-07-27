@@ -1,0 +1,5 @@
+# ignore generated DB files:
+ethlink/db/*
+ethlink/incremental_db/*
+#ignore emacs files:
+*~

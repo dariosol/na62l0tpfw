@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pinplan
+ variation_name="temp_sense_0"
+ megafunction_name="ALTERA_TEMP_SENSE"
+ intended_family="Stratix IV"
+ specifies="all_ports">
+ <global>
+  <pin name="clk" direction="input" scope="external" />
+  <pin name="tsdcalo[7..0]" direction="output" scope="external" />
+  <pin name="tsdcaldone" direction="output" scope="external" />
+  <pin name="ce" direction="input" scope="external" />
+  <pin name="clr" direction="input" scope="external" />
+ </global>
+</pinplan>

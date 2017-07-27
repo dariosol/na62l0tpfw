@@ -1,0 +1,8 @@
+	component TemperatureSensor is
+		port (
+			clk        : in  std_logic                    := 'X'; -- clk
+			tsdcaldone : out std_logic;                           -- tsdcaldone
+			tsdcalo    : out std_logic_vector(7 downto 0)         -- tsdcalo
+		);
+	end component TemperatureSensor;
+

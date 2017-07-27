@@ -1,0 +1,71 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 1991-2014 Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus II License Agreement,
+the Altera MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Altera and sold by Altera or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+*/
+(header "symbol" (version "1.1"))
+(symbol
+	(rect 0 0 192 144)
+	(text "TemperatureSensor" (rect 38 -1 118 11)(font "Arial" (font_size 10)))
+	(text "inst" (rect 8 128 20 140)(font "Arial" ))
+	(port
+		(pt 0 72)
+		(input)
+		(text "clk" (rect 0 0 10 12)(font "Arial" (font_size 8)))
+		(text "clk" (rect 4 61 22 72)(font "Arial" (font_size 8)))
+		(line (pt 0 72)(pt 32 72)(line_width 1))
+	)
+	(port
+		(pt 192 72)
+		(output)
+		(text "tsdcaldone" (rect 0 0 41 12)(font "Arial" (font_size 8)))
+		(text "tsdcaldone" (rect 137 61 197 72)(font "Arial" (font_size 8)))
+		(line (pt 192 72)(pt 112 72)(line_width 1))
+	)
+	(port
+		(pt 192 112)
+		(output)
+		(text "tsdcalo[7..0]" (rect 0 0 47 12)(font "Arial" (font_size 8)))
+		(text "tsdcalo[7..0]" (rect 131 101 209 112)(font "Arial" (font_size 8)))
+		(line (pt 192 112)(pt 112 112)(line_width 3))
+	)
+	(drawing
+		(text "clk" (rect 17 43 52 99)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "clk" (rect 37 67 92 144)(font "Arial" (color 0 0 0)))
+		(text "tsdcaldone" (rect 113 43 286 99)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "tsdcaldone" (rect 64 67 188 144)(font "Arial" (color 0 0 0)))
+		(text "tsdcalo" (rect 113 83 268 179)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "tsdcalo" (rect 79 107 200 224)(font "Arial" (color 0 0 0)))
+		(text " TemperatureSensor " (rect 104 128 322 266)(font "Arial" ))
+		(line (pt 32 32)(pt 112 32)(line_width 1))
+		(line (pt 112 32)(pt 112 128)(line_width 1))
+		(line (pt 32 128)(pt 112 128)(line_width 1))
+		(line (pt 32 32)(pt 32 128)(line_width 1))
+		(line (pt 33 52)(pt 33 76)(line_width 1))
+		(line (pt 34 52)(pt 34 76)(line_width 1))
+		(line (pt 111 52)(pt 111 76)(line_width 1))
+		(line (pt 110 52)(pt 110 76)(line_width 1))
+		(line (pt 111 92)(pt 111 116)(line_width 1))
+		(line (pt 110 92)(pt 110 116)(line_width 1))
+		(line (pt 0 0)(pt 192 0)(line_width 1))
+		(line (pt 192 0)(pt 192 144)(line_width 1))
+		(line (pt 0 144)(pt 192 144)(line_width 1))
+		(line (pt 0 0)(pt 0 144)(line_width 1))
+	)
+)

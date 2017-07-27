@@ -1,0 +1,20 @@
+Analysis & Synthesis Status : Successful - Thu Jul 27 18:21:22 2017
+Quartus Prime Version : 16.1.0 Build 196 10/24/2016 SJ Standard Edition
+Revision Name : top
+Top-level Entity Name : top
+Family : Stratix IV
+Logic utilization : N/A
+    Combinational ALUTs : 62,205
+    Memory ALUTs : 0
+    Dedicated logic registers : 49,223
+Total registers : 49311
+Total pins : 240
+Total virtual pins : 0
+Total block memory bits : 11,148,439
+DSP block 18-bit elements : 4
+Total GXB Receiver Channel PCS : 0
+Total GXB Receiver Channel PMA : 0
+Total GXB Transmitter Channel PCS : 0
+Total GXB Transmitter Channel PMA : 0
+Total PLLs : 10
+Total DLLs : 0
