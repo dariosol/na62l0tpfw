@@ -1040,7 +1040,9 @@ begin
 		  r.nprimitivecontrolfinish  :='1';		 
 	       end if;
 
-	       	if n.MERGEDFIFO.outputs.wrfull ='1' then
+	       	if n.MERGEDFIFO.outputs.wrfull ='1' then --QUESTO E' L'ERRORE
+                                                         --CHE SI ALZA NEL
+                                                         --2018!!!! PERICOLOSO!!!!!!!!!
 		   r.TRIGGERERROR := ro.TRIGGERERROR OR SLV(8,32);
 		end if;
 	       

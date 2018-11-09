@@ -44,6 +44,7 @@ entity top is
 
 
 	 --NIM INTERFACE--------------
+         -- Only LKrNIMCalib used. 
 	 LKrNIMCalib   : in std_logic;
 	 DetectorNim0  : in std_logic;
 	 DetectorNim1  : in std_logic;
