@@ -1039,6 +1039,10 @@ begin
 	       if ro.nprimitivecontrol = UINT(n.FIFOMTPNUMCONTROL.outputs.q) then
 		  r.nprimitivecontrolfinish  :='1';		 
 	       end if;
+
+	       	if n.MERGEDFIFO.outputs.wrfull ='1' then
+		   r.TRIGGERERROR := ro.TRIGGERERROR OR SLV(8,32);
+		end if;
 	       
 	       
 --loop to set the address (equal to the reference) of the ram--	 

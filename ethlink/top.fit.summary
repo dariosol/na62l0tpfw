@@ -1,18 +1,18 @@
-Fitter Status : Successful - Thu Jul 27 18:41:21 2017
-Quartus Prime Version : 16.1.0 Build 196 10/24/2016 SJ Standard Edition
+Fitter Status : Successful - Fri Oct 26 10:59:03 2018
+Quartus II 64-Bit Version : 14.1.0 Build 186 12/03/2014 SJ Full Version
 Revision Name : top
 Top-level Entity Name : top
 Family : Stratix IV
 Device : EP4SGX530KH40C2
 Timing Models : Final
-Logic utilization : 19 %
-    Combinational ALUTs : 62,454 / 424,960 ( 15 % )
+Logic utilization : 20 %
+    Combinational ALUTs : 62,732 / 424,960 ( 15 % )
     Memory ALUTs : 269 / 212,480 ( < 1 % )
-    Dedicated logic registers : 49,852 / 424,960 ( 12 % )
-Total registers : 49940
+    Dedicated logic registers : 54,511 / 424,960 ( 13 % )
+Total registers : 54599
 Total pins : 249 / 888 ( 28 % )
 Total virtual pins : 0
-Total block memory bits : 11,139,792 / 21,233,664 ( 52 % )
+Total block memory bits : 11,343,952 / 21,233,664 ( 53 % )
 DSP block 18-bit elements : 4 / 1,024 ( < 1 % )
 Total GXB Receiver Channel PCS : 0 / 24 ( 0 % )
 Total GXB Receiver Channel PMA : 0 / 36 ( 0 % )

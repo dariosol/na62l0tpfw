@@ -1979,7 +1979,7 @@ begin
 		     r.enet_MTPTimestampH(index)(7 downto 0)  :=ro.enet_data0(index);
 		     r.enet_MTPSourceID(index):=ro.enet_data3(index);
 		     r.enet_FSMReceive32bit(index) := S3_loop;
-		  
+		   
 		  else
 		      r.enet_FSMReceive32bit(index) := S2;
 		 end if;
@@ -1997,7 +1997,7 @@ begin
 		     else
 			r.enet_FSMReceive32bit(index) := S4; 
 		     end if;
-		  end if;
+		  end if; 
 		  
 		  if n.enet_MAC(index).outputs.rready(FF_PORT) ='0' then
 		     r.enet_FSMReceive32bit(index) := S2;
@@ -2732,7 +2732,11 @@ begin
 		     then
 			if UINT(ro.maximum_delay_detector)=0 then 
 			   if n.FIFODELAY(0).outputs.rdempty ='0' then
-			      if UINT(ro.start_latency) = 200  then
+			      if UINT(ro.start_latency) = 200  then -- serve
+								    -- per il
+								    -- possibile
+								    -- gitter
+								    -- tra pacchetti
 				 r.start_latency:=(others=>'0');
 				 n.FIFODELAY(index).inputs.rdreq :='1';
 				 r.FSMDelay(index) := readdata;
@@ -3519,6 +3523,7 @@ begin
 	       if ro.sob_ev125 ='1'  then      -- SOB (il segnale dura 25 ns)
 		  r.sob_data_send :='1';
 		  r.FSMPackets := deadtime_1;
+		  r.errorchecktimestamp         := (others =>'0'); 
 		  
 	       elsif ro.write_ev125 ='1' then --DATA			  		
 		  r.data_send :='1';
@@ -3566,7 +3571,7 @@ begin
 
 
 
-	    when SetFarmAddress=>
+	    when SetFarmAddress=> --+8ns
 	       
 	       if ro.errorOff_data_send   ='1'OR
 		  ro.errorOn_data_send  ='1'  OR
@@ -5833,7 +5838,7 @@ begin
 		  r.headermode(0)               :='1';
 		  r.headermode(1)               :='1';
 		  r.headermode(2)               :='1';
-
+        r.errorchecktimestamp         := (others =>'0');  
 		  r.old_number_of_primitives            := (others=>"00000000000000000000000000000000");
 		  r.number_of_primitives            := (others=>"00000000000000000000000000000000");
 		  r.ETHLINKERROR                    := SLV(0,32);

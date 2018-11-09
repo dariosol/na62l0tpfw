@@ -1,16 +1,21 @@
 <internal_error>
-	<executable>quartus</executable>
-	<sub_system>MEM</sub_system>
-	<error>*** Fatal Error: Out of memory in module quartus (16586 megabytes used)</error>
-	<date>Tue Jan 10 12:03:06 2017</date>
-	<version>Version 16.1.0 Build 196 10/24/2016 SJ Standard Edition</version>
+<sub_system>ERR</sub_system>
+<callstack>
+	0x7f871f8154d7: ccl_err + 0x74d7 (_ZN15ERR_STACKWALKER15get_stack_traceEPPKviiPv + 0xb1)
+	0x7f871f817013: ccl_err + 0x9013 (_Z14err_terminatorv + 0x4b)
+	0x7f87180b8796: stdc++.so.6 + 0x63796 (_ZN10__cxxabiv111__terminateEPFvvE + 0x6)
+	0x7f87180b7859: stdc++.so.6 + 0x62859
+	0x7f87180b840a: stdc++.so.6 + 0x6340a (__gxx_personality_v0 + 0x52a)
+	0x7f871793ec03: gcc_s.so.1 + 0xfc03 (_Unwind_RaiseException_Phase2 + 0x43)
+	0x7f871793ef9b: gcc_s.so.1 + 0xff9b (_Unwind_RaiseException + 0xfb)
+	0x7f87180b89e1: stdc++.so.6 + 0x639e1 (__cxa_throw + 0x51)
+	0x7f871f8172f7: ccl_err + 0x92f7 (err_sigaction_handler + 0x7b)
+	0x7f87187736d0: pthread.so.0 + 0xf6d0
+	0x7f871d7dc9b7: QtGui.so.4 + 0x3699b7 (_ZN5QListI23QPaintDeviceRedirectionE6appendERKS0_ + 0x7)
+	0x7fff2b4be840:
+</callstack>
+<error>*** Fatal Error: Unhandled Exception</error>
+<date>Sat Aug 11 18:22:23 2018
+</date>
+<version>Version 14.1.0 Build 186 12/03/2014 SJ Full Version</version>
 </internal_error>
-
-<internal_error>
-	<executable>quartus</executable>
-	<sub_system>MEM</sub_system>
-	<error>*** Fatal Error: Out of memory in module quartus (16491 megabytes used)</error>
-	<date>Tue Jan 10 12:06:48 2017</date>
-	<version>Version 16.1.0 Build 196 10/24/2016 SJ Standard Edition</version>
-</internal_error>
-

@@ -21,6 +21,8 @@ entity altTTC is
     
 	 CHOKE           : in std_logic_vector(13 downto 0);
 	 ERROR           : in std_logic_vector(13 downto 0);
+         FAKECHOKE       : in std_logic_vector(13 downto 0);
+	 FAKEERROR       : in std_logic_vector(13 downto 0);
 	 
 	 CHOKE_ON        : out std_logic;   
 	 CHOKE_OFF       : out std_logic;  
@@ -37,7 +39,7 @@ entity altTTC is
 end altTTC;
 
 architecture rtl of altTTC is
-   type FSMChoke_t is (Idle,Chokestate,Dead_time0,Dead_time1);
+   type FSMChoke_t is (Idle,Chokestate,Dead_time0,Dead_time1,Dead_time2,Dead_time3);
    type FSMERROR_t is (Idle,ERRORstate,Dead_time0,Dead_time1);
    type FSMBurst_t is (Idle,Burststate,Dead_time0,Dead_time1,Dead_time2,Dead_time3);
 
@@ -54,6 +56,8 @@ architecture rtl of altTTC is
    signal s_ERROR_ON        : std_logic;
    signal s_CHOKE           : std_logic_vector(13 downto 0);
    signal s_ERROR           : std_logic_vector(13 downto 0);
+   signal s_FAKECHOKE       : std_logic_vector(13 downto 0);
+   signal s_FAKEERROR       : std_logic_vector(13 downto 0);            
    signal CHOKE_s1          : std_logic_vector(13 downto 0);
    signal CHOKE_s2          : std_logic_vector(13 downto 0);
    signal ERROR_s1          : std_logic_vector(13 downto 0);
@@ -65,42 +69,50 @@ architecture rtl of altTTC is
    signal s_BCRST           : std_logic;
 begin
 
-   s_CHOKEMASK <= CHOKEMASK;
-   s_ERRORMASK <= ERRORMASK;
 
-   s_CHOKE  <= CHOKE;
-   s_ERROR  <= ERROR;
 
    s_ECRST <= ECRST;
    s_BCRST <= BCRST;
 
-   process(clk40, reset) is
-   begin
-      if(rising_edge(clk40)) then
-	 if(reset = '1') then
-	    CHOKE_s1 <= (others=>'0');
-	    CHOKE_s2 <= (others=>'0');
-	 else
-	    CHOKE_s1 <= s_CHOKE;
-	    CHOKE_s2 <= CHOKE_s1;
-	 end if;
-      end if;
-   end process;
-
-
-   process(clk40, reset) is
-   begin
-      if(rising_edge(clk40)) then
-	 if(reset = '1') then
-	    ERROR_s1 <= (others=>'0');
-	    ERROR_s2 <= (others=>'0');
-	 else
-	    ERROR_s1 <= s_ERROR;
-	    ERROR_s2 <= ERROR_s1;
-	 end if;
-      end if;
-   end process;
-
+   
+	
+	
+process(clk40, reset,CHOKE,ERROR,FAKECHOKE,FAKEERROR,CHOKEMASK,ERRORMASK) is
+ begin
+    if(reset = '1') then
+         CHOKE_s1    <= (others=>'0');
+         ERROR_s1    <= (others=>'0');           
+	 CHOKE_s2    <= (others=>'0');
+         ERROR_s2    <= (others=>'0');           
+         
+	 s_FAKEERROR <= (others=>'0');
+         s_FAKECHOKE <= (others=>'0');
+         
+    elsif (clk40='1' and clk40'event)  then
+         s_CHOKEMASK <= CHOKEMASK;
+         s_ERRORMASK <= ERRORMASK;
+         CHOKE_s2  <= CHOKE and CHOKEMASK;
+         ERROR_s2  <= ERROR and ERRORMASK;
+	 
+         s_FAKEERROR <= FAKEERROR;
+         s_FAKECHOKE <= FAKECHOKE;
+       end if;
+ end process;
+--
+--
+-- process(clk40, reset) is
+-- begin
+--    if(rising_edge(clk40)) then
+--       if(reset = '1') then
+--          ERROR_s1 <= (others=>'0');
+--          ERROR_s2 <= (others=>'0');
+--       else
+--          ERROR_s1 <= s_ERROR;
+--          ERROR_s2 <= ERROR_s1;
+--       end if;
+--    end if;
+-- end process;
+--
 
    P1: PROCESS(clk40,s_ECRST,s_BCRST,startRUN)
    begin
@@ -111,7 +123,7 @@ begin
 	    elsif (s_BCRST='0' and s_ECRST='1')  then --EOB
 	       s_BURST <='0';
 	    else
-	       s_BURST <=s_BURST;
+	       s_BURST <= s_BURST;
 	    end if;	
 	 else
 	    s_BURST<='0';
@@ -119,7 +131,7 @@ begin
      end if;	
    end PROCESS;
 
-   CHOKE_P: PROCESS(reset,clk40)
+   CHOKE_P: PROCESS(reset,clk40,CHOKE_s2,s_FAKECHOKE)
    begin
       if reset ='1' then 
 	 
@@ -131,7 +143,7 @@ begin
 	    
 	    when idle =>
 	       if activateCHOKE ='1' then --FROM USB
-		  if (CHOKE_s2 and s_CHOKEMASK) = "00000000000000"   then
+		  if (CHOKE_s2 or s_FAKECHOKE) = "00000000000000"   then
 		     FSMChoke <= Idle;
 		  else
 		     FSMChoke <= Chokestate;
@@ -142,7 +154,7 @@ begin
 	       
 	    when Chokestate =>
 	       if activateCHOKE ='1' then --FROM USB
-		  if (CHOKE_s2 and s_CHOKEMASK) = "00000000000000"  then
+		  if (CHOKE_s2 or s_FAKECHOKE) = "00000000000000"  then
 		     FSMChoke <= Dead_time0;
 		  else
 		     FSMChoke <= Chokestate;
@@ -153,12 +165,49 @@ begin
 
 	    when Dead_time0 =>
 	       
-	       FSMChoke <= Dead_time1;
+	       if activateCHOKE ='1' then --FROM USB
+		  if (CHOKE_s2 or s_FAKECHOKE) = "00000000000000"  then
+		     FSMChoke <= Dead_time1;
+		  else
+		     FSMChoke <= Chokestate;
+		  end if;
+	       else
+		  FSMChoke <= Idle;
+	       end if;
 	       
 	    when Dead_time1 =>
-	       
-	       FSMChoke <= Idle;
-	       
+	      if activateCHOKE ='1' then --FROM USB
+	        if (CHOKE_s2 or s_FAKECHOKE) = "00000000000000"  then
+		     FSMChoke <= Dead_time2;
+		  else
+		     FSMChoke <= Chokestate;
+		  end if;
+	       else
+		  FSMChoke <= Idle;
+	       end if;
+
+         when Dead_time2 =>
+           if activateCHOKE ='1' then --FROM USB
+	        if (CHOKE_s2 or s_FAKECHOKE) = "00000000000000"  then
+		     FSMChoke <= Dead_time3;
+		else
+		     FSMChoke <= Chokestate;
+	       end if;
+
+	    else
+                FSMChoke <= Idle;
+	    end if;
+
+	 when Dead_time3 =>
+           if activateCHOKE ='1' then --FROM USB
+	        if (CHOKE_s2 or s_FAKECHOKE) = "00000000000000"  then
+		   FSMChoke <= Idle;
+		  else
+		     FSMChoke <= Chokestate;
+		  end if;
+	       else
+		  FSMChoke <= Idle;
+	       end if;
 	 end case;
       end if;
    end PROCESS;
@@ -181,10 +230,16 @@ begin
 	 when Dead_time1 =>
 	    s_CHOKE_ON  <='1';
 	    s_CHOKE_OFF <='0';
+	 when Dead_time2 =>
+	    s_CHOKE_ON  <='1';
+	    s_CHOKE_OFF <='0';
+	 when Dead_time3 =>
+	    s_CHOKE_ON  <='1';
+	    s_CHOKE_OFF <='0';
       end case;
    end process;
 
-   ERROR_P: PROCESS(reset,clk40)
+   ERROR_P: PROCESS(reset,clk40,ERROR_s2, s_FAKEERROR)
    begin
       if reset ='1' then 
 	 
@@ -196,7 +251,7 @@ begin
 	    
 	    when idle =>
 	       if activateERROR ='1' then --FROM USB
-		  if (ERROR_s2 and s_ERRORMASK) = "00000000000000"  then
+		  if (ERROR_s2 or s_FAKEERROR) = "00000000000000"  then
 		     FSMERROR <= Idle;
 		  else
 		     FSMERROR <= ERRORstate;
@@ -207,7 +262,7 @@ begin
 	       
 	    when ERRORstate =>
 	       if activateERROR ='1' then --FROM USB
-		  if (ERROR_s2 and s_ERRORMASK) = "00000000000000" then
+		  if (ERROR_s2 or s_FAKEERROR) = "00000000000000" then
 		     FSMERROR <= Dead_time0;
 		  else
 		     FSMERROR <= ERRORstate;
@@ -258,7 +313,7 @@ begin
    BURST    	  <= s_BURST          ;
    Led1   	  <= s_BURST          ;
    Led3           <= not(s_BURST)     ; --Led of EOB
-    CHOKE_signal   <= CHOKE_s2         ;
+   CHOKE_signal   <= CHOKE_s2         ;
    ERROR_signal   <= ERROR_s2         ;
 
 

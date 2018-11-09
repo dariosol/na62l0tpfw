@@ -412,6 +412,8 @@ architecture rtl of top is
 	ERROR           : in std_logic_vector(13 downto 0);
 	CHOKEMASK       : in std_logic_vector(13 downto 0);
 	ERRORMASK       : in std_logic_vector(13 downto 0);
+        FAKECHOKE       : in std_logic_vector(13 downto 0);
+	FAKEERROR       : in std_logic_vector(13 downto 0);
 	led1            : out std_logic;
 	led3            : out std_logic;
 	CHOKE_signal    : out std_logic_vector(13 downto 0);
@@ -929,43 +931,45 @@ begin
 
    ALTTTC_inst : altTTC port map(
       clk40      	  => s_clk40, --to sample SOB/EOB TTCrx
-      reset 		  => s_software_CPU_RESET_n,
+      reset 		  => NOT(CPU_RESET_n),
       ECRST 		  => ECRST,
       BCRST 		  => BCRST,
       startRUN            => s_startRUN,
-      BURST   		  => s_B
+      BURST   		  => s_BURST,
 
       Led1                => Led1,
       Led3                => Led3,
-      CHOKE(0)            => CHOKE0  or s_FAKECHOKE(0) ,
-      CHOKE(1)            => CHOKE1   or s_FAKECHOKE(1) ,
-      CHOKE(2)            => CHOKE2   or s_FAKECHOKE(2) ,
-      CHOKE(3)            => CHOKE3   or s_FAKECHOKE(3) ,
-      CHOKE(4)            => CHOKE4   or s_FAKECHOKE(4) ,
-      CHOKE(5)            => CHOKE5   or s_FAKECHOKE(5) ,
-      CHOKE(6)            => CHOKE6   or s_FAKECHOKE(6) ,
-      CHOKE(7)            => CHOKE7   or s_FAKECHOKE(7) ,
-      CHOKE(8)            => CHOKE8   or s_FAKECHOKE(8) ,
-      CHOKE(9)            => CHOKE9   or s_FAKECHOKE(9) ,
-      CHOKE(10)           => CHOKE10  or s_FAKECHOKE(10),
-      CHOKE(11)           => CHOKE11  or s_FAKECHOKE(11),
-      CHOKE(12)           => CHOKE12  or s_FAKECHOKE(12),
-      CHOKE(13)           => CHOKE13  or s_FAKECHOKE(13),
-      
-      ERROR(0)            => ERROR0  or s_FAKEERROR(0) ,
-      ERROR(1)            => ERROR1  or s_FAKEERROR(1) ,
-      ERROR(2)            => ERROR2  or s_FAKEERROR(2) ,
-      ERROR(3)            => ERROR3  or s_FAKEERROR(3) ,
-      ERROR(4)            => ERROR4  or s_FAKEERROR(4) ,
-      ERROR(5)            => ERROR5  or s_FAKEERROR(5) ,
-      ERROR(6)            => ERROR6  or s_FAKEERROR(6) ,
-      ERROR(7)            => ERROR7  or s_FAKEERROR(7) ,
-      ERROR(8)            => ERROR8  or s_FAKEERROR(8) ,
-      ERROR(9)            => ERROR9  or s_FAKEERROR(9) ,
-      ERROR(10)           => ERROR10 or s_FAKEERROR(10),
-      ERROR(11)           => ERROR11 or s_FAKEERROR(11),
-      ERROR(12)           => ERROR12 or s_FAKEERROR(12),
-      ERROR(13)           => ERROR13 or s_FAKEERROR(13),
+      FAKECHOKE           => s_FAKECHOKE,
+      CHOKE(0)            => CHOKE0 ,
+      CHOKE(1)            => CHOKE1 ,
+      CHOKE(2)            => CHOKE2 ,  
+      CHOKE(3)            => CHOKE3 ,  
+      CHOKE(4)            => CHOKE4 ,  
+      CHOKE(5)            => CHOKE5 ,  
+      CHOKE(6)            => CHOKE6 ,  
+      CHOKE(7)            => CHOKE7 ,  
+      CHOKE(8)            => CHOKE8 ,  
+      CHOKE(9)            => CHOKE9 ,  
+      CHOKE(10)           => CHOKE10,  
+      CHOKE(11)           => CHOKE11,  
+      CHOKE(12)           => CHOKE12,  
+      CHOKE(13)           => CHOKE13,  
+
+      FAKEERROR           => s_FAKEERROR,
+      ERROR(0)            => ERROR0  ,
+      ERROR(1)            => ERROR1  ,
+      ERROR(2)            => ERROR2  ,
+      ERROR(3)            => ERROR3  ,
+      ERROR(4)            => ERROR4  ,
+      ERROR(5)            => ERROR5  ,
+      ERROR(6)            => ERROR6  ,
+      ERROR(7)            => ERROR7  ,
+      ERROR(8)            => ERROR8  ,
+      ERROR(9)            => ERROR9  ,
+      ERROR(10)           => ERROR10 ,
+      ERROR(11)           => ERROR11 ,
+      ERROR(12)           => ERROR12 ,
+      ERROR(13)           => ERROR13 ,
 
       activateCHOKE       => s_activateCHOKE,
       activateERROR       => s_activateERROR,
