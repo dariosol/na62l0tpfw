@@ -1024,7 +1024,20 @@ begin
 	       
 	       if ro.nprimitivecontrolfinish ='1' and ro.nprimitivereffinish ='1' then
 		  r.FSMReadFifo := Wait1Packet;
-	       else 	 
+
+	       elsif  ro.nprimitivecontrolfinish ='0' and ro.nprimitivereffinish ='0' then 	 
+		  r.FSMReadFifo	:=SelectData;
+
+	       elsif  ro.nprimitivecontrolfinish ='0' and ro.nprimitivereffinish ='1' then
+		  n.MERGEDFIFO.inputs.data(37 downto 0) := n.REFERENCEFIFO.outputs.q(37 downto 0);
+		  n.MERGEDFIFO.inputs.data(39 downto 38) := "01";
+		  n.MERGEDFIFO.inputs.wrreq :='1';					
+		  r.FSMReadFifo	:=SelectData;
+
+	       elsif  ro.nprimitivecontrolfinish ='1' and ro.nprimitivereffinish ='0' then
+		  n.MERGEDFIFO.inputs.data(37 downto 0) := n.CONTROLFIFO.outputs.q(37 downto 0);
+		  n.MERGEDFIFO.inputs.data(39 downto 38) := "10";
+		  n.MERGEDFIFO.inputs.wrreq :='1';					
 		  r.FSMReadFifo	:=SelectData;
 	       end if;
 	        
@@ -1047,7 +1060,7 @@ begin
 	       
 --loop to set the address (equal to the reference) of the ram--	 
 	       
-	       if ro.nprimitivereffinish ='0' and ro.nprimitivecontrolfinish ='0' then
+	       if ro.nprimitivereffinish ='0' and ro.nprimitivecontrolfinish ='0' then 
 		  if(UINT(ro.bit_finetime)=3) then
 		     if UINT(n.REFERENCEFIFO.outputs.q(37 downto 5)) < UINT(n.CONTROLFIFO.outputs.q(37 downto 5)) then
 			n.MERGEDFIFO.inputs.data(37 downto 0) := n.REFERENCEFIFO.outputs.q(37 downto 0);
