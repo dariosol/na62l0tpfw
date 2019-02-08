@@ -1,0 +1,23 @@
+IP Ports Diff Report for temperaturesensor
+Fri Jan 18 09:17:50 2019
+Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Standard Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. IP Information
+
+
+
++-----------------------------------------------------------------------------------------------+
+; IP Information                                                                                ;
++----------------------+------------------------------------------------------------------------+
+; IP Variation Name    ; temperaturesensor                                                      ;
+; Prior Version        ; 14.1                                                                   ;
+; New Version          ; 16.1                                                                   ;
+; New File             ; ../TemperatureSensor/TemperatureSensor/synthesis/TemperatureSensor.vhd ;
+; Has Port Differences ; No                                                                     ;
++----------------------+------------------------------------------------------------------------+
+
+

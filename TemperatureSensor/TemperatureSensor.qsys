@@ -9,14 +9,6 @@
    categories="System" />
  <parameter name="bonusData"><![CDATA[bonusData 
 {
-   element $${FILENAME}
-   {
-      datum _originalDeviceFamily
-      {
-         value = "Stratix IV";
-         type = "String";
-      }
-   }
    element temp_sense_0
    {
       datum _sortIndex
@@ -37,6 +29,7 @@
  <parameter name="globalResetBus" value="false" />
  <parameter name="hdlLanguage" value="VERILOG" />
  <parameter name="hideFromIPCatalog" value="true" />
+ <parameter name="lockedInterfaceDefinition" value="" />
  <parameter name="maxAdditionalLatency" value="1" />
  <parameter name="projectName" value="" />
  <parameter name="sopcBorderPoints" value="false" />
@@ -71,7 +64,7 @@
  <module
    name="temp_sense_0"
    kind="altera_temp_sense"
-   version="14.1"
+   version="16.1"
    enabled="1"
    autoexport="1">
   <parameter name="CBX_AUTO_BLACKBOX" value="ALL" />

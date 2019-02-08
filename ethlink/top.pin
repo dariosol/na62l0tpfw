@@ -1,22 +1,22 @@
- -- Copyright (C) 1991-2014 Altera Corporation. All rights reserved.
- -- Your use of Altera Corporation's design tools, logic functions 
+ -- Copyright (C) 2016  Intel Corporation. All rights reserved.
+ -- Your use of Intel Corporation's design tools, logic functions 
  -- and other software and tools, and its AMPP partner logic 
  -- functions, and any output files from any of the foregoing 
  -- (including device programming or simulation files), and any 
  -- associated documentation or information are expressly subject 
- -- to the terms and conditions of the Altera Program License 
- -- Subscription Agreement, the Altera Quartus II License Agreement,
- -- the Altera MegaCore Function License Agreement, or other 
+ -- to the terms and conditions of the Intel Program License 
+ -- Subscription Agreement, the Intel Quartus Prime License Agreement,
+ -- the Intel MegaCore Function License Agreement, or other 
  -- applicable license agreement, including, without limitation, 
  -- that your use is for the sole purpose of programming logic 
- -- devices manufactured by Altera and sold by Altera or its 
+ -- devices manufactured by Intel and sold by Intel or its 
  -- authorized distributors.  Please refer to the applicable 
  -- agreement for further details.
  -- 
- -- This is a Quartus II output file. It is for reporting purposes only, and is
- -- not intended for use as a Quartus II input file. This file cannot be used
- -- to make Quartus II pin assignments - for instructions on how to make pin
- -- assignments, please see Quartus II help.
+ -- This is a Quartus Prime output file. It is for reporting purposes only, and is
+ -- not intended for use as a Quartus Prime input file. This file cannot be used
+ -- to make Quartus Prime pin assignments - for instructions on how to make pin
+ -- assignments, please see Quartus Prime help.
  ---------------------------------------------------------------------------------
 
 
@@ -28,45 +28,45 @@
  -- VCCINT        : Dedicated power pin, which MUST be connected to VCC  (0.9V).
  -- VCCIO         : Dedicated power pin, which MUST be connected to VCC
  --                 of its bank.
- --					Bank 1A:		2.5V
- --					Bank 1C:		2.5V
- --					Bank 2C:		2.5V
- --					Bank 2A:		2.5V
- --					Bank 3A:		1.8V
- --					Bank 3B:		1.8V
- --					Bank 3C:		1.8V
- --					Bank 4C:	1.8V
- --					Bank 4B:	1.8V
- --					Bank 4A:	1.8V
- --					Bank 5A:	3.0V
- --					Bank 5C:	3.0V
- --					Bank 6C:	2.5V
- --					Bank 6A:	2.5V
- --					Bank 7A:	1.8V
- --					Bank 7B:	1.8V
- --					Bank 7C:	1.8V
- --					Bank 8C:	2.5V
- --					Bank 8B:	1.8V
- --					Bank 8A:	1.8V
+ --                  Bank 1A:       2.5V
+ --                  Bank 1C:       2.5V
+ --                  Bank 2C:       2.5V
+ --                  Bank 2A:       2.5V
+ --                  Bank 3A:       1.8V
+ --                  Bank 3B:       1.8V
+ --                  Bank 3C:       1.8V
+ --                  Bank 4C:  1.8V
+ --                  Bank 4B:  1.8V
+ --                  Bank 4A:  1.8V
+ --                  Bank 5A:  3.0V
+ --                  Bank 5C:  3.0V
+ --                  Bank 6C:  2.5V
+ --                  Bank 6A:  2.5V
+ --                  Bank 7A:  1.8V
+ --                  Bank 7B:  1.8V
+ --                  Bank 7C:  1.8V
+ --                  Bank 8C:  2.5V
+ --                  Bank 8B:  1.8V
+ --                  Bank 8A:  1.8V
  -- RREF          : External reference resistor for the quad, MUST be connected to
  --                 GND via a 2k Ohm resistor.
  -- GND           : Dedicated ground pin. Dedicated GND pins MUST be connected to GND.
- --					It can also be used to report unused dedicated pins. The connection
- --					on the board for unused dedicated pins depends on whether this will
- --					be used in a future design. One example is device migration. When
- --					using device migration, refer to the device pin-tables. If it is a
- --					GND pin in the pin table or if it will not be used in a future design
- --					for another purpose the it MUST be connected to GND. If it is an unused
- --					dedicated pin, then it can be connected to a valid signal on the board
- --					(low, high, or toggling) if that signal is required for a different
- --					revision of the design.
+ --                  It can also be used to report unused dedicated pins. The connection
+ --                  on the board for unused dedicated pins depends on whether this will
+ --                  be used in a future design. One example is device migration. When
+ --                  using device migration, refer to the device pin-tables. If it is a
+ --                  GND pin in the pin table or if it will not be used in a future design
+ --                  for another purpose the it MUST be connected to GND. If it is an unused
+ --                  dedicated pin, then it can be connected to a valid signal on the board
+ --                  (low, high, or toggling) if that signal is required for a different
+ --                  revision of the design.
  -- GND+          : Unused input pin. It can also be used to report unused dual-purpose pins.
- --					This pin should be connected to GND. It may also be connected  to a
- --					valid signal  on the board  (low, high, or toggling)  if that signal
- --					is required for a different revision of the design.
+ --                  This pin should be connected to GND. It may also be connected  to a
+ --                  valid signal  on the board  (low, high, or toggling)  if that signal
+ --                  is required for a different revision of the design.
  -- GND*          : Unused  I/O  pin.   For transceiver I/O banks, connect each pin marked GND*
- --           	    either individually through a 10k Ohm resistor to GND or tie all pins
- --           	    together and connect through a single 10k Ohm resistor to GND.
+ --                  either individually through a 10k Ohm resistor to GND or tie all pins
+ --                  together and connect through a single 10k Ohm resistor to GND.
  -- RESERVED      : Unused I/O pin, which MUST be left unconnected.
  -- RESERVED_INPUT    : Pin is tri-stated and should be connected to the board.
  -- RESERVED_INPUT_WITH_WEAK_PULLUP    : Pin is tri-stated with internal weak pull-up resistor.
@@ -84,7 +84,7 @@
  -- Pin directions (input, output or bidir) are based on device operating in user mode.
  ---------------------------------------------------------------------------------
 
-Quartus II 64-Bit Version 14.1.0 Build 186 12/03/2014 SJ Full Version
+Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Standard Edition
 CHIP  "top"  ASSIGNED TO AN: EP4SGX530KH40C2
 
 Pin Name/Usage               : Location  : Dir.   : I/O Standard      : Voltage : I/O Bank  : User Assignment
@@ -255,7 +255,7 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : AD9       :        :                   :      
 RESERVED_INPUT_WITH_WEAK_PULLUP : AD10      :        :                   :         : 5C        :                
 VREFB5CN0                    : AD11      : power  :                   :         : 5C        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AD12      :        :                   :         : 5A        :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : AD13      :        :                   :         : 5A        :                
+LKrNIMCalib                  : AD13      : input  : 2.5 V             :         : 5A        : N              
 VCCPD4A                      : AD14      : power  :                   : 2.5V    : 4A        :                
 OTG_D[2]                     : AD15      : bidir  : 1.8 V             :         : 4A        : Y              
 VCCPD4B                      : AD16      : power  :                   : 2.5V    : 4B        :                
@@ -1160,7 +1160,7 @@ VCCA_PLL_T2                  : J19       : power  :                   : 2.5V    
 VCCA_PLL_T1                  : J20       : power  :                   : 2.5V    :           :                
 VREFB8CN0                    : J21       : power  :                   :         : 8C        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : J22       :        :                   :         : 8C        :                
-LKrNIMCalib                  : J23       : input  : 2.5 V             :         : 8C        : N              
+RESERVED_INPUT_WITH_WEAK_PULLUP : J23       :        :                   :         : 8C        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : J24       :        :                   :         : 8B        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : J25       :        :                   :         : 8B        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : J26       :        :                   :         : 8A        :                

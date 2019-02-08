@@ -1,13 +1,13 @@
-Analysis & Synthesis Status : Successful - Fri Oct 26 10:38:57 2018
-Quartus II 64-Bit Version : 14.1.0 Build 186 12/03/2014 SJ Full Version
+Analysis & Synthesis Status : Successful - Fri Jan 18 11:55:26 2019
+Quartus Prime Version : 16.1.0 Build 196 10/24/2016 SJ Standard Edition
 Revision Name : top
 Top-level Entity Name : top
 Family : Stratix IV
 Logic utilization : N/A
-    Combinational ALUTs : 62,457
+    Combinational ALUTs : 62,730
     Memory ALUTs : 0
-    Dedicated logic registers : 53,884
-Total registers : 53972
+    Dedicated logic registers : 53,875
+Total registers : 53963
 Total pins : 240
 Total virtual pins : 0
 Total block memory bits : 11,352,599

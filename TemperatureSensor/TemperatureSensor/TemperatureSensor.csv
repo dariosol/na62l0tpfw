@@ -1,0 +1,18 @@
+# system info TemperatureSensor on 2019.01.18.09:17:37
+system_info:
+name,value
+DEVICE,EP4SGX530KH40C2
+DEVICE_FAMILY,Stratix IV
+GENERATION_ID,1547799457
+#
+#
+# Files generated for TemperatureSensor on 2019.01.18.09:17:37
+files:
+filepath,kind,attributes,module,is_top
+simulation/TemperatureSensor.vhd,VHDL,,TemperatureSensor,true
+simulation/submodules/altera_temp_sense.v,VERILOG,,altera_temp_sense,false
+#
+# Map from instance-path to kind of module
+instances:
+instancePath,module
+TemperatureSensor.temp_sense_0,altera_temp_sense

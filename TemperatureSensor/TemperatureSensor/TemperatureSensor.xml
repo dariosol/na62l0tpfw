@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <deploy
- date="2017.01.30.10:12:17"
- outputDirectory="/home/dsoldi/cernbox/L0TP/eth1DE4_versione28/TemperatureSensor/TemperatureSensor/">
+ date="2019.01.18.09:17:39"
+ outputDirectory="/home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/">
  <perimeter>
   <parameter
      name="AUTO_GENERATION_ID"
@@ -80,13 +80,13 @@
  </perimeter>
  <entity
    path=""
-   parameterizationKey="TemperatureSensor:1.0:AUTO_CLK_CLOCK_DOMAIN=-1,AUTO_CLK_CLOCK_RATE=-1,AUTO_CLK_RESET_DOMAIN=-1,AUTO_DEVICE=EP4SGX530KH40C2,AUTO_DEVICE_FAMILY=Stratix IV,AUTO_DEVICE_SPEEDGRADE=2,AUTO_GENERATION_ID=1485767536,AUTO_UNIQUE_ID=(altera_temp_sense:14.1:CBX_AUTO_BLACKBOX=ALL,CE_CHECK=true,CLK_FREQUENCY=40.0,CLOCK_DIVIDER_ENABLE=on,CLOCK_DIVIDER_VALUE=80,CLR_CHECK=true,DEVICE_FAMILY=Stratix IV,NUMBER_OF_SAMPLES=128,POI_CAL_TEMPERATURE=85,SIM_TSDCALO=0,USER_OFFSET_ENABLE=off,USE_WYS=on)"
+   parameterizationKey="TemperatureSensor:1.0:AUTO_CLK_CLOCK_DOMAIN=-1,AUTO_CLK_CLOCK_RATE=-1,AUTO_CLK_RESET_DOMAIN=-1,AUTO_DEVICE=EP4SGX530KH40C2,AUTO_DEVICE_FAMILY=Stratix IV,AUTO_DEVICE_SPEEDGRADE=2,AUTO_GENERATION_ID=1547799459,AUTO_UNIQUE_ID=(altera_temp_sense:16.1:CBX_AUTO_BLACKBOX=ALL,CE_CHECK=true,CLK_FREQUENCY=40.0,CLOCK_DIVIDER_ENABLE=on,CLOCK_DIVIDER_VALUE=80,CLR_CHECK=true,DEVICE_FAMILY=Stratix IV,NUMBER_OF_SAMPLES=128,POI_CAL_TEMPERATURE=85,SIM_TSDCALO=0,USER_OFFSET_ENABLE=off,USE_WYS=on)"
    instancePathKey="TemperatureSensor"
    kind="TemperatureSensor"
    version="1.0"
    name="TemperatureSensor">
   <parameter name="AUTO_CLK_CLOCK_RATE" value="-1" />
-  <parameter name="AUTO_GENERATION_ID" value="1485767536" />
+  <parameter name="AUTO_GENERATION_ID" value="1547799459" />
   <parameter name="AUTO_DEVICE" value="EP4SGX530KH40C2" />
   <parameter name="AUTO_DEVICE_FAMILY" value="Stratix IV" />
   <parameter name="AUTO_CLK_RESET_DOMAIN" value="-1" />
@@ -95,22 +95,22 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="2" />
   <generatedFiles>
    <file
-       path="/home/dsoldi/cernbox/L0TP/eth1DE4_versione28/TemperatureSensor/TemperatureSensor/synthesis/TemperatureSensor.vhd"
+       path="/home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/synthesis/TemperatureSensor.vhd"
        type="VHDL" />
   </generatedFiles>
   <childGeneratedFiles>
    <file
-       path="/home/dsoldi/cernbox/L0TP/eth1DE4_versione28/TemperatureSensor/TemperatureSensor/synthesis/submodules/TemperatureSensor_temp_sense_0.v"
+       path="/home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/synthesis/submodules/TemperatureSensor_temp_sense_0.v"
        type="VERILOG"
        attributes="" />
   </childGeneratedFiles>
   <sourceFiles>
    <file
-       path="/home/dsoldi/cernbox/L0TP/eth1DE4_versione28/TemperatureSensor/TemperatureSensor.qsys" />
+       path="/home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor.qsys" />
   </sourceFiles>
   <childSourceFiles>
    <file
-       path="/home/dsoldi/altera/14.1/ip/altera/altera_temp_sense/altera_temp_sense_hw.tcl" />
+       path="/home/na62torino/altera/16.1/ip/altera/altera_temp_sense/altera_temp_sense_hw.tcl" />
   </childSourceFiles>
   <messages>
    <message level="Debug" culprit="TemperatureSensor">queue size: 0 starting:TemperatureSensor "TemperatureSensor"</message>
@@ -134,10 +134,10 @@
  </entity>
  <entity
    path="submodules/"
-   parameterizationKey="altera_temp_sense:14.1:CBX_AUTO_BLACKBOX=ALL,CE_CHECK=true,CLK_FREQUENCY=40.0,CLOCK_DIVIDER_ENABLE=on,CLOCK_DIVIDER_VALUE=80,CLR_CHECK=true,DEVICE_FAMILY=Stratix IV,NUMBER_OF_SAMPLES=128,POI_CAL_TEMPERATURE=85,SIM_TSDCALO=0,USER_OFFSET_ENABLE=off,USE_WYS=on"
+   parameterizationKey="altera_temp_sense:16.1:CBX_AUTO_BLACKBOX=ALL,CE_CHECK=true,CLK_FREQUENCY=40.0,CLOCK_DIVIDER_ENABLE=on,CLOCK_DIVIDER_VALUE=80,CLR_CHECK=true,DEVICE_FAMILY=Stratix IV,NUMBER_OF_SAMPLES=128,POI_CAL_TEMPERATURE=85,SIM_TSDCALO=0,USER_OFFSET_ENABLE=off,USE_WYS=on"
    instancePathKey="TemperatureSensor:.:temp_sense_0"
    kind="altera_temp_sense"
-   version="14.1"
+   version="16.1"
    name="TemperatureSensor_temp_sense_0">
   <parameter name="CE_CHECK" value="true" />
   <parameter name="NUMBER_OF_SAMPLES" value="128" />
@@ -153,14 +153,14 @@
   <parameter name="CLOCK_DIVIDER_VALUE" value="80" />
   <generatedFiles>
    <file
-       path="/home/dsoldi/cernbox/L0TP/eth1DE4_versione28/TemperatureSensor/TemperatureSensor/synthesis/submodules/TemperatureSensor_temp_sense_0.v"
+       path="/home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/synthesis/submodules/TemperatureSensor_temp_sense_0.v"
        type="VERILOG"
        attributes="" />
   </generatedFiles>
   <childGeneratedFiles/>
   <sourceFiles>
    <file
-       path="/home/dsoldi/altera/14.1/ip/altera/altera_temp_sense/altera_temp_sense_hw.tcl" />
+       path="/home/na62torino/altera/16.1/ip/altera/altera_temp_sense/altera_temp_sense_hw.tcl" />
   </sourceFiles>
   <childSourceFiles/>
   <instantiator instantiator="TemperatureSensor" as="temp_sense_0" />

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file
+   path="simulation/submodules/altera_temp_sense.v"
+   type="VERILOG"
+   library="temp_sense_0" />
+ <file path="simulation/TemperatureSensor.vhd" type="VHDL" />
+ <topLevel name="TemperatureSensor" />
+ <deviceFamily name="stratixiv" />
+</simPackage>

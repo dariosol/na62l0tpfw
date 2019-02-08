@@ -1,6 +1,6 @@
 <sld_project_info>
   <project>
-    <hash md5_digest_80b="40a66d9b6ae93df5de92"/>
+    <hash md5_digest_80b="f8a87a65149451805e4e"/>
   </project>
   <file_info>
     <file device="EP4SGX530KH40C2" path="top.sof" usercode="0xFFFFFFFF"/>
@@ -36,6 +36,9 @@
         <parameter name="SLD_HPS_EVENT_ID" type="dec" value="0"/>
         <parameter name="sld_advanced_trigger_entity" type="unknown" value="basic,1,"/>
         <parameter name="sld_trigger_level_pipeline" type="unknown" value="1"/>
+        <parameter name="sld_trigger_pipeline" type="unknown" value="0"/>
+        <parameter name="sld_ram_pipeline" type="unknown" value="0"/>
+        <parameter name="sld_counter_pipeline" type="unknown" value="0"/>
         <parameter name="sld_enable_advanced_trigger" type="unknown" value="0"/>
         <parameter name="SLD_ADVANCED_TRIGGER_1" type="string" value="NONE"/>
         <parameter name="SLD_ADVANCED_TRIGGER_2" type="string" value="NONE"/>
@@ -61,6 +64,8 @@
         <parameter name="sld_storage_qualifier_inversion_mask_length" type="unknown" value="0"/>
         <parameter name="SLD_STORAGE_QUALIFIER_ADVANCED_CONDITION_ENTITY" type="string" value="basic"/>
         <parameter name="SLD_STORAGE_QUALIFIER_PIPELINE" type="dec" value="0"/>
+        <parameter name="SLD_CREATE_MONITOR_INTERFACE" type="dec" value="0"/>
+        <parameter name="SLD_USE_JTAG_SIGNAL_ADAPTER" type="dec" value="1"/>
       </parameters>
       <inputs/>
       <outputs/>
@@ -69,7 +74,7 @@
   <sld_infos>
     <sld_info hpath="TemperatureSensor:TemperatureSensor_inst" name="TemperatureSensor_inst">
       <assignment_values>
-        <assignment_value text="QSYS_NAME TemperatureSensor HAS_SOPCINFO 1 GENERATION_ID 1485767536"/>
+        <assignment_value text="QSYS_NAME TemperatureSensor HAS_SOPCINFO 1 GENERATION_ID 1547799459"/>
       </assignment_values>
       <parameters/>
     </sld_info>
