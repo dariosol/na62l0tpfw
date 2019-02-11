@@ -929,7 +929,7 @@ begin
 		     r.TRIGGERERROR := ro.TRIGGERERROR OR SLV(4,32);
 		  end if;
 		  
-		  if n.FIFOMTPNUMCONTROL.outputs.wrfull ='0' then	  
+		  if n.FIFOMTPNUMCONTROL.outputs.wrfull ='0' and i.activatecontroltrigger = '1' then	  
 		     n.FIFOMTPNUMCONTROL.inputs.wrreq := '1';
 		  elsif n.FIFOMTPNUMCONTROL.outputs.wrfull ='1' then
 		     r.TRIGGERERROR := ro.TRIGGERERROR OR SLV(32,32);
@@ -1010,23 +1010,23 @@ begin
 	    when ReadFifo=>
 
 	       if UINT(n.FIFOMTPNUMREF.outputs.q) = 0 then
-		  r.nprimitivereffinish    := '1';	
+                 r.nprimitivereffinish    := '1';
+               else
+                 if (ro.nprimitiveref < UINT(n.FIFOMTPNUMREF.outputs.q)) and ro.readfiforeference='1' then 
+                   r.nprimitiveref := ro.nprimitiveref +1; 
+                   n.REFERENCEFIFO.inputs.rdreq :='1';
+                 end if;
 	       end if;
 	       
 	       if UINT(n.FIFOMTPNUMCONTROL.outputs.q) = 0 then
-		  r.nprimitivecontrolfinish    := '1';	
+                 r.nprimitivecontrolfinish    := '1';
+               else
+                 if ro.nprimitivecontrol < UINT(n.FIFOMTPNUMCONTROL.outputs.q) and ro.readfifocontrol='1'  then
+                   r.nprimitivecontrol := ro.nprimitivecontrol +1; 
+                   n.CONTROLFIFO.inputs.rdreq :='1';
+                 end if; 
 	       end if;
-	       
-	       
-	       if (ro.nprimitiveref < UINT(n.FIFOMTPNUMREF.outputs.q)) and ro.readfiforeference='1' then 
-		  r.nprimitiveref := ro.nprimitiveref +1; 
-		  n.REFERENCEFIFO.inputs.rdreq :='1';
-	       end if;
-	       
-	       if ro.nprimitivecontrol < UINT(n.FIFOMTPNUMCONTROL.outputs.q) and ro.readfifocontrol='1' then 
-		  r.nprimitivecontrol := ro.nprimitivecontrol +1; 
-		  n.CONTROLFIFO.inputs.rdreq :='1';
-	       end if;
+	       	       
 	       
 	       if ro.nprimitivecontrolfinish ='1' and ro.nprimitivereffinish ='1' then
 		  r.FSMReadFifo := Wait1Packet;
