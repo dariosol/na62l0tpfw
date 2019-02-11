@@ -205,8 +205,8 @@ architecture rtl of trigger is
    type FSMReadRam_t is (
       ReadFifo,
       SetRamAddress1,SetDetector1,ReadRam1,
-      SetDetector1_2,ReadRam1_2,
-      SetDetector1_3,ReadRam1_3
+      ReadRam1_2,
+      ReadRam1_3
       );
 
    type FSMReadFifo_t is (Wait1Packet,ReadFifo,SelectData);
@@ -245,9 +245,10 @@ architecture rtl of trigger is
       control_detector_counter           : std_logic_vector(31 downto 0);
       reset_counters                     : std_logic;
       detector_triggering                : std_logic_vector(6 downto 0);
-      
+
+      alignRAMoutput               :vector42bit_t(6 downto 0);
       alignreadaddressb_clear      : std_logic_vector(13 downto 0);
-      TRIGGERERROR                    : std_logic_vector(31 downto 0);
+      TRIGGERERROR                 : std_logic_vector(31 downto 0);
       --RECEIVED PRIMITIVE FROM ETHLINK
       received_signal              : std_logic_vector(0 to ethlink_NODES-2);
       timestamp                    : vector32bit_t(0 to ethlink_NODES-2);
@@ -346,7 +347,8 @@ architecture rtl of trigger is
 	 ntriggers_predownscaling_control  => (others=>'0'),
 	 ntriggers_postdownscaling         => (others=>"00000000000000000000000000000000"),
 	 ntriggers_postdownscaling_control => (others => '0'),
-	 
+
+	 alignRAMoutput         => (others=>"000000000000000000000000000000000000000000"),
 	 alignreadaddressb_clear=> (others =>'0'),
 	 TRIGGERERROR 		=> (others =>'0'),
 	 reset_counters		=> '0',
@@ -1255,7 +1257,7 @@ begin
 	       r.finetime1        := (others=>"00000000");
 	       r.finetime2        := (others=>"00000000");
 	       r.timetocompare    := (others=>"0000000000000000");
-               r.alignRAMoutput   := (others=>"0000000000000000");
+               r.alignRAMoutput   := (others=>"000000000000000000000000000000000000000000");
 	       
 --loop to set the address (coming from MERGEDFIFO) of the ram.
 --address depends on granularity.
@@ -1311,7 +1313,6 @@ begin
 	    when SetDetector1 => --Position N
 	       --set registers to compare DT between reference and other detectors
               for index in 0 to Ethlink_NODES- 2 loop
-                
                --MSB timestamp shoud be equal (Taurock's trick):
 		  if n.alignRAM(index).outputs.q_b(33 downto 15) = n.MERGEDFIFO.outputs.q(37 downto 19) then
                      --FINETIME + LSB timestamp
@@ -1330,11 +1331,21 @@ begin
 		     r.detector_triggering(index)        := '1';
 
 
-                     --I have to register all the output of the RAM:
-                     r.alignRAMoutput(index) = n.alignRAM(index).outputs.q_b;
+                     --I have to register all the output of the RAM: si ricorda
+                     --lo stato 0
+                     r.alignRAMoutput(index) := n.alignRAM(index).outputs.q_b;
 
-                     --Now I can Read Again the RAM:
+
                      
+		  else 
+		     r.primitiveID0(index) := (others =>'0');
+		     r.detector_triggering(index)        := '0';
+		     r.finetime0(index) := (others =>'0');
+		  end if;
+	       end loop;
+
+
+                     --Now I can Read Again the RAM:    
 	       for index in 0 to ethlink_NODES - 2 loop
 		  --Between this if and the next elsif there are no
 		  --difference, this structure is due to old version.
@@ -1368,19 +1379,14 @@ begin
 		  
 	       end loop;
 
-                     
-		  else 
-		     r.primitiveID0(index) := (others =>'0');
-		     r.detector_triggering(index)        := '0';
-		     r.finetime0(index) := (others =>'0');
-                     r.alignRAMoutput(index) :=(others =>'0');
-		  end if;
-	       end loop;
-	       
+              
 	       r.FSMReadRam       :=ReadRam1;
 	       
 	       
-	    when ReadRam1 =>
+           when ReadRam1 =>
+
+              --metto nella lut lo stato 0, preparo timetocomare con lo stato -1
+              
 	       -- Set LUT inputs. LUT contains a shift register to share the outputs.
 	       --LUT passes in outputs all the infos of the trigger: primIDs and time
 	       --Only 30 bits of timestamp are used.
@@ -1462,13 +1468,9 @@ begin
 	       
 	       r.detector_triggering         := (others=>'0');
 
-                  -----HO RILETTO LA RAM CAMBIARE QUI!
- 	       
-	       
-	       r.FSMReadRam       :=SetDetector1_2;
-	       
-	       
-	    when SetDetector1_2 =>
+                  -----HO RILETTO LA RAM, La Posso Riutilizzare!! CAMBIARE QUI!
+ 	       --Era lo setato SetDetector1_2, lo faccio direttamente qui	       
+	      --STO SETTANDO TIME TO COMPARE CON IL NUOVO OUTPUT A -1
 	       for index in 0 to Ethlink_NODES- 2 loop
 		  if n.alignRAM(index).outputs.q_b(33 downto 15) = n.MERGEDFIFO.outputs.q(37 downto 19) then
 
@@ -1488,7 +1490,8 @@ begin
 			   else
 			      r.timetocompare(index) := ro.timetocompare(index);
 			   end if; --index
-			else --merged fifo
+
+                     else --merged fifo
 			   if index /= UINT(ro.reference_detector) then
 			      if UINT(ro.bit_finetime)=3 then
 				 r.timetocompare(index) := SLV(UINT(ro.oldaddress(10 downto 0))-1,11) & n.alignRAM(index).outputs.q_b(38 downto 34); --FINETIME + LSB timestamp
@@ -1505,6 +1508,11 @@ begin
 			   end if; --index
 			end if;--merged fifo
 
+
+                     --registro il -1
+                     r.alignRAMoutput(index) := n.alignRAM(index).outputs.q_b;
+
+                           
 		     r.detector_triggering(index)        := '1';
 		     r.primitiveID1(index) := '0' & n.alignRAM(index).outputs.q_b(14 downto 0);
 		     r.finetime1(index) := n.alignRAM(index).outputs.q_b(41 downto 34);
@@ -1512,13 +1520,50 @@ begin
 		     r.detector_triggering(index)        := '0';
 		  end if;
 	       end loop;
-	       
+
+
+
+                
+                  for index in 0 to ethlink_NODES - 2 loop
+		  --Between this if and the next elsif there are no
+		  --difference, this structure is due to old version.
+		  --Maybe can be changed.
+		  if n.MERGEDFIFO.outputs.q(38)= '1' then
+		     if UINT(ro.bit_finetime)=3 then
+			n.alignRAM(index).inputs.address_b := SLV(UINT(n.MERGEDFIFO.outputs.q(18 downto 5))+ 1,14);
+		     elsif UINT(ro.bit_finetime)=2 then
+			n.alignRAM(index).inputs.address_b := SLV(UINT(n.MERGEDFIFO.outputs.q(19 downto 6))+ 1,14);
+		     elsif UINT(ro.bit_finetime)=1 then
+			n.alignRAM(index).inputs.address_b := SLV(UINT(n.MERGEDFIFO.outputs.q(20 downto 7))+ 1,14);
+		     else
+			n.alignRAM(index).inputs.address_b := SLV(UINT(n.MERGEDFIFO.outputs.q(21 downto 8))+ 1,14);
+		     end if;
+		     n.alignRAM(index).inputs.rden_b                 :='1';
+		     
+		     
+		  elsif n.MERGEDFIFO.outputs.q(39 downto 38)="10" then
+		     if UINT(ro.bit_finetime)=3 then
+			n.alignRAM(index).inputs.address_b := SLV(UINT(n.MERGEDFIFO.outputs.q(18 downto 5)) + 1,14);
+		     elsif UINT(ro.bit_finetime)=2 then
+			n.alignRAM(index).inputs.address_b := SLV(UINT(n.MERGEDFIFO.outputs.q(19 downto 6)) + 1,14);
+		     elsif UINT(ro.bit_finetime)=1 then
+			n.alignRAM(index).inputs.address_b := SLV(UINT(n.MERGEDFIFO.outputs.q(20 downto 7)) + 1,14);
+		     else
+			n.alignRAM(index).inputs.address_b := SLV(UINT(n.MERGEDFIFO.outputs.q(21 downto 8)) + 1,14);
+		     end if;
+		     n.alignRAM(index).inputs.rden_b                 :='1';
+		     
+		  end if;
+		  
+	       end loop;
+
+                  
 	       r.FSMReadRam       :=ReadRam1_2;
 	       
 	       
 	       
 	    when ReadRam1_2 =>
-	       
+	       --metto nella LUT il -1, Setto timetocompare con il +1
 	       n.LUT.inputs.wena         :='1';
 	       n.LUT.inputs.timestamp_in(31) :='0';
 	       n.LUT.inputs.timestamp_in(29 downto 0) := n.MERGEDFIFO.outputs.q(37 downto 8);
@@ -1538,7 +1583,7 @@ begin
 		  for i in ro.detector_triggering'range loop
 		     if ro.detector_triggering(i) ='1' then
 			if abs(signed(ro.timetocompare(i))-signed( ro.timetocompare(to_integer(unsigned(ro.reference_detector))))) < SIGNED(ro.timecut(i)) then 
-			   n.LUT.inputs.detector(i)      := '0' & n.alignRAM(i).outputs.q_b(14 downto 0); -- i.e. chod muv lav
+			   n.LUT.inputs.detector(i)      := '0' & ro.alignRAMoutput(i)(14 downto 0); -- i.e. chod muv lav
 			end if;
 		     end if;
 		  end loop;
@@ -1550,7 +1595,7 @@ begin
 		  for i in ro.detector_triggering'range loop
 		     if ro.detector_triggering(i) ='1' then
 			if abs(signed(ro.timetocompare(i))-signed(ro.timetocompare(to_integer(unsigned(ro.control_detector))))) < SIGNED(ro.timecut(i)) then 
-			   n.LUT.inputs.detector(i)      := '0' & n.alignRAM(i).outputs.q_b(14 downto 0); -- i.e. chod muv lav
+			   n.LUT.inputs.detector(i)      := '0' & ro.alignRAMoutput(i)(14 downto 0); -- i.e. chod muv lav
 			end if;
 		     end if;
 		  end loop;
@@ -1562,7 +1607,7 @@ begin
 		  for i in ro.detector_triggering'range loop
 		     if ro.detector_triggering(i) ='1' then
 			if abs(signed(ro.timetocompare(i))-signed(ro.timetocompare(to_integer(unsigned(ro.reference_detector))))) < SIGNED(ro.timecut(i)) then 
-			   n.LUT.inputs.detector(i)      := '0' & n.alignRAM(i).outputs.q_b(14 downto 0); -- i.e. chod muv lav
+			   n.LUT.inputs.detector(i)      := '0' & ro.alignRAMoutput(i)(14 downto 0); -- i.e. chod muv lav
 			end if;
 		     end if;
 		  end loop;
@@ -1572,42 +1617,6 @@ begin
 	       
 	       r.detector_triggering         := (others=>'0');
 
-	       
-	       for index in 0 to ethlink_NODES - 2 loop     
-		  if n.MERGEDFIFO.outputs.q(38)= '1' then
-		     if UINT(ro.bit_finetime)=3 then
-			n.alignRAM(index).inputs.address_b := SLV(UINT(n.MERGEDFIFO.outputs.q(18 downto 5))+ 1,14);
-		     elsif UINT(ro.bit_finetime)=2 then
-			n.alignRAM(index).inputs.address_b := SLV(UINT(n.MERGEDFIFO.outputs.q(19 downto 6))+ 1,14);
-		     elsif UINT(ro.bit_finetime)=1 then
-			n.alignRAM(index).inputs.address_b := SLV(UINT(n.MERGEDFIFO.outputs.q(20 downto 7))+ 1,14);
-		     else
-			n.alignRAM(index).inputs.address_b := SLV(UINT(n.MERGEDFIFO.outputs.q(21 downto 8))+ 1,14);
-		     end if;
-		     n.alignRAM(index).inputs.rden_b                 :='1';
-		     
-		  elsif n.MERGEDFIFO.outputs.q(39 downto 38)="10" then
-		     if UINT(ro.bit_finetime)=3 then
-			n.alignRAM(index).inputs.address_b := SLV(UINT(n.MERGEDFIFO.outputs.q(18 downto 5))+ 1,14);
-		     elsif UINT(ro.bit_finetime)=2 then
-			n.alignRAM(index).inputs.address_b := SLV(UINT(n.MERGEDFIFO.outputs.q(19 downto 6))+ 1,14);
-		     elsif UINT(ro.bit_finetime)=1 then
-			n.alignRAM(index).inputs.address_b := SLV(UINT(n.MERGEDFIFO.outputs.q(20 downto 7))+ 1,14);
-		     else
-			n.alignRAM(index).inputs.address_b := SLV(UINT(n.MERGEDFIFO.outputs.q(21 downto 8))+ 1,14);
-		     end if;
-		     n.alignRAM(index).inputs.rden_b                 :='1';
-		  end if;
-		  
-	       end loop;
-	       
------------
-
-	       r.FSMReadRam       := SetDetector1_3;
-
-
-
-	    when SetDetector1_3 =>
 	       for index in 0 to Ethlink_NODES- 2 loop
 		  if n.alignRAM(index).outputs.q_b(33 downto 15) = n.MERGEDFIFO.outputs.q(37 downto 19) then
 		     
@@ -1657,7 +1666,7 @@ begin
 
 	       
 	    when ReadRam1_3 =>
-
+              --Metto nella LUT il +1
 	       n.LUT.inputs.wena  :='1';
 	       n.LUT.inputs.timestamp_in(31) :='0';
 	       n.LUT.inputs.timestamp_in(29 downto 0) := n.MERGEDFIFO.outputs.q(37 downto 8);
@@ -1708,7 +1717,7 @@ begin
 	       r.finetime1           := (others=>"00000000");
 	       r.finetime2           := (others=>"00000000");
 	       r.tmpfinetime_ref_in  :=(others=>'0');
-	       
+               r.alignRAMoutput      :=(others=>"000000000000000000000000000000000000000000");
 	       if n.MERGEDFIFO.outputs.rdempty ='0' then
 		  n.MERGEDFIFO.inputs.rdreq :='1';
 		  r.FSMReadRam	:=SetRamAddress1;

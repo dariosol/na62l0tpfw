@@ -15,6 +15,7 @@ type vector16bit_t is array(NATURAL RANGE <>) of std_logic_vector(15 downto 0);
 type vector17bit_t is array(NATURAL RANGE <>) of std_logic_vector(16 downto 0);
 type vector24bit_t is array(NATURAL RANGE <>) of std_logic_vector(23 downto 0);
 type vector32bit_t is array(NATURAL RANGE <>) of std_logic_vector(31 downto 0);
+type vector42bit_t is array(NATURAL RANGE <>) of std_logic_vector(41 downto 0);
 type vector64bit_t is array(NATURAL RANGE <>) of std_logic_vector(63 downto 0);
 type vector96bit_t is array(NATURAL RANGE <>) of std_logic_vector(95 downto 0);
 type vector112bit_t is array(NATURAL RANGE <>) of std_logic_vector(111 downto 0);
