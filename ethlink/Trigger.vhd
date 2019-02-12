@@ -991,29 +991,37 @@ begin
 	       -- Pari a DeltaPacket.
 	       -- Se e' cosi' leggo il primo pacchetto
 	       -- ricevuto.
-	       r.nprimitivereffinish     := '0';
-	       r.nprimitivecontrolfinish := '0';
-	       r.nprimitiveref           :=  0;
-	       r.nprimitivecontrol       :=  0;
-	       r.readfiforeference       := '1';
-	       r.readfifocontrol         := '1';
+              r.nprimitivereffinish     := '0';
+              r.readfiforeference       := '1';
+              
+              if i.activatecontroltrigger = '1' then
+                r.nprimitivecontrolfinish := '0';
+                r.readfifocontrol         := '1';
+              else
+                r.readfifocontrol         := '0'; 
+                r.nprimitivecontrolfinish := '1';
+              end if;
+              
+              r.nprimitiveref           :=  0;
+              r.nprimitivecontrol       :=  0;
+             
+
 	       
 	       if UINT(n.FIFOMTPNUMREF.outputs.rdusedw) > UINT(ro.DeltaPacket) then -- reference detector
 		  n.FIFOMTPNUMREF.inputs.rdreq     :='1'; --leggo le parole del pacchetto precedente
-		  n.FIFOMTPNUMCONTROL.inputs.rdreq :='1'; --leggo le parole del pacchetto precedente
+		  n.FIFOMTPNUMCONTROL.inputs.rdreq :='1';
 		  r.FSMReadFifo	:=ReadFifo;
 	       else
 		  r.FSMReadFifo	:=Wait1Packet;
 	       end if;
 
---read reference fifo and control fifo-- 
+            --read reference fifo and control fifo-- 
 	    when ReadFifo=>
 
 	       if UINT(n.FIFOMTPNUMREF.outputs.q) = 0 then
                  r.nprimitivereffinish    := '1';
                else
                  if (ro.nprimitiveref < UINT(n.FIFOMTPNUMREF.outputs.q)) and ro.readfiforeference='1' then 
-                   r.nprimitiveref := ro.nprimitiveref +1; 
                    n.REFERENCEFIFO.inputs.rdreq :='1';
                  end if;
 	       end if;
@@ -1022,42 +1030,32 @@ begin
                  r.nprimitivecontrolfinish    := '1';
                else
                  if ro.nprimitivecontrol < UINT(n.FIFOMTPNUMCONTROL.outputs.q) and ro.readfifocontrol='1'  then
-                   r.nprimitivecontrol := ro.nprimitivecontrol +1; 
                    n.CONTROLFIFO.inputs.rdreq :='1';
                  end if; 
 	       end if;
-	       	       
-	       
-	       if ro.nprimitivecontrolfinish ='1' and ro.nprimitivereffinish ='1' then
-		  r.FSMReadFifo := Wait1Packet;
 
-	       elsif  ro.nprimitivecontrolfinish ='0' and ro.nprimitivereffinish ='0' then 	 
-		  r.FSMReadFifo	:=SelectData;
 
-	       elsif  ro.nprimitivecontrolfinish ='0' and ro.nprimitivereffinish ='1' then
-		  n.MERGEDFIFO.inputs.data(37 downto 0) := n.REFERENCEFIFO.outputs.q(37 downto 0);
-		  n.MERGEDFIFO.inputs.data(39 downto 38) := "01";
-		  n.MERGEDFIFO.inputs.wrreq :='1';					
-		  r.FSMReadFifo	:=SelectData;
-
-	       elsif  ro.nprimitivecontrolfinish ='1' and ro.nprimitivereffinish ='0' then
-		  n.MERGEDFIFO.inputs.data(37 downto 0) := n.CONTROLFIFO.outputs.q(37 downto 0);
-		  n.MERGEDFIFO.inputs.data(39 downto 38) := "10";
-		  n.MERGEDFIFO.inputs.wrreq :='1';					
-		  r.FSMReadFifo	:=SelectData;
-	       end if;
-	        
-	       ----------------1---------------------------------------------------
-	       
-	    when SelectData =>	
-	       
-	       if ro.nprimitiveref = UINT(n.FIFOMTPNUMREF.outputs.q) then
-		  r.nprimitivereffinish  :='1';		 
+               if ro.nprimitiveref = UINT(n.FIFOMTPNUMREF.outputs.q) then
+                 r.nprimitivereffinish  :='1';
 	       end if;
 	       
 	       if ro.nprimitivecontrol = UINT(n.FIFOMTPNUMCONTROL.outputs.q) then
-		  r.nprimitivecontrolfinish  :='1';		 
+                 r.nprimitivecontrolfinish  :='1';
 	       end if;
+
+
+               
+	       if ro.nprimitiveref >= UINT(n.FIFOMTPNUMREF.outputs.q) and ro.nprimitivecontrol >= UINT(n.FIFOMTPNUMCONTROL.outputs.q) then
+                 r.FSMReadFifo := Wait1Packet;
+               else
+                  r.FSMReadFifo	:=SelectData;
+               end if;
+
+               	       
+	    when SelectData =>	
+	       
+
+               
 
 	       	if n.MERGEDFIFO.outputs.wrfull ='1' then
 		   r.TRIGGERERROR := ro.TRIGGERERROR OR SLV(8,32);
@@ -1074,6 +1072,7 @@ begin
 			n.MERGEDFIFO.inputs.wrreq :='1';
 			r.readfiforeference := '1';
 			r.readfifocontrol := '0';
+                        r.nprimitiveref := ro.nprimitiveref +1; 
 			r.FSMReadFifo := ReadFifo;
 			
 		     elsif UINT(n.CONTROLFIFO.outputs.q(37 downto 5)) < UINT(n.REFERENCEFIFO.outputs.q(37 downto 5)) then
@@ -1082,6 +1081,7 @@ begin
 			n.MERGEDFIFO.inputs.wrreq :='1';
 			r.readfiforeference := '0';
 			r.readfifocontrol := '1';
+                        r.nprimitivecontrol := ro.nprimitivecontrol +1; 
 			r.FSMReadFifo := ReadFifo;
 			
 		     elsif UINT(n.CONTROLFIFO.outputs.q(37 downto 5)) = UINT(n.REFERENCEFIFO.outputs.q(37 downto 5)) then
@@ -1090,7 +1090,9 @@ begin
 			n.MERGEDFIFO.inputs.wrreq :='1';
 			r.readfiforeference := '1';
 			r.readfifocontrol := '1';
-			r.FSMReadFifo := ReadFifo;
+                        r.nprimitiveref := ro.nprimitiveref +1; 
+                        r.nprimitivecontrol := ro.nprimitivecontrol +1; 
+                        r.FSMReadFifo := ReadFifo;
 		     end if;
 		     
 		  elsif (UINT(ro.bit_finetime)=2) then
@@ -1099,6 +1101,7 @@ begin
 			n.MERGEDFIFO.inputs.data(39 downto 38) := "01";
 			n.MERGEDFIFO.inputs.wrreq :='1';
 			r.readfiforeference := '1';
+                        r.nprimitiveref := ro.nprimitiveref +1; 
 			r.readfifocontrol := '0';
 			r.FSMReadFifo := ReadFifo;
 			
@@ -1108,15 +1111,18 @@ begin
 			n.MERGEDFIFO.inputs.wrreq :='1';
 			r.readfiforeference := '0';
 			r.readfifocontrol := '1';
-			r.FSMReadFifo := ReadFifo;
+                        r.nprimitivecontrol := ro.nprimitivecontrol +1; 
+                        r.FSMReadFifo := ReadFifo;
 			
 		     elsif UINT(n.CONTROLFIFO.outputs.q(37 downto 6)) = UINT(n.REFERENCEFIFO.outputs.q(37 downto 6)) then
 			n.MERGEDFIFO.inputs.data(37 downto 0) := n.REFERENCEFIFO.outputs.q(37 downto 0);
 			n.MERGEDFIFO.inputs.data(39 downto 38) := "11";
 			n.MERGEDFIFO.inputs.wrreq :='1';
 			r.readfiforeference := '1';
+                        r.nprimitiveref := ro.nprimitiveref +1; 
 			r.readfifocontrol := '1';
-			r.FSMReadFifo := ReadFifo;
+                        r.nprimitivecontrol := ro.nprimitivecontrol +1; 
+                        r.FSMReadFifo := ReadFifo;
 		     end if;
 		     
 		     
@@ -1126,6 +1132,7 @@ begin
 			n.MERGEDFIFO.inputs.data(39 downto 38) := "01";
 			n.MERGEDFIFO.inputs.wrreq :='1';
 			r.readfiforeference := '1';
+                        r.nprimitiveref := ro.nprimitiveref +1; 
 			r.readfifocontrol := '0';
 			r.FSMReadFifo := ReadFifo;
 			
@@ -1135,6 +1142,7 @@ begin
 			n.MERGEDFIFO.inputs.wrreq :='1';
 			r.readfiforeference := '0';
 			r.readfifocontrol := '1';
+                        r.nprimitivecontrol := ro.nprimitivecontrol +1; 
 			r.FSMReadFifo := ReadFifo;
 			
 		     elsif UINT(n.CONTROLFIFO.outputs.q(37 downto 7)) = UINT(n.REFERENCEFIFO.outputs.q(37 downto 7)) then
@@ -1143,7 +1151,9 @@ begin
 			n.MERGEDFIFO.inputs.wrreq :='1';
 			r.readfiforeference := '1';
 			r.readfifocontrol := '1';
-			r.FSMReadFifo := ReadFifo;
+                        r.nprimitiveref := ro.nprimitiveref +1; 
+                        r.nprimitivecontrol := ro.nprimitivecontrol +1; 
+                        r.FSMReadFifo := ReadFifo;
 		     end if;
 		     
 		     
@@ -1154,6 +1164,7 @@ begin
 			n.MERGEDFIFO.inputs.wrreq :='1';
 			r.readfiforeference := '1';
 			r.readfifocontrol := '0';
+                        r.nprimitiveref := ro.nprimitiveref +1; 
 			r.FSMReadFifo := ReadFifo;
 			
 		     elsif UINT(n.CONTROLFIFO.outputs.q(37 downto 8)) < UINT(n.REFERENCEFIFO.outputs.q(37 downto 8)) then
@@ -1162,7 +1173,8 @@ begin
 			n.MERGEDFIFO.inputs.wrreq :='1';
 			r.readfiforeference := '0';
 			r.readfifocontrol := '1';
-			r.FSMReadFifo := ReadFifo;
+                        r.nprimitivecontrol := ro.nprimitivecontrol +1; 
+                        r.FSMReadFifo := ReadFifo;
 			
 		     elsif UINT(n.CONTROLFIFO.outputs.q(37 downto 8)) = UINT(n.REFERENCEFIFO.outputs.q(37 downto 8)) then
 			n.MERGEDFIFO.inputs.data(37 downto 0) := n.REFERENCEFIFO.outputs.q(37 downto 0);
@@ -1170,6 +1182,8 @@ begin
 			n.MERGEDFIFO.inputs.wrreq :='1';
 			r.readfiforeference := '1';
 			r.readfifocontrol := '1';
+                        r.nprimitiveref := ro.nprimitiveref +1; 
+                        r.nprimitivecontrol := ro.nprimitivecontrol +1; 
 			r.FSMReadFifo := ReadFifo;
 		     end if;
 		  end if; --number of write
@@ -1180,6 +1194,7 @@ begin
 		  n.MERGEDFIFO.inputs.wrreq :='1';
 		  r.readfiforeference := '0';
 		  r.readfifocontrol := '1';
+                  r.nprimitivecontrol := ro.nprimitivecontrol +1; 
 		  r.FSMReadFifo := ReadFifo;
 		  
 		  
@@ -1189,10 +1204,11 @@ begin
 		  n.MERGEDFIFO.inputs.wrreq :='1';
 		  r.readfiforeference := '1';
 		  r.readfifocontrol := '0';
+                  r.nprimitiveref := ro.nprimitiveref +1; 
 		  r.FSMReadFifo := ReadFifo;
 		  
-	       elsif ro.nprimitivereffinish ='1' and ro.nprimitivecontrolfinish='1' then
-		  r.FSMReadFifo := Wait1Packet;
+--	       elsif ro.nprimitivereffinish ='1' and ro.nprimitivecontrolfinish='1' then
+--		  r.FSMReadFifo := Wait1Packet;
 	       end if;
 	 end case;
       end procedure;	
