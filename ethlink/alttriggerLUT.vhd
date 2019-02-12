@@ -144,6 +144,7 @@ begin
 	 s_finetime_ref0      <= (others=>'0');
 	 s_finetime_ref1      <= (others=>'0');
 	 s_finetime_ref2      <= (others=>'0');
+         s_timestamp          <= (others=>'0');
 	 s_timestamp0         <= (others=>'0');
 	 s_timestamp1         <= (others=>'0');
 	 s_timestamp2         <= (others=>'0');
