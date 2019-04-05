@@ -316,7 +316,7 @@ end ethlink;
 
 architecture rtl of ethlink is
 
-   type FSMReceive32bit_t is (S0,S1, S2, S3_1,S3_2,S3_3,S3_4,S3_loop,S4,S5_header,S5_write);
+   type FSMReceive32bit_t is (S0,S1, S2, S3_1,S3_2,S3_3,S3_4,S3_loop,S4);
    type FSMReceive32bit_vector_t is array(NATURAL RANGE <>) of FSMReceive32bit_t;
    type FSMReceive64bit_t is (S0,S1, S2, S3_1,S3_2,S3_3,S3_4,S3_5,S3_6,S3_7,S3_8,S3_loop,S4,S5_header,S5_write);
    type FSMReceive64bit_vector_t is array(NATURAL RANGE <>) of FSMReceive64bit_t;
@@ -1704,27 +1704,66 @@ begin
 		  
 	     
 	   	when S3_4 =>
-		  r.data3(index) := n.MAC(index).outputs.rdata(FF_PORT); --byte 4
-		  if ro.headermode(index) ='1' then
-		     r.FSMReceive32bit(index) := S5_header;
-		  else
-		     r.FSMReceive32bit(index) := S5_write;
-		  end if;
-		  
-	       when S5_header=> --registers for saving header data
-                 
+
 		  if ro.headermode(index) ='1' then
 		     r.headerreceived(index) := '1';
 		     r.headermode(index) :='0';
 		     r.MTPTimestampH(index)(23 downto 16):=ro.data2(index);
 		     r.MTPTimestampH(index)(15 downto 8) :=ro.data1(index);
 		     r.MTPTimestampH(index)(7 downto 0)  :=ro.data0(index);
-		     r.MTPSourceID(index):=ro.data3(index);
+		     r.MTPSourceID(index):= n.MAC(index).outputs.rdata(FF_PORT);
 		     r.FSMReceive32bit(index) := S3_loop;
 		  
 		  else
-		      r.FSMReceive32bit(index) := S2;
-		 end if;
+                    if(ro.headerreceived(index)='1') then
+			r.headerreceived(index):='0';                        
+			---------STO SCRIVENDO L'HEADER-------------------------------
+			if ro.activate_primitives ='1' then
+			   if n.FIFoDELAY(index).outputs.wrfull = '0' then
+			      n.FIFODELAY(index).inputs.wrreq :='1'; --ho scritto i dati	
+			      n.FIFODELAY(index).inputs.data(63):='1'; --mi dice che
+								    --e' un header
+			      n.FIFODELAY(index).inputs.data(62 downto 56):= n.MAC(index).outputs.rdata(FF_PORT)(6 downto 0);--subid   
+			      n.FIFODELAY(index).inputs.data(55 downto 48):= ro.data2(index); --#primitive   
+			      n.FIFODELAY(index).inputs.data(47 downto 40):= ro.data1(index); --length 
+			      n.FIFODELAY(index).inputs.data(39 downto 32):= ro.data0(index); --length
+			      n.FIFODELAY(index).inputs.data(31 downto 24):= ro.MTPSourceID(index);
+			      n.FIFODELAY(index).inputs.data(23 downto 16):= ro.MTPTimestampH(index)(23 downto 16); --timestamp
+			      n.FIFODELAY(index).inputs.data(15 downto 8) := ro.MTPTimestampH(index)(15 downto 8); --timestamp
+			      n.FIFODELAY(index).inputs.data(7 downto 0)  := ro.MTPTimestampH(index)(7 downto 0); --timestamp
+			      r.FSMReceive32bit(index) := S3_loop;
+			   else --FIFO PIENA
+			      r.FSMReceive32bit(index) := S3_loop;
+			      r.ETHLINKERROR:=ro.ETHLINKERROR OR SLV(1,32);
+			   end if;--wrfull
+			end if;--activate primitives;
+	             else --it is not header
+			--------SONO PRIMITIVE, NO HEADER---------------------------------
+			if ro.activate_primitives ='1' then
+			   if n.MAC(index).outputs.rdata(FF_PORT) /= "00000000" then --primitive ID valid.
+			      r.number_of_primitives(index) := SLV(UINT(ro.number_of_primitives(index))+1,32);
+			      if n.FIFoDELAY(index).outputs.wrfull = '0' then
+				 n.FIFODELAY(index).inputs.wrreq :='1'; --ho scritto i dati	
+				 n.FIFODELAY(index).inputs.data(63):='0'; --mi dice che sono dati				  
+				 n.FIFODELAY(index).inputs.data(62 downto 32):= ro.MTPTimestampH(index)(22 downto 0) &  ro.data1(index); --timestamp
+				 n.FIFODELAY(index).inputs.data(31 downto 24):= n.MAC(index).outputs.rdata(FF_PORT);--primID 
+				 n.FIFODELAY(index).inputs.data(23 downto 16):= ro.data2(index); --primID   
+				 n.FIFODELAY(index).inputs.data(15 downto 8) := (others=>'0');--reserved
+				 n.FIFODELAY(index).inputs.data(7 downto 0)  := ro.data0(index); --finetime 
+				 r.FSMReceive32bit(index) := S3_loop;
+			      else --FIFO PIENA
+				 r.FSMReceive32bit(index) := S3_loop;
+				 r.ETHLINKERROR:=ro.ETHLINKERROR OR SLV(1,32);
+			      end if;--wrfull
+			   else --primitive ID invalid
+			       r.MTPTimestampH(index) := ro.data2(index) & ro.data1(index) & ro.data0(index);
+			      r.FSMReceive32bit(index) := S3_loop;
+			   end if; --primitiveID
+			else
+			   r.FSMReceive32bit(index) := S3_loop;
+			end if;--activate primitive
+		     end if;-- header received
+                  end if;--header mode
 
 		  
 	       when S3_loop =>
@@ -1744,60 +1783,7 @@ begin
 		  
 		  if n.MAC(index).outputs.rready(FF_PORT) ='0' then
 		     r.FSMReceive32bit(index) := S2;
-		  end if;
-
-		  
-	       when S5_write =>-----------------LI SCRIVO NELLA FIFO ----------------
-		  
-		     if(ro.headerreceived(index)='1') then
-			r.headerreceived(index):='0';
-			---------STO SCRIVENDO L'HEADER-------------------------------
-			if ro.activate_primitives ='1' then
-			   if n.FIFoDELAY(index).outputs.wrfull = '0' then
-			      n.FIFODELAY(index).inputs.wrreq :='1'; --ho scritto i dati	
-			      n.FIFODELAY(index).inputs.data(63):='1'; --mi dice che
-								    --e' un header
-			      n.FIFODELAY(index).inputs.data(62 downto 56):=ro.data3(index) (6 downto 0); --subid   
-			      n.FIFODELAY(index).inputs.data(55 downto 48):=ro.data2(index); --#primitive   
-			      n.FIFODELAY(index).inputs.data(47 downto 40):=ro.data1(index); --length 
-			      n.FIFODELAY(index).inputs.data(39 downto 32):=ro.data0(index); --length
-			      n.FIFODELAY(index).inputs.data(31 downto 24):=ro.MTPSourceID(index);
-			      n.FIFODELAY(index).inputs.data(23 downto 16):=ro.MTPTimestampH(index)(23 downto 16); --timestamp
-			      n.FIFODELAY(index).inputs.data(15 downto 8) :=ro.MTPTimestampH(index)(15 downto 8); --timestamp
-			      n.FIFODELAY(index).inputs.data(7 downto 0)  :=ro.MTPTimestampH(index)(7 downto 0); --timestamp
-			      r.FSMReceive32bit(index) := S3_loop;
-			   else --FIFO PIENA
-			      r.FSMReceive32bit(index) := S3_loop;
-			      r.ETHLINKERROR:=ro.ETHLINKERROR OR SLV(1,32);
-			   end if;--wrfull
-			end if;--activate primitives;
-	             else
-			--------SONO PRIMITIVE, NO HEADER---------------------------------
-			if ro.activate_primitives ='1' then
-			   if ro.data3(index)/="00000000" then --primitive ID valid.
-			      r.number_of_primitives(index) := SLV(UINT(ro.number_of_primitives(index))+1,32);
-			      if n.FIFoDELAY(index).outputs.wrfull = '0' then
-				 n.FIFODELAY(index).inputs.wrreq :='1'; --ho scritto i dati	
-				 n.FIFODELAY(index).inputs.data(63):='0'; --mi dice che sono dati				  
-				 n.FIFODELAY(index).inputs.data(62 downto 32):= ro.MTPTimestampH(index)(22 downto 0) &  ro.data1(index); --timestamp
-				 n.FIFODELAY(index).inputs.data(31 downto 24):=ro.data3(index); --primID   
-				 n.FIFODELAY(index).inputs.data(23 downto 16):=ro.data2(index); --primID   
-				 n.FIFODELAY(index).inputs.data(15 downto 8) :=(others=>'0');--reserved
-				 n.FIFODELAY(index).inputs.data(7 downto 0)  :=ro.data0(index); --finetime 
-				 r.FSMReceive32bit(index) := S3_loop;
-			      else --FIFO PIENA
-				 r.FSMReceive32bit(index) := S3_loop;
-				 r.ETHLINKERROR:=ro.ETHLINKERROR OR SLV(1,32);
-			      end if;--wrfull
-			   else --primitive ID invalid
-			       r.MTPTimestampH(index) := ro.data2(index) & ro.data1(index) & ro.data0(index);
-			      r.FSMReceive32bit(index) := S3_loop;
-			   end if; --primitiveID
-			else
-			   r.FSMReceive32bit(index) := S3_loop;
-			end if;--activate primitive
-		     end if;-- header mode
-
+		  end if;		  
 		     
 	       when S4 => --END OF FRAME
 		  if n.MAC(index).outputs.rready(FF_PORT) = '1' then  
@@ -1962,27 +1948,70 @@ begin
 		  
 	       	  
 	       when S3_4 =>
-		  r.enet_data3(index) := n.enet_MAC(index).outputs.rdata(FF_PORT); --byte 3
-		  if ro.enet_headermode(index) ='1' then
-		     r.enet_FSMReceive32bit(index) := S5_header;
-		 
-		  else
-		     r.enet_FSMReceive32bit(index) := S5_write;
-		  end if;
-		  
-	       when S5_header=> --registers for saving header data
+
 		 if ro.enet_headermode(index) ='1' then
 		     r.enet_headerreceived(index) := '1';
 		     r.enet_headermode(index) :='0';
 		     r.enet_MTPTimestampH(index)(23 downto 16):=ro.enet_data2(index);
 		     r.enet_MTPTimestampH(index)(15 downto 8) :=ro.enet_data1(index);
 		     r.enet_MTPTimestampH(index)(7 downto 0)  :=ro.enet_data0(index);
-		     r.enet_MTPSourceID(index):=ro.enet_data3(index);
-		     r.enet_FSMReceive32bit(index) := S3_loop;
-		   
-		  else
-		      r.enet_FSMReceive32bit(index) := S2;
-		 end if;
+		     r.enet_MTPSourceID(index):=  n.enet_MAC(index).outputs.rdata(FF_PORT); --byte 2
+		     r.enet_FSMReceive32bit(index) := S3_loop;   
+                 else
+                   
+		      if(ro.enet_headerreceived(index)='1') then
+			r.enet_headerreceived(index):='0';
+			if ro.activate_primitives ='1' then
+			   if n.FIFODELAY(index+3).outputs.wrfull = '0' then
+			      n.FIFODELAY(index+3).inputs.wrreq :='1'; -- data written
+			      n.FIFODELAY(index+3).inputs.data(63):='1'; -- header
+								      -- tagger							  
+			   --sub id is written without the MSB, in order to
+			   --save space for the header tagger
+			      n.FIFODELAY(index+3).inputs.data(62 downto 56):= n.enet_MAC(index).outputs.rdata(FF_PORT)(6 downto 0); --subid 
+			      n.FIFODELAY(index+3).inputs.data(55 downto 48):= ro.enet_data2(index); --#primitive  
+			      n.FIFODELAY(index+3).inputs.data(47 downto 40):= ro.enet_data1(index); --length 
+			      n.FIFODELAY(index+3).inputs.data(39 downto 32):= ro.enet_data0(index); --length
+			      n.FIFODELAY(index+3).inputs.data(31 downto 24):= ro.enet_MTPSourceID(index);
+			      n.FIFODELAY(index+3).inputs.data(23 downto 16):= ro.enet_MTPTimestampH(index)(23 downto 16); --timestamp
+			      n.FIFODELAY(index+3).inputs.data(15 downto 8) := ro.enet_MTPTimestampH(index)(15 downto 8); --timestamp
+			      n.FIFODELAY(index+3).inputs.data(7 downto 0)  := ro.enet_MTPTimestampH(index)(7 downto 0); --timestamp
+			      r.enet_FSMReceive32bit(index) := S3_loop;
+			   else
+			      r.enet_FSMReceive32bit(index) := S3_loop;
+			      r.ETHLINKERROR:=ro.ETHLINKERROR OR SLV(1,32);
+			   end if;--wrfull
+			end if;--activate primitives
+			
+	             else --header received ='0'
+                           ------STO SCRIVENDO LE PRIMITIVE
+			if ro.activate_primitives ='1' then
+			   if n.enet_MAC(index).outputs.rdata(FF_PORT) /="00000000" then --primitive ID /=0
+			      r.number_of_primitives(index+3) := SLV(UINT(ro.number_of_primitives(index+3))+1,32);
+			      if n.FIFODELAY(index+3).outputs.wrfull = '0' then
+				 n.FIFODELAY(index+3).inputs.wrreq   :='1'; --ho scritto i dati	
+				 n.FIFODELAY(index+3).inputs.data(63):='0'; --header tagger		  
+				 n.FIFODELAY(index+3).inputs.data(62 downto 32):= ro.enet_MTPTimestampH(index)(22 downto 0) &  ro.enet_data1(index); --timestamp
+				 n.FIFODELAY(index+3).inputs.data(31 downto 24):= n.enet_MAC(index).outputs.rdata(FF_PORT); --primID
+				 n.FIFODELAY(index+3).inputs.data(23 downto 16):= ro.enet_data2(index); --primID   
+				 n.FIFODELAY(index+3).inputs.data(15 downto 8) := (others=>'0'); --reserved
+				 n.FIFODELAY(index+3).inputs.data(7 downto 0)  := ro.enet_data0(index); --finetime 
+				 r.enet_FSMReceive32bit(index) := S3_loop;
+			      else
+				 r.enet_FSMReceive32bit(index) := S3_loop;
+				 r.ETHLINKERROR:=ro.ETHLINKERROR OR SLV(1,32);
+			      end if;--wrfull
+			   else -- primitive invalid
+                              r.enet_MTPTimestampH(index) := ro.enet_data2(index) & ro.enet_data1(index) & ro.enet_data0(index);
+			      r.enet_FSMReceive32bit(index) := S3_loop;
+			   end if;	---primitiveID
+			else --primitive not active
+			   r.enet_FSMReceive32bit(index) := S3_loop;
+			end if;--activate primitive
+                       end if;--header received
+		     end if;-- header mode
+		      
+		
 
 	       when S3_loop =>
 		 	  
@@ -2003,59 +2032,7 @@ begin
 		     r.enet_FSMReceive32bit(index) := S2;
 		  end if;
 		  
-	       when S5_write =>-----------------LI SCRIVO 1 ----------------
-		  
-		
-		      if(ro.enet_headerreceived(index)='1') then
-			r.enet_headerreceived(index):='0';
-			if ro.activate_primitives ='1' then
-			   if n.FIFODELAY(index+3).outputs.wrfull = '0' then
-			      n.FIFODELAY(index+3).inputs.wrreq :='1'; -- data written
-			      n.FIFODELAY(index+3).inputs.data(63):='1'; -- header
-								      -- tagger							  
-			   --sub id is written without the MSB, in order to
-			   --save space for the header tagger
-			      n.FIFODELAY(index+3).inputs.data(62 downto 56):=ro.enet_data3(index)(6 downto 0); --subid 
-			      n.FIFODELAY(index+3).inputs.data(55 downto 48):=ro.enet_data2(index); --#primitive  
-			      n.FIFODELAY(index+3).inputs.data(47 downto 40):=ro.enet_data1(index); --length 
-			      n.FIFODELAY(index+3).inputs.data(39 downto 32):=ro.enet_data0(index); --length
-			      n.FIFODELAY(index+3).inputs.data(31 downto 24):=ro.enet_MTPSourceID(index);
-			      n.FIFODELAY(index+3).inputs.data(23 downto 16):= ro.enet_MTPTimestampH(index)(23 downto 16); --timestamp
-			      n.FIFODELAY(index+3).inputs.data(15 downto 8) := ro.enet_MTPTimestampH(index)(15 downto 8); --timestamp
-			      n.FIFODELAY(index+3).inputs.data(7 downto 0)  := ro.enet_MTPTimestampH(index)(7 downto 0); --timestamp
-			      r.enet_FSMReceive32bit(index) := S3_loop;
-			   else
-			      r.enet_FSMReceive32bit(index) := S3_loop;
-			      r.ETHLINKERROR:=ro.ETHLINKERROR OR SLV(1,32);
-			   end if;--wrfull
-			end if;--activate primitives
-			
-	             else --header received ='0'
-                          
-			if ro.activate_primitives ='1' then
-			   if ro.enet_data3(index)/="00000000" then --primitive ID /=0
-			      r.number_of_primitives(index+3) := SLV(UINT(ro.number_of_primitives(index+3))+1,32);
-			      if n.FIFODELAY(index+3).outputs.wrfull = '0' then
-				 n.FIFODELAY(index+3).inputs.wrreq   :='1'; --ho scritto i dati	
-				 n.FIFODELAY(index+3).inputs.data(63):='0'; --header tagger		  
-				 n.FIFODELAY(index+3).inputs.data(62 downto 32):= ro.enet_MTPTimestampH(index)(22 downto 0) &  ro.enet_data1(index); --timestamp
-				 n.FIFODELAY(index+3).inputs.data(31 downto 24):=ro.enet_data3(index); --primID   
-				 n.FIFODELAY(index+3).inputs.data(23 downto 16):=ro.enet_data2(index); --primID   
-				 n.FIFODELAY(index+3).inputs.data(15 downto 8) :=(others=>'0'); --reserved
-				 n.FIFODELAY(index+3).inputs.data(7 downto 0)  :=ro.enet_data0(index); --finetime 
-				 r.enet_FSMReceive32bit(index) := S3_loop;
-			      else
-				 r.enet_FSMReceive32bit(index) := S3_loop;
-				 r.ETHLINKERROR:=ro.ETHLINKERROR OR SLV(1,32);
-			      end if;--wrfull
-			   else -- primitive invalid
-                              r.enet_MTPTimestampH(index) := ro.enet_data2(index) & ro.enet_data1(index) & ro.enet_data0(index);
-			      r.enet_FSMReceive32bit(index) := S3_loop;
-			   end if;	---primitiveID
-			else --primitive not active
-			   r.enet_FSMReceive32bit(index) := S3_loop;
-			end if;--activate primitive
-		     end if;-- header mode
+	       		
 			
 	       when S4 => --END OFF RAME
 		  if n.enet_MAC(index).outputs.rready(FF_PORT) = '1' then  

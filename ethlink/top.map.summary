@@ -1,13 +1,13 @@
-Analysis & Synthesis Status : Successful - Fri Jan 18 11:55:26 2019
+Analysis & Synthesis Status : Successful - Fri Apr  5 09:35:15 2019
 Quartus Prime Version : 16.1.0 Build 196 10/24/2016 SJ Standard Edition
 Revision Name : top
 Top-level Entity Name : top
 Family : Stratix IV
 Logic utilization : N/A
-    Combinational ALUTs : 62,730
+    Combinational ALUTs : 62,835
     Memory ALUTs : 0
-    Dedicated logic registers : 53,875
-Total registers : 53963
+    Dedicated logic registers : 54,020
+Total registers : 54108
 Total pins : 240
 Total virtual pins : 0
 Total block memory bits : 11,352,599

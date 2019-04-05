@@ -255,7 +255,7 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : AD9       :        :                   :      
 RESERVED_INPUT_WITH_WEAK_PULLUP : AD10      :        :                   :         : 5C        :                
 VREFB5CN0                    : AD11      : power  :                   :         : 5C        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AD12      :        :                   :         : 5A        :                
-LKrNIMCalib                  : AD13      : input  : 2.5 V             :         : 5A        : N              
+RESERVED_INPUT_WITH_WEAK_PULLUP : AD13      :        :                   :         : 5A        :                
 VCCPD4A                      : AD14      : power  :                   : 2.5V    : 4A        :                
 OTG_D[2]                     : AD15      : bidir  : 1.8 V             :         : 4A        : Y              
 VCCPD4B                      : AD16      : power  :                   : 2.5V    : 4B        :                
@@ -1401,7 +1401,7 @@ NC                           : R26       :        :                   :         
 RESERVED_INPUT_WITH_WEAK_PULLUP : R27       :        :                   :         : 1A        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : R28       :        :                   :         : 1A        :                
 led2                         : R29       : output : 2.5 V             :         : 1A        : Y              
-RESERVED_INPUT_WITH_WEAK_PULLUP : R30       :        :                   :         : 1C        :                
+LKrNIMCalib                  : R30       : input  : 2.5 V             :         : 1C        : N              
 RESERVED_INPUT_WITH_WEAK_PULLUP : R31       :        :                   :         : 1C        :                
 ETH_TX_p[1]                  : R32       : output : LVDS              :         : 1C        : Y              
 ETH_TX_p[1](n)               : R33       : output : LVDS              :         : 1C        : N              
