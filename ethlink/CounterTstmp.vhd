@@ -58,17 +58,23 @@ begin
 
 
    FIFOTstsmp_inst : altFIFOtstmp port map (
-      aclr	   => s_aclr,
-      data	   => timestamp,
+      aclr	   => s_aclr,  -- quando ho il reset questo è 1 quando burst è
+                               -- 0, questo è 1
+      data	   => timestamp,  
       rdclk	   => clock125 ,
-      rdreq	   => s_rdreq,
+      rdreq	   => s_rdreq,    -- questo è 1 quando volgio leggere, quindi
+                                  -- quando il 
       wrclk	   => clock40 ,
-      wrreq	   => s_wrreq ,
-      q		   => s_internal_timestamp125,
+      wrreq	   => s_wrreq ,    -- quando vuole scrivere questo è 1, ma solo
+                                   -- per un colpo di clock
+      q		   => s_internal_timestamp125,   -- questa è l'uscita e diventa
+                                                 -- timestamp (if q + 3160 =
+                                                 -- internaltimestamp) allora
+                                                 -- il trigger è su
       rdempty      => s_rdempty,
       rdfull       => s_rdfull,
       rdusedw      => s_rdusedw,
-      wrempty      => s_wrempty,
+      wrempty      => s_wrempty,    -- se questo è 0 non è vuota allora leggo
       wrfull       => s_wrfull,
       wrusedw      => s_wrusedw
       );
