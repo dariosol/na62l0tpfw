@@ -207,6 +207,10 @@ package component_ethlink is
       readerrorfifoon         : std_logic;
       dataformat              : std_logic_vector(0 to ethlink_NODES-2);
       temperature             : std_logic_vector(7 downto 0);
+ 
+--------------- Stefan signal
+      rit_port       : std_logic;
+	
    end record;
 
 --
@@ -476,6 +480,10 @@ architecture rtl of ethlink is
 
 
    type reglist_clk125_t is record
+------------ Stefan part
+
+      s_rit  : std_logic;
+----------------------
       errorchecktimestamp : std_logic_vector(0 to ethlink_NODES-1);
       fifodelay           : vector32bit_t(0 to ethlink_NODES -2);
       fifodelay_set       : vector32bit_t(0 to ethlink_NODES -2);
@@ -687,6 +695,12 @@ architecture rtl of ethlink is
    
    constant reglist_clk125_default : reglist_clk125_t :=
       (
+
+-- Stefan default
+          s_rit =>'0',
+	
+------------------------------  
+
 	 errorchecktimestamp     => (others=>'0'),
 	 fifODELAY               => (others=>"00000000000000000000000000000000"),
 	 fifODELAY_set           => (others=>"00000000000000000000000000000000"),
@@ -1550,6 +1564,10 @@ begin
 	    END LOOP;     
 	 END LOOP;
 
+
+-- Parte Stefan test registro
+
+            r.clk125.s_rit  := i.rit_port;
 	 
       end procedure;
 --
@@ -3173,6 +3191,37 @@ begin
 		  r.tmpfinetime1                 :=(others=>"00000000")                  ;
 		  r.tmpfinetime2                 :=(others=>"00000000")                  ;
 		  
+
+
+		--Parte Stefan------------------------------------------
+
+               elsif ro.s_rit='1' then
+                 --    elsif ro.s_new_trigger='1' then
+                 n.LATENCYRAM.inputs.rden_a     := '1'                                ;
+                 n.LATENCYRAM.inputs.address_a  :=ro.internal_timestamp(14 downto 0)  ;
+                 r.FSMoutputdata                :=SetFarmAddress                      ;
+                 
+                 
+                 r.tmptimestamp                 :=ro.internal_timestamp; 
+                 r.tmptriggerword               :="111111"           ; --TO BE CHECKED 
+                 r.tmpdatatype                  :=X"20"              ;
+                 r.tmpprimitiveID0              :=ro.primitiveID_t0  ;
+                 r.tmpprimitiveID1              :=ro.primitiveID_t1  ;
+                 r.tmpprimitiveID2              :=ro.primitiveID_t2  ;
+                 r.tmptriggerflag               :=(others=>'0')      ;
+                 r.tmpfinetime_ref              :=(others=>'0')       ;
+                 r.tmpfinetime0                 :=(others=>"00000000");
+                 r.tmpfinetime1                 :=(others=>"00000000");
+                 r.tmpfinetime2                 :=(others=>"00000000");
+                 
+--------------------------------------------------------                 
+
+
+
+
+
+
+
 		  
 	       elsif ro.calib_signal /="0000000" and ro.trigger_signal ='0' then 
 		  n.LATENCYRAM.inputs.rden_a     :='1'                                   ;

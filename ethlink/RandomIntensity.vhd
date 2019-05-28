@@ -22,6 +22,10 @@ entity RandomIntensityTrigger is
 end RandomIntensityTrigger;
 
 Architecture rtl of RandomIntensityTrigger is
+
+constant triggerdelay : integer := 2772;
+constant NPrimitives  : integer := 2000; 
+
   signal timerit : std_logic_vector(29 downto 0);
   signal s_time_stamp_data : std_logic_vector(29 downto 0);
   signal s_rdreq : std_logic;
@@ -98,8 +102,8 @@ begin
     elsif (clk125'EVENT) then
       s_aclr            <= '0';
 
-      --Sezione comparatore e lettore
-      if (SLV(UINT(timerit) + 109,30) = internal_time_stamp ) and (UINT(internal_time_stamp) > 10 ) then
+      --Sezione comparatore e lettore6
+      if (SLV(UINT(timerit) + triggerdelay,30) = internal_time_stamp ) and (UINT(internal_time_stamp) > triggerdelay ) then
         s_posttrigger <= '1';
         s_rdreq        <= '1';
       else
@@ -114,7 +118,7 @@ begin
         if (received_signal = '1') then
           dato := dato +1;
         end if;
-        if (dato = 10) then
+        if (dato = NPrimitives) then
           s_trigger     <= '1';
           s_wrreq       <= '1';
           dato          :=  0 ;

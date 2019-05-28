@@ -361,6 +361,13 @@ architecture rtl of top is
    signal s_temp_counter : integer;
 
 
+-- Stefan signal
+   signal s_rit :std_logic;
+   signal s_RandomIntensityTrigger :std_logic;
+
+------------------------------------------------------------------------
+
+
 --Component declarations:
    --Handle the temperature measurement:
    --Also when the cooling in the electronic barack is off, the FPGA never goes
@@ -423,6 +430,26 @@ architecture rtl of top is
 	CHOKE_OFF       : out std_logic;
 	ERROR_OFF       : out std_logic
 	);end component;
+
+
+
+  --test parte Stefan
+  component RandomIntensityTrigger
+     port (
+       BURST125            : in std_logic;
+       clk125              : in std_logic;
+       received_signal     : in std_logic;
+       received_packet     : in std_logic;
+       time_stamp          : in std_logic_vector;
+       internal_time_stamp : in std_logic_vector;
+       
+       trigger             : out std_logic;
+       posttrigger         : out std_logic
+       );
+   end component;
+
+
+
 
 
    --Handle Timestamp @40 MHz and 125 MHz with crossing domain using a dual
@@ -914,6 +941,27 @@ begin
       outputs.triggerflag                       => s_triggerflag,
       outputs.delaydeliveryoutput               => s_delaydeliveryoutput
       );
+
+
+
+--test parte Stefan
+
+   RandomTrigger : RandomIntensityTrigger port map
+     
+     (
+       clk125               => s_clk125,
+       BURST125             => s_BURST,
+       received_signal      => s_received_signal(0),
+       received_packet      => s_packet_received,
+       time_stamp           => s_timestamp(0)(29 downto 0),
+       internal_time_stamp  => s_internal_timestamp125,
+       
+       trigger              => s_RandomIntensityTrigger,
+       posttrigger          => s_rit
+       );
+
+
+
 
 
 
