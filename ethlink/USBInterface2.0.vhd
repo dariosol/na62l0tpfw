@@ -18,28 +18,29 @@ entity USBinterface is
       
       --Trigger Types-------------------------------------------------------------------
       
-      activateclock20MHz           : out std_logic;
-      activateCHOKE                : out std_logic;
-      activateERROR                : out std_logic;
-      activateperiodictrigger0     : out std_logic;
-      activateperiodictrigger1     : out std_logic;
-      activatecalibtrigger         : out std_logic;
-      activatesynchtrigger         : out std_logic;
-      activateprimitives           : out std_logic;
-      activaterandomtrigger        : out std_logic;
-      activateSOBEOBtrigger        : out std_logic;
-      activateNIMCalibration       : out std_logic;
-      activatecontroltrigger       : out std_logic;
+      activateclock20MHz             : out std_logic;
+      activateCHOKE                  : out std_logic;
+      activateERROR                  : out std_logic;
+      activateperiodictrigger0       : out std_logic;
+      activateperiodictrigger1       : out std_logic;
+      activatecalibtrigger           : out std_logic;
+      activatesynchtrigger           : out std_logic;
+      activateprimitives             : out std_logic;
+      activaterandomtrigger          : out std_logic;
+      activaterandomintensitytrigger : out std_logic;
+      activateSOBEOBtrigger          : out std_logic;
+      activateNIMCalibration         : out std_logic;
+      activatecontroltrigger         : out std_logic;
       --Debug---------------------------------------------------------------------------
       
-      ntriggers_predownscaling 		   : in vector32bit_t(0 to nmask-1);
+      ntriggers_predownscaling 	   : in vector32bit_t(0 to nmask-1);
       MEPNum                       : in std_logic_vector(31 downto 0);
       number_of_primitives         : vector32bit_t(0 to ethlink_NODES-2);
       
       ntriggers_postdownscaling_control: in std_logic_vector(31 downto 0);
       periodicrandomtriggercounter : in std_logic_vector(31 downto 0);
       randomtriggercounter         : in std_logic_vector(31 downto 0);
-      
+      randomintensitycounter       : in std_logic_vector(31 downto 0);
       CounterLTU                   : in std_logic_vector(31 downto 0);
       TRIGGERERROR                    : in std_logic_vector(31 downto 0);
       ETHLINKERROR                 : in std_logic_vector(31 downto 0);
@@ -108,7 +109,8 @@ entity USBinterface is
       Dataformat                   : out std_logic_vector(31 downto 0);
       FAKECHOKE                    : out std_logic_vector(13 downto 0);
       FAKEERROR                    : out std_logic_vector(13 downto 0);
-      activetriggers               : out std_logic_vector(31 downto 0)
+      activetriggers               : out std_logic_vector(31 downto 0);
+      NPrimitiveForRandom          : out std_logic_vector(31 downto 0)
       );
 
    
@@ -124,24 +126,25 @@ architecture rtl of USBinterface is
 
 -- matrix for parameters:
    type vector32bit_t is array(NATURAL RANGE <>) of std_logic_vector(31 downto 0)  ;
-   signal s_parameters                 : vector32bit_t(0 to 255)                   ;
-   signal s_address                    : std_logic_vector(31 downto 0)             ;
-   signal parametersdebug              : vector32bit_t(0 to 127)                   ;
-   signal s_addressdebug               : std_logic_vector(31 downto 0)             ;
-
-   signal s_activetriggers             : std_logic_vector(31 downto 0);
-   signal s_activateperiodictrigger0   : std_logic;
-   signal s_activateperiodictrigger1   : std_logic;
-   signal s_activatesynchtrigger       : std_logic;
-   signal s_activate_primitives        : std_logic;
-   signal s_activatecalibtrigger       : std_logic;
-   signal s_activateSOBEOB             : std_logic;
-   signal s_activateClock20MHz         : std_logic;
-   signal s_activateCHOKE              : std_logic;
-   signal s_activateERROR              : std_logic;
-   signal s_activateNIMCalib           : std_logic;
-   signal s_activateRandomtrigger      : std_logic;
-   signal s_activatecontroltrigger     : std_logic;
+   signal s_parameters                     : vector32bit_t(0 to 255)                   ;
+   signal s_address                        : std_logic_vector(31 downto 0)             ;
+   signal parametersdebug                  : vector32bit_t(0 to 127)                   ;
+   signal s_addressdebug                   : std_logic_vector(31 downto 0)             ;
+                                           
+   signal s_activetriggers                 : std_logic_vector(31 downto 0);
+   signal s_activateperiodictrigger0       : std_logic;
+   signal s_activateperiodictrigger1       : std_logic;
+   signal s_activatesynchtrigger           : std_logic;
+   signal s_activate_primitives            : std_logic;
+   signal s_activatecalibtrigger           : std_logic;
+   signal s_activateSOBEOB                 : std_logic;
+   signal s_activateClock20MHz             : std_logic;
+   signal s_activateCHOKE                  : std_logic;
+   signal s_activateERROR                  : std_logic;
+   signal s_activateNIMCalib               : std_logic;
+   signal s_activateRandomtrigger          : std_logic;
+   signal s_activateRandomIntensitytrigger : std_logic;
+   signal s_activatecontroltrigger         : std_logic;
  
 	
 --FAKE----------------------------------------------
@@ -212,10 +215,10 @@ begin
    parametersdebug(37)(9)  <= s_activateERROR; 	
    parametersdebug(37)(10) <= s_activateClock20MHz; 	 
    parametersdebug(37)(11) <= s_activatesynchtrigger; 	 	
-
+   parametersdebug(37)(12) <= s_activaterandomintensitytrigger;
+   parametersdebug(38)     <= randomintensitycounter;
    
-   
-   parametersdebug(38 to 127) <= (others =>"00000000000000000000000000000000"); --reserved
+   parametersdebug(39 to 127) <= (others =>"00000000000000000000000000000000"); --reserved
 
    P1: PROCESS(Reset,clk125,data_in)
    begin
@@ -235,18 +238,19 @@ begin
 	       
 	       status                   <=SLV(0,32)       ; --Dico alla interfaccia che sono in idle
 	       ----CLEAR COUNTERS------------------------------
-	       s_activateperiodictrigger0<='0'; --0)
-	       s_activateperiodictrigger1<='0'; --1)
-	       s_activate_primitives     <='0'; --2)
-	       s_activatesynchtrigger    <='0'; --3)
-	       s_activatecalibtrigger    <='0'; --4)
-	       s_activateCHOKE           <='0'; --5)
-	       s_activateERROR           <='0'; --6)
-	       s_activaterandomtrigger   <='0'; --7)
-	       s_activateClock20MHz      <='0'; --8)
-	       s_activateSOBEOB          <='0'; --9)
-	       s_activateNIMCalib        <='0'; --A)
-	       s_activatecontroltrigger  <='0'; --B)
+	       s_activateperiodictrigger0        <='0'; --0)
+	       s_activateperiodictrigger1        <='0'; --1)
+	       s_activate_primitives             <='0'; --2)
+	       s_activatesynchtrigger            <='0'; --3)
+	       s_activatecalibtrigger            <='0'; --4)
+	       s_activateCHOKE                   <='0'; --5)
+	       s_activateERROR                   <='0'; --6)
+	       s_activaterandomtrigger           <='0'; --7)
+	       s_activateClock20MHz              <='0'; --8)
+	       s_activateSOBEOB                  <='0'; --9)
+	       s_activateNIMCalib                <='0'; --A)
+	       s_activatecontroltrigger          <='0'; --B)
+               s_activaterandomintensitytrigger  <='0'; --C)
 	       s_parameters              <=(others=>X"00000000");
 	       s_address                 <=(others=>'0')        ;  
 	       s_FAKECHOKE               <=(others=>'0');
@@ -279,7 +283,8 @@ begin
 	       s_activateSOBEOB          <='0'; --9)
 	       s_activateNIMCalib        <='0'; --A)
 	       s_activatecontroltrigger  <='0'; --B)
-	       
+	       s_activaterandomintensitytrigger  <='0'; --C)
+               
 	       if data_in= par_reset then                  -- Reset_RunControl;
 		  USBstate <=Reset_RunControl;
 		  
@@ -473,7 +478,16 @@ begin
 		     s_activaterandomtrigger <='0';
 		  else
 		     s_activaterandomtrigger <=s_activaterandomtrigger;
-		  end if; --Random trigger		
+		  end if; --Random trigger
+
+
+                  if data_in = par_activaterandomintensitytrigger        then
+		     s_activaterandomintensitytrigger <='1';
+		  elsif data_in = par_deactivaterandomintensitytrigger then
+		     s_activaterandomintensitytrigger <='0';
+		  else
+		     s_activaterandomintensitytrigger <=s_activaterandomintensitytrigger;
+		  end if; --Random Intensity trigger		
 		  
 		  
 		  
@@ -623,21 +637,22 @@ begin
    
 --------TRIGGERTYPES----------------------------
 
-   activetriggers             <= parametersdebug(37)        ;
-   activateperiodictrigger0   <= s_activateperiodictrigger0 ;
-   activateperiodictrigger1   <= s_activateperiodictrigger1 ;
-   activatecalibtrigger       <= s_activatecalibtrigger     ;
-   activatesynchtrigger       <= s_activatesynchtrigger     ;
-   activateprimitives         <= s_activate_primitives      ;
-   activateCHOKE              <= s_activateCHOKE            ;
-   activateERROR              <= s_activateERROR            ;	
-   activateSOBEOBtrigger      <= s_activateSOBEOB           ;
-   activateRandomtrigger      <= s_activateRandomtrigger    ;
-   activateClock20MHz         <= s_activateClock20MHz       ;
-   activateNIMCalibration     <= s_activateNIMCalib         ;
-   activatecontroltrigger     <= s_activatecontroltrigger   ;
-   FAKECHOKE                  <= s_FAKECHOKE(13 downto 0)   ;
-   FAKEERROR                  <= s_FAKEERROR(13 downto 0)  ;
+   activetriggers                 <= parametersdebug(37)        ;
+   activateperiodictrigger0       <= s_activateperiodictrigger0 ;
+   activateperiodictrigger1       <= s_activateperiodictrigger1 ;
+   activatecalibtrigger           <= s_activatecalibtrigger     ;
+   activatesynchtrigger           <= s_activatesynchtrigger     ;
+   activateprimitives             <= s_activate_primitives      ;
+   activateCHOKE                  <= s_activateCHOKE            ;
+   activateERROR                  <= s_activateERROR            ;	
+   activateSOBEOBtrigger          <= s_activateSOBEOB           ;
+   activateRandomtrigger          <= s_activateRandomtrigger    ;
+   activateRandomIntensitytrigger <= s_activateRandomIntensityTrigger;      
+   activateClock20MHz             <= s_activateClock20MHz       ;
+   activateNIMCalibration         <= s_activateNIMCalib         ;
+   activatecontroltrigger         <= s_activatecontroltrigger   ;
+   FAKECHOKE                      <= s_FAKECHOKE(13 downto 0)   ;
+   FAKEERROR                      <= s_FAKEERROR(13 downto 0)  ;
 --------OUTPUTS--------------------------------
    MEPEventNumber             <= s_parameters(0) ;
    FIxed_LAtency              <= s_parameters(1) ;
@@ -685,7 +700,8 @@ begin
    Calib_Triggerword            <= s_parameters(99);
    Deltapacket                  <= s_parameters(100);
    Control_trigger_downscaling <= s_parameters(101);
-   --.....PARAMETER 102 MISSING....
+   NPrimitiveForRandom         <= s_parameters(102);
+   
    CHOKEMASK                    <= s_parameters(104)(13 downto 0);
    ERRORMASK                    <= s_parameters(104)(27 downto 14);
    

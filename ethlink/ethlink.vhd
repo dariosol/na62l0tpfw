@@ -260,6 +260,8 @@ package component_ethlink is
       CounterERROR                : std_logic_vector(31 downto 0);
       periodicrandomtriggercounter: std_logic_vector(31 downto 0);
       randomtriggercounter        : std_logic_vector(31 downto 0);
+      randomintensitycounter      : std_logic_vector(31 downto 0);
+      
       rst40                       : std_logic;
       rst125                      : std_logic;
       packet_received             : std_logic;
@@ -573,6 +575,8 @@ architecture rtl of ethlink is
       old_tw                   : std_logic_vector(5 downto 0);
       periodicrandomtriggercounter: std_logic_vector(31 downto 0);
       randomtriggercounter     : std_logic_vector(31 downto 0);
+      randomintensitycounter   : std_logic_vector(31 downto 0);
+      
       calib_direction          : std_logic;
       calib_latency            : std_logic_vector(31 downto 0);
       periodic_triggerword0    : std_logic_vector(5 downto 0);
@@ -781,7 +785,9 @@ architecture rtl of ethlink is
 	 old_timestamp            =>(others=>'0'),
 	 sendEOB                  =>'0',
 	 periodicrandomtriggercounter =>(others =>'0'),
-	 randomtriggercounter     =>(others =>'0'),
+          randomtriggercounter     =>(others =>'0'),
+          randomintensitycounter     =>(others =>'0'),
+          
 	 calib_direction          => '0',
 	 calib_latency            => (others =>'0'),
 	 periodic_triggerword0    =>(others=>'0'),
@@ -1309,6 +1315,7 @@ begin
 	 o.counterERROR                   := ro.clk40.counterERROR                 ;
 	 o.periodicrandomtriggercounter   := ro.clk125.periodicrandomtriggercounter;
 	 o.randomtriggercounter           := ro.clk125.randomtriggercounter        ;
+         o.randomintensitycounter         := ro.clk125.randomintensitycounter     ;
 	 o.Fixed_Latency_o                := ro.clk40.fixed_latency                ;
 	 
 	 o.LTU0                           := ro.clk40.LTU0       ;
@@ -1368,7 +1375,10 @@ begin
 	 r.clk125.calib_signal             := i.calib_signal       ;  
 	 r.clk125.CHOKE_signal             := i.CHOKE_signal       ;  
 	 r.clk125.ERROR_signal             := i.ERROR_signal       ;  
-	 
+
+	 -- Parte Stefan test registro
+         r.clk125.s_rit                    := i.rit_port;
+         
 	 r.clk125.CHOKE_OFF                := i.CHOKE_OFF and  ro.clk125.MACReady;    
 	 r.clk125.CHOKE_ON                 := i.CHOKE_ON  or (not(ro.clk125.MACReady));    
 	 r.clk125.ERROR_ON                 := i.ERROR_ON          ;  
@@ -1563,11 +1573,6 @@ begin
 	       n.enet_MAC(index).inputs.wrst(p)       := n.rst.clk125;
 	    END LOOP;     
 	 END LOOP;
-
-
--- Parte Stefan test registro
-
-            r.clk125.s_rit  := i.rit_port;
 	 
       end procedure;
 --
@@ -3201,9 +3206,13 @@ begin
                  n.LATENCYRAM.inputs.address_a  :=ro.internal_timestamp(14 downto 0)  ;
                  r.FSMoutputdata                :=SetFarmAddress                      ;
                  
-                 
+                 r.randomintensitycounter       :=SLV(UINT(ro.randomintensitycounter) +1,32); --contatore
+                                                                                              --trigger
+                                                                                              --random as
+                                                                                              --function
+                                                                                              --of intensity
                  r.tmptimestamp                 :=ro.internal_timestamp; 
-                 r.tmptriggerword               :="111111"           ; --TO BE CHECKED 
+                 r.tmptriggerword               :=ro.random_triggerword; 
                  r.tmpdatatype                  :=X"20"              ;
                  r.tmpprimitiveID0              :=ro.primitiveID_t0  ;
                  r.tmpprimitiveID1              :=ro.primitiveID_t1  ;
@@ -3215,12 +3224,6 @@ begin
                  r.tmpfinetime2                 :=(others=>"00000000");
                  
 --------------------------------------------------------                 
-
-
-
-
-
-
 
 		  
 	       elsif ro.calib_signal /="0000000" and ro.trigger_signal ='0' then 
@@ -5877,6 +5880,8 @@ begin
 		  r.MEPNum                          := (others=>'0');
 		  r.periodicrandomtriggercounter    := (others=>'0');
                   r.randomtriggercounter            := (others=>'0');
+                  r.randomintensitycounter          := (others=>'0');
+                  
 		  r.MTPNUMREF                       := (others=>"00000000");  
 		
 		  r.fifODelay                    := (others=>"00000000000000000000000000000000");

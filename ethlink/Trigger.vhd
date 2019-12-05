@@ -2029,6 +2029,10 @@ begin
 		  r.oldaddress                   := (others=>'0');
 		  r.delaydeliveryoutput          := (others=>'0');
 		  r.old_trigger_timestamp        := (others=>'0');
+                  if ro.downscaling_reset /="00000000000000000000000000000000" then
+                    r.downscaling := (others=>"00000000000000000000000000000000");
+                    r.control_downscaling          := (others=>'0');
+                  end if;
 	       else
 		  r.FSMResetCounters :=S0;
 	       end if;

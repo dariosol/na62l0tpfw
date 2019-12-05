@@ -54,7 +54,7 @@ entity top is
 	 ---TTC signals from LTU------
 	 SMA_CLKIN_p  : in std_logic;
 
-         ECRST        : in std_logic;
+        ECRST        : in std_logic;
          BCRST        : in std_logic;
 	 CHOKE0       : in std_logic;
 	 CHOKE1       : in std_logic;
@@ -253,6 +253,7 @@ architecture rtl of top is
    signal s_activateperiodictrigger1       : std_logic;
    signal s_activatecontroltrigger         : std_logic;
    signal s_activaterandomtrigger          : std_logic;
+   signal s_activaterandomintensitytrigger : std_logic;      
    signal s_activateNIMCalib               : std_logic;
    signal s_activateprimitives             : std_logic;
    signal s_activatecalibtrigger           : std_logic;
@@ -362,9 +363,11 @@ architecture rtl of top is
 
 
 -- Stefan signal
-   signal s_rit :std_logic;
-   signal s_RandomIntensityTrigger :std_logic;
-
+   signal s_rit : std_logic;
+   signal s_RandomIntensityTrigger : std_logic;
+   signal s_nprimitiveforrandom    : std_logic_vector(31 downto 0);
+   signal s_randomintensitycounter : std_logic_vector(31 downto 0);
+   signal s_error_randomintensity  : std_logic_vector(4 downto 0);
 ------------------------------------------------------------------------
 
 
@@ -383,7 +386,7 @@ architecture rtl of top is
    end component;
   
 -----------
-   --PLL clock @ 125 MHz:
+   --PLL clock @ 125 MHz
    component altpll_refclk2
       port(
 	 areset		: IN STD_LOGIC  := '0';
@@ -436,15 +439,19 @@ architecture rtl of top is
   --test parte Stefan
   component RandomIntensityTrigger
      port (
-       BURST125            : in std_logic;
-       clk125              : in std_logic;
-       received_signal     : in std_logic;
-       received_packet     : in std_logic;
-       time_stamp          : in std_logic_vector;
-       internal_time_stamp : in std_logic_vector;
+       reset                          : in std_logic;
+       BURST125                       : in std_logic;
+       clk125                         : in std_logic;
+       received_signal                : in std_logic;
+       received_packet                : in std_logic;
+       activaterandomintensitytrigger : in std_logic;
+       time_stamp                     : in std_logic_vector(29 downto 0);
+       internal_time_stamp            : in std_logic_vector(29 downto 0);
+       nprimitiveforrandom            : in std_logic_vector(31 downto 0);
        
-       trigger             : out std_logic;
-       posttrigger         : out std_logic
+       trigger                        : out std_logic;
+       posttrigger                    : out std_logic;
+       errorfifo                      : out std_logic_vector(4 downto 0)
        );
    end component;
 
@@ -521,19 +528,20 @@ architecture rtl of top is
 	 
 	 --Trigger Types-------------------------------------------------------------------
 	 
-	 activateclock20MHz           : out std_logic;
-	 activateCHOKE                : out std_logic;
-	 activateERROR                : out std_logic;
-	 activateperiodictrigger0     : out std_logic;
-	 activateperiodictrigger1     : out std_logic;
-         activatecontroltrigger       : out std_logic;
-	 activatecalibtrigger         : out std_logic;
-	 activatesynchtrigger         : out std_logic;
-	 activateprimitives           : out std_logic;
-	 activaterandomtrigger        : out std_logic;
-         activateSOBEOBtrigger        : out std_logic;
-         activateNIMCalibration       : out std_logic;
-	 activetriggers               : out std_logic_vector(31 downto 0);
+	 activateclock20MHz             : out std_logic;
+	 activateCHOKE                  : out std_logic;
+	 activateERROR                  : out std_logic;
+	 activateperiodictrigger0       : out std_logic;
+	 activateperiodictrigger1       : out std_logic;
+         activatecontroltrigger         : out std_logic;
+	 activatecalibtrigger           : out std_logic;
+	 activatesynchtrigger           : out std_logic;
+	 activateprimitives             : out std_logic;
+	 activaterandomtrigger          : out std_logic;
+         activaterandomintensitytrigger : out std_logic;
+         activateSOBEOBtrigger          : out std_logic;
+         activateNIMCalibration         : out std_logic;
+	 activetriggers                 : out std_logic_vector(31 downto 0);
 	 --Debug---------------------------------------------------------------------------
 	 ntriggers_predownscaling 	    : in vector32bit_t(0 to nmask-1);
 	 ntriggers_postdownscaling_control  : in std_logic_vector(31 downto 0);
@@ -558,6 +566,9 @@ architecture rtl of top is
 	 CHOKEFIFOOFF                 : in std_logic_vector(31 downto 0);
 	 ERRORFIFOON                  : in std_logic_vector(31 downto 0);
 	 ERRORFIFOOFF                 : in std_logic_vector(31 downto 0);
+
+	 randomintensitycounter       : in std_logic_vector (31 downto 0);
+	 
 	 readCHOKEFIFOON              : out std_LOGIC;
 	 readCHOKEFIFOOFF             : out std_LOGIC;
 	 readERRORFIFOON              : out std_LOGIC;
@@ -606,7 +617,9 @@ architecture rtl of top is
 	 Delaydeliveryprimitive       : out std_logic_vector(31 downto 0);
 	 Dataformat                   : out std_logic_vector(31 downto 0);
 	 FAKECHOKE                    : out std_logic_vector(13 downto 0);
-	 FAKEERROR                    : out std_logic_vector(13 downto 0)
+	 FAKEERROR                    : out std_logic_vector(13 downto 0);
+         NPrimitiveForRandom          : out std_logic_vector(31 downto 0)
+	 
 	 );
    end component;
 
@@ -800,7 +813,9 @@ begin
       inputs.trigger_signal                    => s_trigger_signal ,
       inputs.ERROR_signal                      => s_ERROR_signal   ,
       inputs.CHOKE_signal                      => s_CHOKE_signal   ,
-      				               
+--Stefan port
+      inputs.rit_port                          => s_rit,
+      
       inputs.CHOKE_OFF                         => s_CHOKE_OFF,
       inputs.CHOKE_ON                          => s_CHOKE_ON,
       inputs.ERROR_OFF                         => s_ERROR_OFF,
@@ -851,6 +866,7 @@ begin
       					       
       outputs.periodicrandomtriggercounter     => s_periodicrandomtriggercounter,
       outputs.randomtriggercounter             => s_randomtriggercounter,
+      outputs.randomintensitycounter            => s_randomintensitycounter,
       -----------			       
       inputs.activate_primitives               => s_activateprimitives,
       inputs.delay_set                         => s_offset,
@@ -949,15 +965,18 @@ begin
    RandomTrigger : RandomIntensityTrigger port map
      
      (
-       clk125               => s_clk125,
+       reset                => NOT(CPU_RESET_n),
        BURST125             => s_BURST,
+       clk125               => s_clk125,
        received_signal      => s_received_signal(0),
        received_packet      => s_packet_received,
+       activaterandomintensitytrigger => s_activaterandomintensitytrigger,
        time_stamp           => s_timestamp(0)(29 downto 0),
        internal_time_stamp  => s_internal_timestamp125,
-       
+       nprimitiveforrandom  => s_nprimitiveforrandom,
        trigger              => s_RandomIntensityTrigger,
-       posttrigger          => s_rit
+       posttrigger          => s_rit,
+       errorfifo            => s_error_randomintensity
        );
 
 
@@ -1088,7 +1107,7 @@ begin
       activateRandomtrigger              => s_activateRandomtrigger,
       activateClock20MHz                 => s_activateClock20MHz,
       activateNIMCalibration             => s_activateNIMCalib,
-     
+      activateRandomIntensityTrigger     => s_activateRandomIntensityTrigger,
       ntriggers_predownscaling           => s_ntriggers_predownscaling,
       number_of_primitives               => s_number_of_primitives ,
       n_of_random                        => (others =>'0'), 
@@ -1116,6 +1135,8 @@ begin
       Random_StartTime                   => s_Random_Start_Time,
       Random_EndTime                     => s_Random_End_Time,
 
+      nprimitiveforrandom                => s_nprimitiveforrandom,
+      
       Offset                             => s_offset,
       maximum_delay_detector             => s_maximum_delay_detector,
       primitiveDT                        => s_primitiveDT,
@@ -1132,7 +1153,7 @@ begin
 
       MEPNum                             => s_MEPNum,
       CounterLTU                         => s_CounterLTU,
-      TRIGGERERROR                       => s_TRIGGERERROR,  
+      TRIGGERERROR                       => s_TRIGGERERROR or s_error_randomintensity,  
       ETHLINKERROR                       => s_ETHLINKERROR,
       Fixed_Latency_i                    => s_Fixed_Latency_o,
       
@@ -1141,6 +1162,7 @@ begin
       
       periodicrandomtriggercounter       => s_periodicrandomtriggercounter,
       randomtriggercounter               => s_randomtriggercounter,
+      randomintensitycounter             => s_randomintensitycounter,
       ntriggers_postdownscaling_control  => s_ntriggers_postdownscaling_control,
       out_control_dontcare               => s_control_dontcare,
       out_control_mask                   => s_control_mask,       

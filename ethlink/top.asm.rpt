@@ -1,6 +1,6 @@
 Assembler report for top
-Fri Apr  5 09:59:39 2019
-Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Standard Edition
+Mon Jul 15 17:02:23 2019
+Quartus Prime Version 16.1.2 Build 203 01/18/2017 SJ Standard Edition
 
 
 ---------------------
@@ -19,7 +19,7 @@ Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Standard Edition
 ----------------
 ; Legal Notice ;
 ----------------
-Copyright (C) 2016  Intel Corporation. All rights reserved.
+Copyright (C) 2017  Intel Corporation. All rights reserved.
 Your use of Intel Corporation's design tools, logic functions 
 and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
@@ -39,7 +39,7 @@ agreement for further details.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Fri Apr  5 09:59:39 2019 ;
+; Assembler Status      ; Successful - Mon Jul 15 17:02:23 2019 ;
 ; Revision Name         ; top                                   ;
 ; Top-level Entity Name ; top                                   ;
 ; Family                ; Stratix IV                            ;
@@ -81,8 +81,8 @@ agreement for further details.
 ; Option         ; Setting          ;
 +----------------+------------------+
 ; Device         ; EP4SGX530KH40C2  ;
-; JTAG usercode  ; 0x156E3970       ;
-; Checksum       ; 0x156E3970       ;
+; JTAG usercode  ; 0x15887B80       ;
+; Checksum       ; 0x15887B80       ;
 +----------------+------------------+
 
 
@@ -91,15 +91,15 @@ agreement for further details.
 +--------------------+
 Info: *******************************************************************
 Info: Running Quartus Prime Assembler
-    Info: Version 16.1.0 Build 196 10/24/2016 SJ Standard Edition
-    Info: Processing started: Fri Apr  5 09:58:59 2019
+    Info: Version 16.1.2 Build 203 01/18/2017 SJ Standard Edition
+    Info: Processing started: Mon Jul 15 17:01:45 2019
 Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off top -c top
 Info (115031): Writing out detailed assembly data for power analysis
 Info (115030): Assembler is generating device programming files
 Info: Quartus Prime Assembler was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 1729 megabytes
-    Info: Processing ended: Fri Apr  5 09:59:40 2019
-    Info: Elapsed time: 00:00:41
-    Info: Total CPU time (on all processors): 00:00:40
+    Info: Peak virtual memory: 1740 megabytes
+    Info: Processing ended: Mon Jul 15 17:02:24 2019
+    Info: Elapsed time: 00:00:39
+    Info: Total CPU time (on all processors): 00:00:38
 
 

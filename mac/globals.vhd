@@ -63,6 +63,11 @@ constant par_deactivateFAKEchoke: std_logic_vector(31 downto 0)     :=x"0FFFFFCE
 constant par_activateFAKEerror  : std_logic_vector(31 downto 0)     :=x"0FFFFFCD";
 constant par_deactivateFAKEerror: std_logic_vector(31 downto 0)     :=x"0FFFFFCC";
 
+constant par_activaterandomintensitytrigger    : std_logic_vector(31 downto 0)     :=x"0FFFFFCB";
+constant par_deactivaterandomintensitytrigger  : std_logic_vector(31 downto 0)     :=x"0FFFFFCA";
+
+
+
 --0
 constant par_activateCHOKE                : std_logic_vector (31 downto 0) := x"0FFFFFF6";
 constant par_deactivateCHOKE              : std_logic_vector (31 downto 0) := x"0FFFFFF5";
