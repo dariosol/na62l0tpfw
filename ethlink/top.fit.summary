@@ -1,4 +1,4 @@
-Fitter Status : Successful - Mon Jul 15 17:01:22 2019
+Fitter Status : Successful - Tue Mar 10 17:34:21 2020
 Quartus Prime Version : 16.1.2 Build 203 01/18/2017 SJ Standard Edition
 Revision Name : top
 Top-level Entity Name : top
@@ -6,10 +6,10 @@ Family : Stratix IV
 Device : EP4SGX530KH40C2
 Timing Models : Final
 Logic utilization : 20 %
-    Combinational ALUTs : 63,463 / 424,960 ( 15 % )
+    Combinational ALUTs : 63,430 / 424,960 ( 15 % )
     Memory ALUTs : 269 / 212,480 ( < 1 % )
-    Dedicated logic registers : 57,328 / 424,960 ( 13 % )
-Total registers : 57416
+    Dedicated logic registers : 57,325 / 424,960 ( 13 % )
+Total registers : 57413
 Total pins : 249 / 888 ( 28 % )
 Total virtual pins : 0
 Total block memory bits : 11,451,408 / 21,233,664 ( 54 % )

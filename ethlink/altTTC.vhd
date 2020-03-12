@@ -14,7 +14,7 @@ entity altTTC is
 	 startRUN        : in std_logic;
 	 BCRST           : in std_logic;
 	 BURST             : out std_logic;
-
+         BURSTERROR      : out std_logic_vector(5 downto 0);
 	 ECRST           : in std_logic;
 	 led1            : out std_logic;
 	 led3            : out std_logic;
@@ -49,7 +49,8 @@ architecture rtl of altTTC is
    
    signal s_n_of_choke      : std_logic_vector(31 downto 0);
    signal s_n_of_error      : std_logic_vector(31 downto 0);
-   signal s_BURST             : std_logic;
+   signal s_BURST           : std_logic;
+   signal s_BURSTERROR      : std_logic_vector(5 downto 0);     
    signal s_CHOKE_OFF       : std_logic;
    signal s_CHOKE_ON        : std_logic;
    signal s_ERROR_OFF       : std_logic;
@@ -131,6 +132,23 @@ process(clk40, reset,CHOKE,ERROR,FAKECHOKE,FAKEERROR,CHOKEMASK,ERRORMASK) is
      end if;	
    end PROCESS;
 
+ PError: PROCESS(clk40,s_ECRST,s_BCRST)
+ begin
+   if(clk40='1' and clk40'event)  then
+     if (s_ECRST='1' and s_BCRST='1' and s_BURST = '1')  then --sob without eob
+       s_BURSTERROR <= "100000";
+     elsif (s_ECRST='1' and s_BCRST='1' and s_BURST = '0')  then --good sob
+       s_BURSTERROR <= "000000";
+     else
+       s_BURSTERROR  <=s_BURSTERROR;
+     end if;
+    end if;      
+   end PROCESS;
+
+
+ 
+
+ 
    CHOKE_P: PROCESS(reset,clk40,CHOKE_s2,s_FAKECHOKE)
    begin
       if reset ='1' then 
@@ -306,15 +324,16 @@ process(clk40, reset,CHOKE,ERROR,FAKECHOKE,FAKEERROR,CHOKEMASK,ERRORMASK) is
 
 
 
-   ERROR_ON       <= s_ERROR_ON       ;
-   ERROR_OFF      <= s_ERROR_OFF      ;
-   CHOKE_ON       <= s_CHOKE_ON       ;
-   CHOKE_OFF      <= s_CHOKE_OFF      ;
-   BURST    	  <= s_BURST          ;
-   Led1   	  <= s_BURST          ;
-   Led3           <= not(s_BURST)     ; --Led of EOB
-   CHOKE_signal   <= CHOKE_s2         ;
-   ERROR_signal   <= ERROR_s2         ;
+ ERROR_ON       <= s_ERROR_ON   ;
+ ERROR_OFF      <= s_ERROR_OFF  ;
+ CHOKE_ON       <= s_CHOKE_ON   ;
+ CHOKE_OFF      <= s_CHOKE_OFF  ;
+ BURST    	<= s_BURST      ;
+ BURSTERROR     <= s_BURSTERROR ;
+ Led1           <= s_BURST      ;
+ Led3           <= not(s_BURST) ; --Led of EOB
+ CHOKE_signal   <= CHOKE_s2     ;
+ ERROR_signal   <= ERROR_s2     ;
 
 
 

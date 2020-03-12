@@ -1,5 +1,5 @@
 TimeQuest Timing Analyzer report for top
-Mon Jul 15 17:03:09 2019
+Tue Mar 10 17:36:05 2020
 Quartus Prime Version 16.1.2 Build 203 01/18/2017 SJ Standard Edition
 
 
@@ -96,14 +96,14 @@ agreement for further details.
 ; Number detected on machine ; 8           ;
 ; Maximum allowed            ; 4           ;
 ;                            ;             ;
-; Average used               ; 1.75        ;
+; Average used               ; 1.70        ;
 ; Maximum used               ; 4           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;  27.3%      ;
-;     Processor 3            ;  24.0%      ;
-;     Processor 4            ;  23.4%      ;
+;     Processor 2            ;  24.8%      ;
+;     Processor 3            ;  22.7%      ;
+;     Processor 4            ;  22.3%      ;
 +----------------------------+-------------+
 
 
@@ -112,7 +112,7 @@ agreement for further details.
 +----------------------------+--------+--------------------------+
 ; SDC File Path              ; Status ; Read at                  ;
 +----------------------------+--------+--------------------------+
-; ../mac/mac_sgmii_rgmii.sdc ; OK     ; Mon Jul 15 17:02:36 2019 ;
+; ../mac/mac_sgmii_rgmii.sdc ; OK     ; Tue Mar 10 17:35:35 2020 ;
 +----------------------------+--------+--------------------------+
 
 
@@ -142,14 +142,14 @@ agreement for further details.
 +------------+-----------------+---------------------+------+
 ; Fmax       ; Restricted Fmax ; Clock Name          ; Note ;
 +------------+-----------------+---------------------+------+
-; 70.45 MHz  ; 70.45 MHz       ; input_clock_40      ;      ;
-; 101.63 MHz ; 101.63 MHz      ; altera_reserved_tck ;      ;
-; 104.5 MHz  ; 104.5 MHz       ; input_clock_50      ;      ;
-; 109.77 MHz ; 109.77 MHz      ; input_clock_125     ;      ;
-; 130.82 MHz ; 130.82 MHz      ; rx_input_clock[1]   ;      ;
+; 80.53 MHz  ; 80.53 MHz       ; input_clock_40      ;      ;
+; 95.72 MHz  ; 95.72 MHz       ; input_clock_50      ;      ;
+; 99.69 MHz  ; 99.69 MHz       ; altera_reserved_tck ;      ;
+; 112.17 MHz ; 112.17 MHz      ; input_clock_125     ;      ;
+; 129.47 MHz ; 129.47 MHz      ; rx_input_clock[0]   ;      ;
+; 130.89 MHz ; 130.89 MHz      ; rx_input_clock[1]   ;      ;
+; 130.89 MHz ; 130.89 MHz      ; rx_input_clock[3]   ;      ;
 ; 130.99 MHz ; 130.99 MHz      ; rx_input_clock[2]   ;      ;
-; 131.06 MHz ; 131.06 MHz      ; rx_input_clock[3]   ;      ;
-; 131.13 MHz ; 131.13 MHz      ; rx_input_clock[0]   ;      ;
 +------------+-----------------+---------------------+------+
 This panel reports FMAX for every clock in the design, regardless of the user-specified clock periods.  FMAX is only computed for paths where the source and destination registers or ports are driven by the same clock.  Paths of different clocks, including generated clocks, are ignored.  For paths between a clock and its inversion, FMAX is computed as if the rising and falling edges are scaled along with FMAX, such that the duty cycle (in terms of a percentage) is maintained. Altera recommends that you always use clock constraints and other slack reports for sign-off analysis.
 
@@ -165,18 +165,18 @@ HTML report is unavailable in plain text report export.
 +---------------------+--------+---------------+
 ; Clock               ; Slack  ; End Point TNS ;
 +---------------------+--------+---------------+
-; input_clock_125     ; -1.110 ; -926.834      ;
-; input_clock_50      ; -0.963 ; -9.143        ;
-; tx_output_clock[0]  ; 0.056  ; 0.000         ;
-; tx_output_clock[1]  ; 0.106  ; 0.000         ;
+; input_clock_50      ; -0.918 ; -16.643       ;
+; input_clock_125     ; -0.915 ; -1220.771     ;
+; tx_output_clock[0]  ; 0.041  ; 0.000         ;
+; tx_output_clock[1]  ; 0.095  ; 0.000         ;
 ; tx_output_clock[3]  ; 0.122  ; 0.000         ;
+; rx_input_clock[0]   ; 0.138  ; 0.000         ;
 ; tx_output_clock[2]  ; 0.155  ; 0.000         ;
-; rx_input_clock[1]   ; 0.178  ; 0.000         ;
+; rx_input_clock[1]   ; 0.180  ; 0.000         ;
+; rx_input_clock[3]   ; 0.180  ; 0.000         ;
 ; rx_input_clock[2]   ; 0.183  ; 0.000         ;
-; rx_input_clock[3]   ; 0.185  ; 0.000         ;
-; rx_input_clock[0]   ; 0.187  ; 0.000         ;
-; input_clock_40      ; 6.578  ; 0.000         ;
-; altera_reserved_tck ; 45.080 ; 0.000         ;
+; input_clock_40      ; 7.174  ; 0.000         ;
+; altera_reserved_tck ; 45.931 ; 0.000         ;
 +---------------------+--------+---------------+
 
 
@@ -185,18 +185,18 @@ HTML report is unavailable in plain text report export.
 +---------------------+-------+---------------+
 ; Clock               ; Slack ; End Point TNS ;
 +---------------------+-------+---------------+
-; rx_input_clock[1]   ; 0.058 ; 0.000         ;
-; rx_input_clock[2]   ; 0.162 ; 0.000         ;
+; rx_input_clock[1]   ; 0.028 ; 0.000         ;
+; rx_input_clock[0]   ; 0.124 ; 0.000         ;
+; rx_input_clock[2]   ; 0.146 ; 0.000         ;
+; rx_input_clock[3]   ; 0.158 ; 0.000         ;
 ; input_clock_125     ; 0.192 ; 0.000         ;
-; input_clock_40      ; 0.205 ; 0.000         ;
-; input_clock_50      ; 0.230 ; 0.000         ;
-; rx_input_clock[3]   ; 0.233 ; 0.000         ;
-; rx_input_clock[0]   ; 0.251 ; 0.000         ;
-; altera_reserved_tck ; 0.323 ; 0.000         ;
-; tx_output_clock[3]  ; 3.701 ; 0.000         ;
-; tx_output_clock[1]  ; 3.707 ; 0.000         ;
+; input_clock_50      ; 0.255 ; 0.000         ;
+; input_clock_40      ; 0.268 ; 0.000         ;
+; altera_reserved_tck ; 0.325 ; 0.000         ;
+; tx_output_clock[3]  ; 3.697 ; 0.000         ;
+; tx_output_clock[1]  ; 3.711 ; 0.000         ;
 ; tx_output_clock[2]  ; 3.737 ; 0.000         ;
-; tx_output_clock[0]  ; 3.755 ; 0.000         ;
+; tx_output_clock[0]  ; 3.756 ; 0.000         ;
 +---------------------+-------+---------------+
 
 
@@ -205,14 +205,14 @@ HTML report is unavailable in plain text report export.
 +---------------------+--------+---------------+
 ; Clock               ; Slack  ; End Point TNS ;
 +---------------------+--------+---------------+
-; input_clock_50      ; -1.602 ; -11.861       ;
-; input_clock_125     ; -0.704 ; -225.187      ;
-; rx_input_clock[0]   ; 0.583  ; 0.000         ;
-; rx_input_clock[1]   ; 1.064  ; 0.000         ;
-; rx_input_clock[3]   ; 1.839  ; 0.000         ;
-; rx_input_clock[2]   ; 2.449  ; 0.000         ;
-; input_clock_40      ; 8.209  ; 0.000         ;
-; altera_reserved_tck ; 86.036 ; 0.000         ;
+; input_clock_50      ; -1.463 ; -11.073       ;
+; input_clock_125     ; -0.600 ; -16.210       ;
+; rx_input_clock[0]   ; 0.247  ; 0.000         ;
+; rx_input_clock[1]   ; 1.057  ; 0.000         ;
+; rx_input_clock[2]   ; 1.577  ; 0.000         ;
+; rx_input_clock[3]   ; 2.297  ; 0.000         ;
+; input_clock_40      ; 9.460  ; 0.000         ;
+; altera_reserved_tck ; 87.652 ; 0.000         ;
 +---------------------+--------+---------------+
 
 
@@ -221,14 +221,14 @@ HTML report is unavailable in plain text report export.
 +---------------------+-------+---------------+
 ; Clock               ; Slack ; End Point TNS ;
 +---------------------+-------+---------------+
-; rx_input_clock[1]   ; 0.279 ; 0.000         ;
-; rx_input_clock[2]   ; 0.390 ; 0.000         ;
-; rx_input_clock[3]   ; 0.459 ; 0.000         ;
-; input_clock_125     ; 0.464 ; 0.000         ;
-; rx_input_clock[0]   ; 0.498 ; 0.000         ;
-; altera_reserved_tck ; 0.646 ; 0.000         ;
-; input_clock_50      ; 0.702 ; 0.000         ;
-; input_clock_40      ; 1.012 ; 0.000         ;
+; rx_input_clock[0]   ; 0.264 ; 0.000         ;
+; input_clock_125     ; 0.461 ; 0.000         ;
+; rx_input_clock[1]   ; 0.503 ; 0.000         ;
+; rx_input_clock[3]   ; 0.514 ; 0.000         ;
+; rx_input_clock[2]   ; 0.518 ; 0.000         ;
+; input_clock_40      ; 0.531 ; 0.000         ;
+; altera_reserved_tck ; 0.658 ; 0.000         ;
+; input_clock_50      ; 0.736 ; 0.000         ;
 +---------------------+-------+---------------+
 
 
@@ -237,13 +237,13 @@ HTML report is unavailable in plain text report export.
 +---------------------+--------+-------------------+
 ; Clock               ; Slack  ; End Point TNS     ;
 +---------------------+--------+-------------------+
-; rx_input_clock[0]   ; 3.026  ; 0.000             ;
-; rx_input_clock[2]   ; 3.033  ; 0.000             ;
-; rx_input_clock[1]   ; 3.034  ; 0.000             ;
-; rx_input_clock[3]   ; 3.041  ; 0.000             ;
-; input_clock_125     ; 3.158  ; 0.000             ;
-; input_clock_50      ; 9.253  ; 0.000             ;
-; input_clock_40      ; 11.723 ; 0.000             ;
+; rx_input_clock[0]   ; 3.028  ; 0.000             ;
+; rx_input_clock[1]   ; 3.029  ; 0.000             ;
+; rx_input_clock[3]   ; 3.039  ; 0.000             ;
+; rx_input_clock[2]   ; 3.058  ; 0.000             ;
+; input_clock_125     ; 3.097  ; 0.000             ;
+; input_clock_50      ; 9.248  ; 0.000             ;
+; input_clock_40      ; 11.716 ; 0.000             ;
 ; external_clock_40   ; 12.490 ; 0.000             ;
 ; altera_reserved_tck ; 49.202 ; 0.000             ;
 +---------------------+--------+-------------------+
@@ -261,14 +261,14 @@ Design MTBF is not calculated because the design doesn't meet its timing require
 +------------+-----------------+---------------------+------+
 ; Fmax       ; Restricted Fmax ; Clock Name          ; Note ;
 +------------+-----------------+---------------------+------+
-; 74.29 MHz  ; 74.29 MHz       ; input_clock_40      ;      ;
-; 106.25 MHz ; 106.25 MHz      ; altera_reserved_tck ;      ;
-; 111.53 MHz ; 111.53 MHz      ; input_clock_50      ;      ;
-; 115.77 MHz ; 115.77 MHz      ; input_clock_125     ;      ;
-; 141.92 MHz ; 141.92 MHz      ; rx_input_clock[1]   ;      ;
-; 142.9 MHz  ; 142.9 MHz       ; rx_input_clock[0]   ;      ;
-; 142.33 MHz ; 142.33 MHz      ; rx_input_clock[2]   ;      ;
-; 142.61 MHz ; 142.61 MHz      ; rx_input_clock[3]   ;      ;
+; 84.83 MHz  ; 84.83 MHz       ; input_clock_40      ;      ;
+; 101.24 MHz ; 101.24 MHz      ; input_clock_50      ;      ;
+; 106.97 MHz ; 106.97 MHz      ; altera_reserved_tck ;      ;
+; 118.72 MHz ; 118.72 MHz      ; input_clock_125     ;      ;
+; 136.31 MHz ; 136.31 MHz      ; rx_input_clock[0]   ;      ;
+; 141.96 MHz ; 141.96 MHz      ; rx_input_clock[1]   ;      ;
+; 142.29 MHz ; 142.29 MHz      ; rx_input_clock[2]   ;      ;
+; 142.41 MHz ; 142.41 MHz      ; rx_input_clock[3]   ;      ;
 +------------+-----------------+---------------------+------+
 This panel reports FMAX for every clock in the design, regardless of the user-specified clock periods.  FMAX is only computed for paths where the source and destination registers or ports are driven by the same clock.  Paths of different clocks, including generated clocks, are ignored.  For paths between a clock and its inversion, FMAX is computed as if the rising and falling edges are scaled along with FMAX, such that the duty cycle (in terms of a percentage) is maintained. Altera recommends that you always use clock constraints and other slack reports for sign-off analysis.
 
@@ -278,18 +278,18 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +---------------------+--------+---------------+
 ; Clock               ; Slack  ; End Point TNS ;
 +---------------------+--------+---------------+
-; input_clock_50      ; -0.705 ; -4.580        ;
-; input_clock_125     ; -0.638 ; -177.351      ;
-; tx_output_clock[0]  ; 0.180  ; 0.000         ;
-; tx_output_clock[1]  ; 0.230  ; 0.000         ;
+; input_clock_50      ; -0.529 ; -8.577        ;
+; input_clock_125     ; -0.489 ; -346.710      ;
+; tx_output_clock[0]  ; 0.167  ; 0.000         ;
+; tx_output_clock[1]  ; 0.221  ; 0.000         ;
 ; tx_output_clock[3]  ; 0.243  ; 0.000         ;
 ; tx_output_clock[2]  ; 0.272  ; 0.000         ;
-; rx_input_clock[1]   ; 0.477  ; 0.000         ;
-; rx_input_clock[2]   ; 0.487  ; 0.000         ;
-; rx_input_clock[3]   ; 0.494  ; 0.000         ;
-; rx_input_clock[0]   ; 0.501  ; 0.000         ;
-; input_clock_40      ; 7.227  ; 0.000         ;
-; altera_reserved_tck ; 45.294 ; 0.000         ;
+; rx_input_clock[0]   ; 0.332  ; 0.000         ;
+; rx_input_clock[1]   ; 0.478  ; 0.000         ;
+; rx_input_clock[2]   ; 0.486  ; 0.000         ;
+; rx_input_clock[3]   ; 0.489  ; 0.000         ;
+; input_clock_40      ; 7.721  ; 0.000         ;
+; altera_reserved_tck ; 46.091 ; 0.000         ;
 +---------------------+--------+---------------+
 
 
@@ -298,16 +298,16 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +---------------------+-------+---------------+
 ; Clock               ; Slack ; End Point TNS ;
 +---------------------+-------+---------------+
-; rx_input_clock[1]   ; 0.059 ; 0.000         ;
-; rx_input_clock[2]   ; 0.131 ; 0.000         ;
-; rx_input_clock[0]   ; 0.133 ; 0.000         ;
-; input_clock_40      ; 0.187 ; 0.000         ;
+; rx_input_clock[1]   ; 0.019 ; 0.000         ;
+; rx_input_clock[0]   ; 0.101 ; 0.000         ;
+; rx_input_clock[2]   ; 0.132 ; 0.000         ;
+; rx_input_clock[3]   ; 0.155 ; 0.000         ;
 ; input_clock_125     ; 0.193 ; 0.000         ;
-; input_clock_50      ; 0.213 ; 0.000         ;
-; rx_input_clock[3]   ; 0.213 ; 0.000         ;
-; altera_reserved_tck ; 0.318 ; 0.000         ;
-; tx_output_clock[3]  ; 3.655 ; 0.000         ;
-; tx_output_clock[1]  ; 3.667 ; 0.000         ;
+; input_clock_40      ; 0.247 ; 0.000         ;
+; input_clock_50      ; 0.251 ; 0.000         ;
+; altera_reserved_tck ; 0.319 ; 0.000         ;
+; tx_output_clock[3]  ; 3.652 ; 0.000         ;
+; tx_output_clock[1]  ; 3.671 ; 0.000         ;
 ; tx_output_clock[2]  ; 3.704 ; 0.000         ;
 ; tx_output_clock[0]  ; 3.717 ; 0.000         ;
 +---------------------+-------+---------------+
@@ -318,14 +318,14 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +---------------------+--------+---------------+
 ; Clock               ; Slack  ; End Point TNS ;
 +---------------------+--------+---------------+
-; input_clock_50      ; -1.315 ; -8.086        ;
-; input_clock_125     ; -0.145 ; -8.015        ;
-; rx_input_clock[0]   ; 0.738  ; 0.000         ;
-; rx_input_clock[1]   ; 1.235  ; 0.000         ;
-; rx_input_clock[3]   ; 1.964  ; 0.000         ;
-; rx_input_clock[2]   ; 2.486  ; 0.000         ;
-; input_clock_40      ; 8.613  ; 0.000         ;
-; altera_reserved_tck ; 87.075 ; 0.000         ;
+; input_clock_50      ; -1.030 ; -6.976        ;
+; input_clock_125     ; -0.407 ; -10.226       ;
+; rx_input_clock[0]   ; 0.513  ; 0.000         ;
+; rx_input_clock[1]   ; 1.262  ; 0.000         ;
+; rx_input_clock[2]   ; 1.702  ; 0.000         ;
+; rx_input_clock[3]   ; 2.336  ; 0.000         ;
+; input_clock_40      ; 9.833  ; 0.000         ;
+; altera_reserved_tck ; 88.453 ; 0.000         ;
 +---------------------+--------+---------------+
 
 
@@ -334,14 +334,14 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +---------------------+-------+---------------+
 ; Clock               ; Slack ; End Point TNS ;
 +---------------------+-------+---------------+
-; rx_input_clock[1]   ; 0.301 ; 0.000         ;
-; rx_input_clock[2]   ; 0.389 ; 0.000         ;
-; rx_input_clock[3]   ; 0.450 ; 0.000         ;
-; input_clock_125     ; 0.451 ; 0.000         ;
-; rx_input_clock[0]   ; 0.488 ; 0.000         ;
-; altera_reserved_tck ; 0.618 ; 0.000         ;
-; input_clock_50      ; 0.662 ; 0.000         ;
-; input_clock_40      ; 0.956 ; 0.000         ;
+; rx_input_clock[0]   ; 0.247 ; 0.000         ;
+; input_clock_125     ; 0.446 ; 0.000         ;
+; rx_input_clock[1]   ; 0.485 ; 0.000         ;
+; rx_input_clock[3]   ; 0.497 ; 0.000         ;
+; rx_input_clock[2]   ; 0.504 ; 0.000         ;
+; input_clock_40      ; 0.510 ; 0.000         ;
+; altera_reserved_tck ; 0.629 ; 0.000         ;
+; input_clock_50      ; 0.691 ; 0.000         ;
 +---------------------+-------+---------------+
 
 
@@ -350,15 +350,15 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +---------------------+--------+------------------+
 ; Clock               ; Slack  ; End Point TNS    ;
 +---------------------+--------+------------------+
+; rx_input_clock[1]   ; 3.062  ; 0.000            ;
 ; rx_input_clock[0]   ; 3.063  ; 0.000            ;
-; rx_input_clock[1]   ; 3.064  ; 0.000            ;
-; rx_input_clock[2]   ; 3.064  ; 0.000            ;
-; rx_input_clock[3]   ; 3.073  ; 0.000            ;
-; input_clock_125     ; 3.166  ; 0.000            ;
-; input_clock_50      ; 9.252  ; 0.000            ;
-; input_clock_40      ; 11.742 ; 0.000            ;
+; rx_input_clock[3]   ; 3.070  ; 0.000            ;
+; input_clock_125     ; 3.093  ; 0.000            ;
+; rx_input_clock[2]   ; 3.093  ; 0.000            ;
+; input_clock_50      ; 9.245  ; 0.000            ;
+; input_clock_40      ; 11.738 ; 0.000            ;
 ; external_clock_40   ; 12.491 ; 0.000            ;
-; altera_reserved_tck ; 49.185 ; 0.000            ;
+; altera_reserved_tck ; 49.187 ; 0.000            ;
 +---------------------+--------+------------------+
 
 
@@ -374,18 +374,18 @@ Design MTBF is not calculated because the design doesn't meet its timing require
 +---------------------+--------+---------------+
 ; Clock               ; Slack  ; End Point TNS ;
 +---------------------+--------+---------------+
-; tx_output_clock[0]  ; 0.556  ; 0.000         ;
-; tx_output_clock[1]  ; 0.599  ; 0.000         ;
+; tx_output_clock[0]  ; 0.547  ; 0.000         ;
+; tx_output_clock[1]  ; 0.594  ; 0.000         ;
 ; tx_output_clock[3]  ; 0.614  ; 0.000         ;
 ; tx_output_clock[2]  ; 0.642  ; 0.000         ;
-; input_clock_50      ; 0.803  ; 0.000         ;
-; rx_input_clock[1]   ; 0.968  ; 0.000         ;
-; rx_input_clock[2]   ; 0.974  ; 0.000         ;
-; rx_input_clock[0]   ; 0.978  ; 0.000         ;
-; rx_input_clock[3]   ; 0.978  ; 0.000         ;
-; input_clock_125     ; 1.363  ; 0.000         ;
-; input_clock_40      ; 10.615 ; 0.000         ;
-; altera_reserved_tck ; 47.670 ; 0.000         ;
+; input_clock_50      ; 0.804  ; 0.000         ;
+; rx_input_clock[1]   ; 0.962  ; 0.000         ;
+; rx_input_clock[2]   ; 0.970  ; 0.000         ;
+; rx_input_clock[3]   ; 0.971  ; 0.000         ;
+; rx_input_clock[0]   ; 0.976  ; 0.000         ;
+; input_clock_125     ; 1.194  ; 0.000         ;
+; input_clock_40      ; 10.972 ; 0.000         ;
+; altera_reserved_tck ; 48.099 ; 0.000         ;
 +---------------------+--------+---------------+
 
 
@@ -394,16 +394,16 @@ Design MTBF is not calculated because the design doesn't meet its timing require
 +---------------------+--------+---------------+
 ; Clock               ; Slack  ; End Point TNS ;
 +---------------------+--------+---------------+
-; rx_input_clock[0]   ; -0.446 ; -1.019        ;
-; rx_input_clock[1]   ; -0.278 ; -0.278        ;
-; rx_input_clock[2]   ; -0.126 ; -0.249        ;
-; rx_input_clock[3]   ; 0.057  ; 0.000         ;
-; input_clock_125     ; 0.085  ; 0.000         ;
-; input_clock_40      ; 0.118  ; 0.000         ;
-; input_clock_50      ; 0.131  ; 0.000         ;
-; altera_reserved_tck ; 0.165  ; 0.000         ;
-; tx_output_clock[3]  ; 3.416  ; 0.000         ;
-; tx_output_clock[1]  ; 3.431  ; 0.000         ;
+; rx_input_clock[0]   ; -0.444 ; -1.015        ;
+; rx_input_clock[1]   ; -0.283 ; -0.283        ;
+; rx_input_clock[2]   ; -0.116 ; -0.230        ;
+; rx_input_clock[3]   ; 0.044  ; 0.000         ;
+; input_clock_125     ; 0.079  ; 0.000         ;
+; input_clock_40      ; 0.135  ; 0.000         ;
+; input_clock_50      ; 0.137  ; 0.000         ;
+; altera_reserved_tck ; 0.166  ; 0.000         ;
+; tx_output_clock[3]  ; 3.414  ; 0.000         ;
+; tx_output_clock[1]  ; 3.433  ; 0.000         ;
 ; tx_output_clock[2]  ; 3.456  ; 0.000         ;
 ; tx_output_clock[0]  ; 3.468  ; 0.000         ;
 +---------------------+--------+---------------+
@@ -414,14 +414,14 @@ Design MTBF is not calculated because the design doesn't meet its timing require
 +---------------------+--------+---------------+
 ; Clock               ; Slack  ; End Point TNS ;
 +---------------------+--------+---------------+
-; input_clock_50      ; 0.431  ; 0.000         ;
-; input_clock_125     ; 1.285  ; 0.000         ;
-; rx_input_clock[0]   ; 2.203  ; 0.000         ;
-; rx_input_clock[1]   ; 2.477  ; 0.000         ;
-; rx_input_clock[3]   ; 2.980  ; 0.000         ;
-; rx_input_clock[2]   ; 3.403  ; 0.000         ;
-; input_clock_40      ; 11.650 ; 0.000         ;
-; altera_reserved_tck ; 91.374 ; 0.000         ;
+; input_clock_50      ; 0.535  ; 0.000         ;
+; input_clock_125     ; 1.126  ; 0.000         ;
+; rx_input_clock[0]   ; 1.944  ; 0.000         ;
+; rx_input_clock[1]   ; 2.459  ; 0.000         ;
+; rx_input_clock[2]   ; 2.804  ; 0.000         ;
+; rx_input_clock[3]   ; 3.278  ; 0.000         ;
+; input_clock_40      ; 12.434 ; 0.000         ;
+; altera_reserved_tck ; 92.430 ; 0.000         ;
 +---------------------+--------+---------------+
 
 
@@ -430,14 +430,14 @@ Design MTBF is not calculated because the design doesn't meet its timing require
 +---------------------+-------+---------------+
 ; Clock               ; Slack ; End Point TNS ;
 +---------------------+-------+---------------+
-; rx_input_clock[1]   ; 0.103 ; 0.000         ;
-; rx_input_clock[2]   ; 0.202 ; 0.000         ;
-; rx_input_clock[3]   ; 0.254 ; 0.000         ;
-; input_clock_125     ; 0.257 ; 0.000         ;
-; rx_input_clock[0]   ; 0.273 ; 0.000         ;
-; altera_reserved_tck ; 0.337 ; 0.000         ;
-; input_clock_50      ; 0.387 ; 0.000         ;
-; input_clock_40      ; 0.569 ; 0.000         ;
+; rx_input_clock[0]   ; 0.113 ; 0.000         ;
+; input_clock_125     ; 0.254 ; 0.000         ;
+; input_clock_40      ; 0.274 ; 0.000         ;
+; rx_input_clock[1]   ; 0.277 ; 0.000         ;
+; rx_input_clock[3]   ; 0.285 ; 0.000         ;
+; rx_input_clock[2]   ; 0.286 ; 0.000         ;
+; altera_reserved_tck ; 0.342 ; 0.000         ;
+; input_clock_50      ; 0.411 ; 0.000         ;
 +---------------------+-------+---------------+
 
 
@@ -446,15 +446,15 @@ Design MTBF is not calculated because the design doesn't meet its timing require
 +---------------------+--------+------------------+
 ; Clock               ; Slack  ; End Point TNS    ;
 +---------------------+--------+------------------+
-; rx_input_clock[0]   ; 2.835  ; 0.000            ;
-; rx_input_clock[2]   ; 2.839  ; 0.000            ;
-; rx_input_clock[1]   ; 2.844  ; 0.000            ;
-; rx_input_clock[3]   ; 2.844  ; 0.000            ;
-; input_clock_125     ; 3.211  ; 0.000            ;
-; input_clock_50      ; 9.178  ; 0.000            ;
-; input_clock_40      ; 11.723 ; 0.000            ;
+; rx_input_clock[1]   ; 2.837  ; 0.000            ;
+; rx_input_clock[3]   ; 2.837  ; 0.000            ;
+; rx_input_clock[0]   ; 2.840  ; 0.000            ;
+; rx_input_clock[2]   ; 2.854  ; 0.000            ;
+; input_clock_125     ; 3.204  ; 0.000            ;
+; input_clock_50      ; 9.180  ; 0.000            ;
+; input_clock_40      ; 11.720 ; 0.000            ;
 ; external_clock_40   ; 12.491 ; 0.000            ;
-; altera_reserved_tck ; 49.175 ; 0.000            ;
+; altera_reserved_tck ; 49.174 ; 0.000            ;
 +---------------------+--------+------------------+
 
 
@@ -467,7 +467,7 @@ Typical MTBF of Design is 1e+09 years or 3.15e+16 seconds.
 Number of Synchronizer Chains Found: 1603
 Shortest Synchronizer Chain: 2 Registers
 Fraction of Chains for which MTBFs Could Not be Calculated: 0.048
-Worst Case Available Settling Time: 6.597 ns
+Worst Case Available Settling Time: 7.315 ns
 
 Worst-Case MTBF values are calculated based on the worst-case silicon characteristics, with worst-case operating conditions.
   - Under worst-case conditions, an increase of 100ps in available settling time will increase MTBF values by a factor of 32.7
@@ -476,40 +476,40 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 
 
 
-+-------------------------------------------------------------------------------------+
-; Multicorner Timing Analysis Summary                                                 ;
-+----------------------+----------+--------+----------+---------+---------------------+
-; Clock                ; Setup    ; Hold   ; Recovery ; Removal ; Minimum Pulse Width ;
-+----------------------+----------+--------+----------+---------+---------------------+
-; Worst-case Slack     ; -1.110   ; -0.446 ; -1.602   ; 0.103   ; 2.835               ;
-;  altera_reserved_tck ; 45.080   ; 0.165  ; 86.036   ; 0.337   ; 49.175              ;
-;  external_clock_40   ; N/A      ; N/A    ; N/A      ; N/A     ; 12.490              ;
-;  input_clock_125     ; -1.110   ; 0.085  ; -0.704   ; 0.257   ; 3.158               ;
-;  input_clock_40      ; 6.578    ; 0.118  ; 8.209    ; 0.569   ; 11.723              ;
-;  input_clock_50      ; -0.963   ; 0.131  ; -1.602   ; 0.387   ; 9.178               ;
-;  rx_input_clock[0]   ; 0.187    ; -0.446 ; 0.583    ; 0.273   ; 2.835               ;
-;  rx_input_clock[1]   ; 0.178    ; -0.278 ; 1.064    ; 0.103   ; 2.844               ;
-;  rx_input_clock[2]   ; 0.183    ; -0.126 ; 2.449    ; 0.202   ; 2.839               ;
-;  rx_input_clock[3]   ; 0.185    ; 0.057  ; 1.839    ; 0.254   ; 2.844               ;
-;  tx_output_clock[0]  ; 0.056    ; 3.468  ; N/A      ; N/A     ; N/A                 ;
-;  tx_output_clock[1]  ; 0.106    ; 3.431  ; N/A      ; N/A     ; N/A                 ;
-;  tx_output_clock[2]  ; 0.155    ; 3.456  ; N/A      ; N/A     ; N/A                 ;
-;  tx_output_clock[3]  ; 0.122    ; 3.416  ; N/A      ; N/A     ; N/A                 ;
-; Design-wide TNS      ; -935.977 ; -1.546 ; -237.048 ; 0.0     ; 0.0                 ;
-;  altera_reserved_tck ; 0.000    ; 0.000  ; 0.000    ; 0.000   ; 0.000               ;
-;  external_clock_40   ; N/A      ; N/A    ; N/A      ; N/A     ; 0.000               ;
-;  input_clock_125     ; -926.834 ; 0.000  ; -225.187 ; 0.000   ; 0.000               ;
-;  input_clock_40      ; 0.000    ; 0.000  ; 0.000    ; 0.000   ; 0.000               ;
-;  input_clock_50      ; -9.143   ; 0.000  ; -11.861  ; 0.000   ; 0.000               ;
-;  rx_input_clock[0]   ; 0.000    ; -1.019 ; 0.000    ; 0.000   ; 0.000               ;
-;  rx_input_clock[1]   ; 0.000    ; -0.278 ; 0.000    ; 0.000   ; 0.000               ;
-;  rx_input_clock[2]   ; 0.000    ; -0.249 ; 0.000    ; 0.000   ; 0.000               ;
-;  rx_input_clock[3]   ; 0.000    ; 0.000  ; 0.000    ; 0.000   ; 0.000               ;
-;  tx_output_clock[0]  ; 0.000    ; 0.000  ; N/A      ; N/A     ; N/A                 ;
-;  tx_output_clock[1]  ; 0.000    ; 0.000  ; N/A      ; N/A     ; N/A                 ;
-;  tx_output_clock[2]  ; 0.000    ; 0.000  ; N/A      ; N/A     ; N/A                 ;
-;  tx_output_clock[3]  ; 0.000    ; 0.000  ; N/A      ; N/A     ; N/A                 ;
-+----------------------+----------+--------+----------+---------+---------------------+
++--------------------------------------------------------------------------------------+
+; Multicorner Timing Analysis Summary                                                  ;
++----------------------+-----------+--------+----------+---------+---------------------+
+; Clock                ; Setup     ; Hold   ; Recovery ; Removal ; Minimum Pulse Width ;
++----------------------+-----------+--------+----------+---------+---------------------+
+; Worst-case Slack     ; -0.918    ; -0.444 ; -1.463   ; 0.113   ; 2.837               ;
+;  altera_reserved_tck ; 45.931    ; 0.166  ; 87.652   ; 0.342   ; 49.174              ;
+;  external_clock_40   ; N/A       ; N/A    ; N/A      ; N/A     ; 12.490              ;
+;  input_clock_125     ; -0.915    ; 0.079  ; -0.600   ; 0.254   ; 3.093               ;
+;  input_clock_40      ; 7.174     ; 0.135  ; 9.460    ; 0.274   ; 11.716              ;
+;  input_clock_50      ; -0.918    ; 0.137  ; -1.463   ; 0.411   ; 9.180               ;
+;  rx_input_clock[0]   ; 0.138     ; -0.444 ; 0.247    ; 0.113   ; 2.840               ;
+;  rx_input_clock[1]   ; 0.180     ; -0.283 ; 1.057    ; 0.277   ; 2.837               ;
+;  rx_input_clock[2]   ; 0.183     ; -0.116 ; 1.577    ; 0.286   ; 2.854               ;
+;  rx_input_clock[3]   ; 0.180     ; 0.044  ; 2.297    ; 0.285   ; 2.837               ;
+;  tx_output_clock[0]  ; 0.041     ; 3.468  ; N/A      ; N/A     ; N/A                 ;
+;  tx_output_clock[1]  ; 0.095     ; 3.433  ; N/A      ; N/A     ; N/A                 ;
+;  tx_output_clock[2]  ; 0.155     ; 3.456  ; N/A      ; N/A     ; N/A                 ;
+;  tx_output_clock[3]  ; 0.122     ; 3.414  ; N/A      ; N/A     ; N/A                 ;
+; Design-wide TNS      ; -1237.414 ; -1.528 ; -27.283  ; 0.0     ; 0.0                 ;
+;  altera_reserved_tck ; 0.000     ; 0.000  ; 0.000    ; 0.000   ; 0.000               ;
+;  external_clock_40   ; N/A       ; N/A    ; N/A      ; N/A     ; 0.000               ;
+;  input_clock_125     ; -1220.771 ; 0.000  ; -16.210  ; 0.000   ; 0.000               ;
+;  input_clock_40      ; 0.000     ; 0.000  ; 0.000    ; 0.000   ; 0.000               ;
+;  input_clock_50      ; -16.643   ; 0.000  ; -11.073  ; 0.000   ; 0.000               ;
+;  rx_input_clock[0]   ; 0.000     ; -1.015 ; 0.000    ; 0.000   ; 0.000               ;
+;  rx_input_clock[1]   ; 0.000     ; -0.283 ; 0.000    ; 0.000   ; 0.000               ;
+;  rx_input_clock[2]   ; 0.000     ; -0.230 ; 0.000    ; 0.000   ; 0.000               ;
+;  rx_input_clock[3]   ; 0.000     ; 0.000  ; 0.000    ; 0.000   ; 0.000               ;
+;  tx_output_clock[0]  ; 0.000     ; 0.000  ; N/A      ; N/A     ; N/A                 ;
+;  tx_output_clock[1]  ; 0.000     ; 0.000  ; N/A      ; N/A     ; N/A                 ;
+;  tx_output_clock[2]  ; 0.000     ; 0.000  ; N/A      ; N/A     ; N/A                 ;
+;  tx_output_clock[3]  ; 0.000     ; 0.000  ; N/A      ; N/A     ; N/A                 ;
++----------------------+-----------+--------+----------+---------+---------------------+
 
 
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -1227,26 +1227,26 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 +---------------------+---------------------+------------+----------+------------+------------+
 ; altera_reserved_tck ; altera_reserved_tck ; 24082      ; 0        ; 56         ; 0          ;
 ; input_clock_125     ; altera_reserved_tck ; false path ; 0        ; 0          ; 0          ;
-; input_clock_40      ; input_clock_40      ; 13045066   ; 1        ; 0          ; 0          ;
+; input_clock_40      ; input_clock_40      ; 13045068   ; 1        ; 0          ; 0          ;
 ; input_clock_125     ; input_clock_40      ; 121        ; 0        ; 0          ; 0          ;
-; input_clock_50      ; input_clock_50      ; 98418      ; 0        ; 0          ; 0          ;
+; input_clock_50      ; input_clock_50      ; 98510      ; 0        ; 0          ; 0          ;
 ; input_clock_125     ; input_clock_50      ; 76         ; 0        ; 0          ; 0          ;
 ; altera_reserved_tck ; input_clock_125     ; false path ; 0        ; 0          ; 0          ;
-; input_clock_40      ; input_clock_125     ; 1780       ; 0        ; 0          ; 0          ;
+; input_clock_40      ; input_clock_125     ; 1781       ; 0        ; 0          ; 0          ;
 ; input_clock_50      ; input_clock_125     ; 539641     ; 0        ; 0          ; 0          ;
-; input_clock_125     ; input_clock_125     ; 71729671   ; 40       ; 1359       ; 1          ;
+; input_clock_125     ; input_clock_125     ; 71725658   ; 40       ; 1359       ; 1          ;
 ; rx_input_clock[0]   ; input_clock_125     ; 0          ; 22       ; 0          ; 0          ;
 ; rx_input_clock[1]   ; input_clock_125     ; 0          ; 22       ; 0          ; 0          ;
 ; rx_input_clock[2]   ; input_clock_125     ; 0          ; 22       ; 0          ; 0          ;
 ; rx_input_clock[3]   ; input_clock_125     ; 0          ; 22       ; 0          ; 0          ;
 ; input_clock_125     ; rx_input_clock[0]   ; 0          ; 0        ; false path ; 0          ;
-; rx_input_clock[0]   ; rx_input_clock[0]   ; 6          ; 10       ; 16         ; 111580     ;
+; rx_input_clock[0]   ; rx_input_clock[0]   ; 6          ; 10       ; 16         ; 111392     ;
 ; input_clock_125     ; rx_input_clock[1]   ; 0          ; 0        ; false path ; 0          ;
-; rx_input_clock[1]   ; rx_input_clock[1]   ; 6          ; 10       ; 16         ; 111418     ;
+; rx_input_clock[1]   ; rx_input_clock[1]   ; 6          ; 10       ; 16         ; 111606     ;
 ; input_clock_125     ; rx_input_clock[2]   ; 0          ; 0        ; false path ; 0          ;
-; rx_input_clock[2]   ; rx_input_clock[2]   ; 6          ; 10       ; 16         ; 111580     ;
+; rx_input_clock[2]   ; rx_input_clock[2]   ; 6          ; 10       ; 16         ; 111392     ;
 ; input_clock_125     ; rx_input_clock[3]   ; 0          ; 0        ; false path ; 0          ;
-; rx_input_clock[3]   ; rx_input_clock[3]   ; 6          ; 10       ; 16         ; 111507     ;
+; rx_input_clock[3]   ; rx_input_clock[3]   ; 6          ; 10       ; 16         ; 111497     ;
 ; input_clock_125     ; tx_output_clock[0]  ; false path ; 5        ; 5          ; false path ;
 ; input_clock_125     ; tx_output_clock[1]  ; false path ; 5        ; 5          ; false path ;
 ; input_clock_125     ; tx_output_clock[2]  ; false path ; 5        ; 5          ; false path ;
@@ -1262,26 +1262,26 @@ Entries labeled "false path" only account for clock-to-clock false paths and not
 +---------------------+---------------------+------------+----------+------------+------------+
 ; altera_reserved_tck ; altera_reserved_tck ; 24082      ; 0        ; 56         ; 0          ;
 ; input_clock_125     ; altera_reserved_tck ; false path ; 0        ; 0          ; 0          ;
-; input_clock_40      ; input_clock_40      ; 13045066   ; 1        ; 0          ; 0          ;
+; input_clock_40      ; input_clock_40      ; 13045068   ; 1        ; 0          ; 0          ;
 ; input_clock_125     ; input_clock_40      ; 121        ; 0        ; 0          ; 0          ;
-; input_clock_50      ; input_clock_50      ; 98418      ; 0        ; 0          ; 0          ;
+; input_clock_50      ; input_clock_50      ; 98510      ; 0        ; 0          ; 0          ;
 ; input_clock_125     ; input_clock_50      ; 76         ; 0        ; 0          ; 0          ;
 ; altera_reserved_tck ; input_clock_125     ; false path ; 0        ; 0          ; 0          ;
-; input_clock_40      ; input_clock_125     ; 1780       ; 0        ; 0          ; 0          ;
+; input_clock_40      ; input_clock_125     ; 1781       ; 0        ; 0          ; 0          ;
 ; input_clock_50      ; input_clock_125     ; 539641     ; 0        ; 0          ; 0          ;
-; input_clock_125     ; input_clock_125     ; 71729671   ; 40       ; 1359       ; 1          ;
+; input_clock_125     ; input_clock_125     ; 71725658   ; 40       ; 1359       ; 1          ;
 ; rx_input_clock[0]   ; input_clock_125     ; 0          ; 22       ; 0          ; 0          ;
 ; rx_input_clock[1]   ; input_clock_125     ; 0          ; 22       ; 0          ; 0          ;
 ; rx_input_clock[2]   ; input_clock_125     ; 0          ; 22       ; 0          ; 0          ;
 ; rx_input_clock[3]   ; input_clock_125     ; 0          ; 22       ; 0          ; 0          ;
 ; input_clock_125     ; rx_input_clock[0]   ; 0          ; 0        ; false path ; 0          ;
-; rx_input_clock[0]   ; rx_input_clock[0]   ; 6          ; 10       ; 16         ; 111580     ;
+; rx_input_clock[0]   ; rx_input_clock[0]   ; 6          ; 10       ; 16         ; 111392     ;
 ; input_clock_125     ; rx_input_clock[1]   ; 0          ; 0        ; false path ; 0          ;
-; rx_input_clock[1]   ; rx_input_clock[1]   ; 6          ; 10       ; 16         ; 111418     ;
+; rx_input_clock[1]   ; rx_input_clock[1]   ; 6          ; 10       ; 16         ; 111606     ;
 ; input_clock_125     ; rx_input_clock[2]   ; 0          ; 0        ; false path ; 0          ;
-; rx_input_clock[2]   ; rx_input_clock[2]   ; 6          ; 10       ; 16         ; 111580     ;
+; rx_input_clock[2]   ; rx_input_clock[2]   ; 6          ; 10       ; 16         ; 111392     ;
 ; input_clock_125     ; rx_input_clock[3]   ; 0          ; 0        ; false path ; 0          ;
-; rx_input_clock[3]   ; rx_input_clock[3]   ; 6          ; 10       ; 16         ; 111507     ;
+; rx_input_clock[3]   ; rx_input_clock[3]   ; 6          ; 10       ; 16         ; 111497     ;
 ; input_clock_125     ; tx_output_clock[0]  ; false path ; 5        ; 5          ; false path ;
 ; input_clock_125     ; tx_output_clock[1]  ; false path ; 5        ; 5          ; false path ;
 ; input_clock_125     ; tx_output_clock[2]  ; false path ; 5        ; 5          ; false path ;
@@ -1298,12 +1298,12 @@ Entries labeled "false path" only account for clock-to-clock false paths and not
 ; altera_reserved_tck ; altera_reserved_tck ; 2544       ; 0        ; 0          ; 0        ;
 ; input_clock_40      ; input_clock_40      ; 15200      ; 0        ; 0          ; 0        ;
 ; input_clock_125     ; input_clock_40      ; 66         ; 0        ; 0          ; 0        ;
-; input_clock_50      ; input_clock_50      ; 1156       ; 0        ; 0          ; 0        ;
+; input_clock_50      ; input_clock_50      ; 1157       ; 0        ; 0          ; 0        ;
 ; input_clock_125     ; input_clock_50      ; 22         ; 0        ; 0          ; 0        ;
 ; altera_reserved_tck ; input_clock_125     ; false path ; 0        ; 0          ; 0        ;
 ; input_clock_40      ; input_clock_125     ; 16339      ; 0        ; 0          ; 0        ;
 ; input_clock_50      ; input_clock_125     ; 1658       ; 0        ; 0          ; 0        ;
-; input_clock_125     ; input_clock_125     ; 113080     ; 48       ; 2          ; 0        ;
+; input_clock_125     ; input_clock_125     ; 43220      ; 48       ; 2          ; 0        ;
 ; rx_input_clock[0]   ; input_clock_125     ; 0          ; 140      ; 0          ; 0        ;
 ; rx_input_clock[1]   ; input_clock_125     ; 0          ; 140      ; 0          ; 0        ;
 ; rx_input_clock[2]   ; input_clock_125     ; 0          ; 140      ; 0          ; 0        ;
@@ -1328,12 +1328,12 @@ Entries labeled "false path" only account for clock-to-clock false paths and not
 ; altera_reserved_tck ; altera_reserved_tck ; 2544       ; 0        ; 0          ; 0        ;
 ; input_clock_40      ; input_clock_40      ; 15200      ; 0        ; 0          ; 0        ;
 ; input_clock_125     ; input_clock_40      ; 66         ; 0        ; 0          ; 0        ;
-; input_clock_50      ; input_clock_50      ; 1156       ; 0        ; 0          ; 0        ;
+; input_clock_50      ; input_clock_50      ; 1157       ; 0        ; 0          ; 0        ;
 ; input_clock_125     ; input_clock_50      ; 22         ; 0        ; 0          ; 0        ;
 ; altera_reserved_tck ; input_clock_125     ; false path ; 0        ; 0          ; 0        ;
 ; input_clock_40      ; input_clock_125     ; 16339      ; 0        ; 0          ; 0        ;
 ; input_clock_50      ; input_clock_125     ; 1658       ; 0        ; 0          ; 0        ;
-; input_clock_125     ; input_clock_125     ; 113080     ; 48       ; 2          ; 0        ;
+; input_clock_125     ; input_clock_125     ; 43220      ; 48       ; 2          ; 0        ;
 ; rx_input_clock[0]   ; input_clock_125     ; 0          ; 140      ; 0          ; 0        ;
 ; rx_input_clock[1]   ; input_clock_125     ; 0          ; 140      ; 0          ; 0        ;
 ; rx_input_clock[2]   ; input_clock_125     ; 0          ; 140      ; 0          ; 0        ;
@@ -1373,7 +1373,7 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 ; Illegal Clocks                  ; 0     ; 0    ;
 ; Unconstrained Clocks            ; 1     ; 1    ;
 ; Unconstrained Input Ports       ; 79    ; 79   ;
-; Unconstrained Input Port Paths  ; 8532  ; 8532 ;
+; Unconstrained Input Port Paths  ; 8534  ; 8534 ;
 ; Unconstrained Output Ports      ; 78    ; 78   ;
 ; Unconstrained Output Port Paths ; 846   ; 846  ;
 +---------------------------------+-------+------+
@@ -1753,7 +1753,7 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 Info: *******************************************************************
 Info: Running Quartus Prime TimeQuest Timing Analyzer
     Info: Version 16.1.2 Build 203 01/18/2017 SJ Standard Edition
-    Info: Processing started: Mon Jul 15 17:02:25 2019
+    Info: Processing started: Tue Mar 10 17:35:25 2020
 Info: Command: quartus_sta top -c top
 Info: qsta_default_script.tcl version: #1
 Info (20032): Parallel compilation is enabled and will use up to 4 processors
@@ -1827,68 +1827,68 @@ Info: Found TIMEQUEST_REPORT_SCRIPT_INCLUDE_DEFAULT_ANALYSIS = ON
 Info: Analyzing Slow 900mV 85C Model
 Critical Warning (332148): Timing requirements not met
     Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the TimeQuest Timing Analyzer.
-Info (332146): Worst-case setup slack is -1.110
+Info (332146): Worst-case setup slack is -0.918
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -1.110            -926.834 input_clock_125 
-    Info (332119):    -0.963              -9.143 input_clock_50 
-    Info (332119):     0.056               0.000 tx_output_clock[0] 
-    Info (332119):     0.106               0.000 tx_output_clock[1] 
+    Info (332119):    -0.918             -16.643 input_clock_50 
+    Info (332119):    -0.915           -1220.771 input_clock_125 
+    Info (332119):     0.041               0.000 tx_output_clock[0] 
+    Info (332119):     0.095               0.000 tx_output_clock[1] 
     Info (332119):     0.122               0.000 tx_output_clock[3] 
+    Info (332119):     0.138               0.000 rx_input_clock[0] 
     Info (332119):     0.155               0.000 tx_output_clock[2] 
-    Info (332119):     0.178               0.000 rx_input_clock[1] 
+    Info (332119):     0.180               0.000 rx_input_clock[1] 
+    Info (332119):     0.180               0.000 rx_input_clock[3] 
     Info (332119):     0.183               0.000 rx_input_clock[2] 
-    Info (332119):     0.185               0.000 rx_input_clock[3] 
-    Info (332119):     0.187               0.000 rx_input_clock[0] 
-    Info (332119):     6.578               0.000 input_clock_40 
-    Info (332119):    45.080               0.000 altera_reserved_tck 
-Info (332146): Worst-case hold slack is 0.058
+    Info (332119):     7.174               0.000 input_clock_40 
+    Info (332119):    45.931               0.000 altera_reserved_tck 
+Info (332146): Worst-case hold slack is 0.028
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.058               0.000 rx_input_clock[1] 
-    Info (332119):     0.162               0.000 rx_input_clock[2] 
+    Info (332119):     0.028               0.000 rx_input_clock[1] 
+    Info (332119):     0.124               0.000 rx_input_clock[0] 
+    Info (332119):     0.146               0.000 rx_input_clock[2] 
+    Info (332119):     0.158               0.000 rx_input_clock[3] 
     Info (332119):     0.192               0.000 input_clock_125 
-    Info (332119):     0.205               0.000 input_clock_40 
-    Info (332119):     0.230               0.000 input_clock_50 
-    Info (332119):     0.233               0.000 rx_input_clock[3] 
-    Info (332119):     0.251               0.000 rx_input_clock[0] 
-    Info (332119):     0.323               0.000 altera_reserved_tck 
-    Info (332119):     3.701               0.000 tx_output_clock[3] 
-    Info (332119):     3.707               0.000 tx_output_clock[1] 
+    Info (332119):     0.255               0.000 input_clock_50 
+    Info (332119):     0.268               0.000 input_clock_40 
+    Info (332119):     0.325               0.000 altera_reserved_tck 
+    Info (332119):     3.697               0.000 tx_output_clock[3] 
+    Info (332119):     3.711               0.000 tx_output_clock[1] 
     Info (332119):     3.737               0.000 tx_output_clock[2] 
-    Info (332119):     3.755               0.000 tx_output_clock[0] 
-Info (332146): Worst-case recovery slack is -1.602
+    Info (332119):     3.756               0.000 tx_output_clock[0] 
+Info (332146): Worst-case recovery slack is -1.463
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -1.602             -11.861 input_clock_50 
-    Info (332119):    -0.704            -225.187 input_clock_125 
-    Info (332119):     0.583               0.000 rx_input_clock[0] 
-    Info (332119):     1.064               0.000 rx_input_clock[1] 
-    Info (332119):     1.839               0.000 rx_input_clock[3] 
-    Info (332119):     2.449               0.000 rx_input_clock[2] 
-    Info (332119):     8.209               0.000 input_clock_40 
-    Info (332119):    86.036               0.000 altera_reserved_tck 
-Info (332146): Worst-case removal slack is 0.279
+    Info (332119):    -1.463             -11.073 input_clock_50 
+    Info (332119):    -0.600             -16.210 input_clock_125 
+    Info (332119):     0.247               0.000 rx_input_clock[0] 
+    Info (332119):     1.057               0.000 rx_input_clock[1] 
+    Info (332119):     1.577               0.000 rx_input_clock[2] 
+    Info (332119):     2.297               0.000 rx_input_clock[3] 
+    Info (332119):     9.460               0.000 input_clock_40 
+    Info (332119):    87.652               0.000 altera_reserved_tck 
+Info (332146): Worst-case removal slack is 0.264
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.279               0.000 rx_input_clock[1] 
-    Info (332119):     0.390               0.000 rx_input_clock[2] 
-    Info (332119):     0.459               0.000 rx_input_clock[3] 
-    Info (332119):     0.464               0.000 input_clock_125 
-    Info (332119):     0.498               0.000 rx_input_clock[0] 
-    Info (332119):     0.646               0.000 altera_reserved_tck 
-    Info (332119):     0.702               0.000 input_clock_50 
-    Info (332119):     1.012               0.000 input_clock_40 
-Info (332146): Worst-case minimum pulse width slack is 3.026
+    Info (332119):     0.264               0.000 rx_input_clock[0] 
+    Info (332119):     0.461               0.000 input_clock_125 
+    Info (332119):     0.503               0.000 rx_input_clock[1] 
+    Info (332119):     0.514               0.000 rx_input_clock[3] 
+    Info (332119):     0.518               0.000 rx_input_clock[2] 
+    Info (332119):     0.531               0.000 input_clock_40 
+    Info (332119):     0.658               0.000 altera_reserved_tck 
+    Info (332119):     0.736               0.000 input_clock_50 
+Info (332146): Worst-case minimum pulse width slack is 3.028
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     3.026               0.000 rx_input_clock[0] 
-    Info (332119):     3.033               0.000 rx_input_clock[2] 
-    Info (332119):     3.034               0.000 rx_input_clock[1] 
-    Info (332119):     3.041               0.000 rx_input_clock[3] 
-    Info (332119):     3.158               0.000 input_clock_125 
-    Info (332119):     9.253               0.000 input_clock_50 
-    Info (332119):    11.723               0.000 input_clock_40 
+    Info (332119):     3.028               0.000 rx_input_clock[0] 
+    Info (332119):     3.029               0.000 rx_input_clock[1] 
+    Info (332119):     3.039               0.000 rx_input_clock[3] 
+    Info (332119):     3.058               0.000 rx_input_clock[2] 
+    Info (332119):     3.097               0.000 input_clock_125 
+    Info (332119):     9.248               0.000 input_clock_50 
+    Info (332119):    11.716               0.000 input_clock_40 
     Info (332119):    12.490               0.000 external_clock_40 
     Info (332119):    49.202               0.000 altera_reserved_tck 
 Info (332114): Report Metastability: Found 1603 synchronizer chains.
@@ -1908,70 +1908,70 @@ Warning (332056): PLL cross checking found inconsistent PLL clock settings:
     Warning (332056): Node: ethlink_inst|\MAC:3:MAC|sgmii|alttse1_inst|altera_tse_pcs_pma_inst|the_altera_tse_pma_lvds_rx|altlvds_rx_component|auto_generated|pll|clk[1] was found missing 1 generated clock that corresponds to a base clock with a period of: 8.000
 Critical Warning (332148): Timing requirements not met
     Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the TimeQuest Timing Analyzer.
-Info (332146): Worst-case setup slack is -0.705
+Info (332146): Worst-case setup slack is -0.529
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -0.705              -4.580 input_clock_50 
-    Info (332119):    -0.638            -177.351 input_clock_125 
-    Info (332119):     0.180               0.000 tx_output_clock[0] 
-    Info (332119):     0.230               0.000 tx_output_clock[1] 
+    Info (332119):    -0.529              -8.577 input_clock_50 
+    Info (332119):    -0.489            -346.710 input_clock_125 
+    Info (332119):     0.167               0.000 tx_output_clock[0] 
+    Info (332119):     0.221               0.000 tx_output_clock[1] 
     Info (332119):     0.243               0.000 tx_output_clock[3] 
     Info (332119):     0.272               0.000 tx_output_clock[2] 
-    Info (332119):     0.477               0.000 rx_input_clock[1] 
-    Info (332119):     0.487               0.000 rx_input_clock[2] 
-    Info (332119):     0.494               0.000 rx_input_clock[3] 
-    Info (332119):     0.501               0.000 rx_input_clock[0] 
-    Info (332119):     7.227               0.000 input_clock_40 
-    Info (332119):    45.294               0.000 altera_reserved_tck 
-Info (332146): Worst-case hold slack is 0.059
+    Info (332119):     0.332               0.000 rx_input_clock[0] 
+    Info (332119):     0.478               0.000 rx_input_clock[1] 
+    Info (332119):     0.486               0.000 rx_input_clock[2] 
+    Info (332119):     0.489               0.000 rx_input_clock[3] 
+    Info (332119):     7.721               0.000 input_clock_40 
+    Info (332119):    46.091               0.000 altera_reserved_tck 
+Info (332146): Worst-case hold slack is 0.019
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.059               0.000 rx_input_clock[1] 
-    Info (332119):     0.131               0.000 rx_input_clock[2] 
-    Info (332119):     0.133               0.000 rx_input_clock[0] 
-    Info (332119):     0.187               0.000 input_clock_40 
+    Info (332119):     0.019               0.000 rx_input_clock[1] 
+    Info (332119):     0.101               0.000 rx_input_clock[0] 
+    Info (332119):     0.132               0.000 rx_input_clock[2] 
+    Info (332119):     0.155               0.000 rx_input_clock[3] 
     Info (332119):     0.193               0.000 input_clock_125 
-    Info (332119):     0.213               0.000 input_clock_50 
-    Info (332119):     0.213               0.000 rx_input_clock[3] 
-    Info (332119):     0.318               0.000 altera_reserved_tck 
-    Info (332119):     3.655               0.000 tx_output_clock[3] 
-    Info (332119):     3.667               0.000 tx_output_clock[1] 
+    Info (332119):     0.247               0.000 input_clock_40 
+    Info (332119):     0.251               0.000 input_clock_50 
+    Info (332119):     0.319               0.000 altera_reserved_tck 
+    Info (332119):     3.652               0.000 tx_output_clock[3] 
+    Info (332119):     3.671               0.000 tx_output_clock[1] 
     Info (332119):     3.704               0.000 tx_output_clock[2] 
     Info (332119):     3.717               0.000 tx_output_clock[0] 
-Info (332146): Worst-case recovery slack is -1.315
+Info (332146): Worst-case recovery slack is -1.030
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -1.315              -8.086 input_clock_50 
-    Info (332119):    -0.145              -8.015 input_clock_125 
-    Info (332119):     0.738               0.000 rx_input_clock[0] 
-    Info (332119):     1.235               0.000 rx_input_clock[1] 
-    Info (332119):     1.964               0.000 rx_input_clock[3] 
-    Info (332119):     2.486               0.000 rx_input_clock[2] 
-    Info (332119):     8.613               0.000 input_clock_40 
-    Info (332119):    87.075               0.000 altera_reserved_tck 
-Info (332146): Worst-case removal slack is 0.301
+    Info (332119):    -1.030              -6.976 input_clock_50 
+    Info (332119):    -0.407             -10.226 input_clock_125 
+    Info (332119):     0.513               0.000 rx_input_clock[0] 
+    Info (332119):     1.262               0.000 rx_input_clock[1] 
+    Info (332119):     1.702               0.000 rx_input_clock[2] 
+    Info (332119):     2.336               0.000 rx_input_clock[3] 
+    Info (332119):     9.833               0.000 input_clock_40 
+    Info (332119):    88.453               0.000 altera_reserved_tck 
+Info (332146): Worst-case removal slack is 0.247
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.301               0.000 rx_input_clock[1] 
-    Info (332119):     0.389               0.000 rx_input_clock[2] 
-    Info (332119):     0.450               0.000 rx_input_clock[3] 
-    Info (332119):     0.451               0.000 input_clock_125 
-    Info (332119):     0.488               0.000 rx_input_clock[0] 
-    Info (332119):     0.618               0.000 altera_reserved_tck 
-    Info (332119):     0.662               0.000 input_clock_50 
-    Info (332119):     0.956               0.000 input_clock_40 
-Info (332146): Worst-case minimum pulse width slack is 3.063
+    Info (332119):     0.247               0.000 rx_input_clock[0] 
+    Info (332119):     0.446               0.000 input_clock_125 
+    Info (332119):     0.485               0.000 rx_input_clock[1] 
+    Info (332119):     0.497               0.000 rx_input_clock[3] 
+    Info (332119):     0.504               0.000 rx_input_clock[2] 
+    Info (332119):     0.510               0.000 input_clock_40 
+    Info (332119):     0.629               0.000 altera_reserved_tck 
+    Info (332119):     0.691               0.000 input_clock_50 
+Info (332146): Worst-case minimum pulse width slack is 3.062
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
+    Info (332119):     3.062               0.000 rx_input_clock[1] 
     Info (332119):     3.063               0.000 rx_input_clock[0] 
-    Info (332119):     3.064               0.000 rx_input_clock[1] 
-    Info (332119):     3.064               0.000 rx_input_clock[2] 
-    Info (332119):     3.073               0.000 rx_input_clock[3] 
-    Info (332119):     3.166               0.000 input_clock_125 
-    Info (332119):     9.252               0.000 input_clock_50 
-    Info (332119):    11.742               0.000 input_clock_40 
+    Info (332119):     3.070               0.000 rx_input_clock[3] 
+    Info (332119):     3.093               0.000 input_clock_125 
+    Info (332119):     3.093               0.000 rx_input_clock[2] 
+    Info (332119):     9.245               0.000 input_clock_50 
+    Info (332119):    11.738               0.000 input_clock_40 
     Info (332119):    12.491               0.000 external_clock_40 
-    Info (332119):    49.185               0.000 altera_reserved_tck 
+    Info (332119):    49.187               0.000 altera_reserved_tck 
 Info (332114): Report Metastability: Found 1603 synchronizer chains.
     Info (332114): Design MTBF is not calculated because the design doesn't meet its timing requirements.
 Info: Analyzing Fast 900mV 0C Model
@@ -1985,72 +1985,72 @@ Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in TimeQue
 Warning (332056): PLL cross checking found inconsistent PLL clock settings:
     Warning (332056): Node: ethlink_inst|\MAC:3:MAC|sgmii|alttse1_inst|altera_tse_pcs_pma_inst|the_altera_tse_pma_lvds_rx|altlvds_rx_component|auto_generated|pll|clk[0] was found missing 1 generated clock that corresponds to a base clock with a period of: 8.000
     Warning (332056): Node: ethlink_inst|\MAC:3:MAC|sgmii|alttse1_inst|altera_tse_pcs_pma_inst|the_altera_tse_pma_lvds_rx|altlvds_rx_component|auto_generated|pll|clk[1] was found missing 1 generated clock that corresponds to a base clock with a period of: 8.000
-Info (332146): Worst-case setup slack is 0.556
+Info (332146): Worst-case setup slack is 0.547
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.556               0.000 tx_output_clock[0] 
-    Info (332119):     0.599               0.000 tx_output_clock[1] 
+    Info (332119):     0.547               0.000 tx_output_clock[0] 
+    Info (332119):     0.594               0.000 tx_output_clock[1] 
     Info (332119):     0.614               0.000 tx_output_clock[3] 
     Info (332119):     0.642               0.000 tx_output_clock[2] 
-    Info (332119):     0.803               0.000 input_clock_50 
-    Info (332119):     0.968               0.000 rx_input_clock[1] 
-    Info (332119):     0.974               0.000 rx_input_clock[2] 
-    Info (332119):     0.978               0.000 rx_input_clock[0] 
-    Info (332119):     0.978               0.000 rx_input_clock[3] 
-    Info (332119):     1.363               0.000 input_clock_125 
-    Info (332119):    10.615               0.000 input_clock_40 
-    Info (332119):    47.670               0.000 altera_reserved_tck 
+    Info (332119):     0.804               0.000 input_clock_50 
+    Info (332119):     0.962               0.000 rx_input_clock[1] 
+    Info (332119):     0.970               0.000 rx_input_clock[2] 
+    Info (332119):     0.971               0.000 rx_input_clock[3] 
+    Info (332119):     0.976               0.000 rx_input_clock[0] 
+    Info (332119):     1.194               0.000 input_clock_125 
+    Info (332119):    10.972               0.000 input_clock_40 
+    Info (332119):    48.099               0.000 altera_reserved_tck 
 Critical Warning (332148): Timing requirements not met
     Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the TimeQuest Timing Analyzer.
-Info (332146): Worst-case hold slack is -0.446
+Info (332146): Worst-case hold slack is -0.444
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -0.446              -1.019 rx_input_clock[0] 
-    Info (332119):    -0.278              -0.278 rx_input_clock[1] 
-    Info (332119):    -0.126              -0.249 rx_input_clock[2] 
-    Info (332119):     0.057               0.000 rx_input_clock[3] 
-    Info (332119):     0.085               0.000 input_clock_125 
-    Info (332119):     0.118               0.000 input_clock_40 
-    Info (332119):     0.131               0.000 input_clock_50 
-    Info (332119):     0.165               0.000 altera_reserved_tck 
-    Info (332119):     3.416               0.000 tx_output_clock[3] 
-    Info (332119):     3.431               0.000 tx_output_clock[1] 
+    Info (332119):    -0.444              -1.015 rx_input_clock[0] 
+    Info (332119):    -0.283              -0.283 rx_input_clock[1] 
+    Info (332119):    -0.116              -0.230 rx_input_clock[2] 
+    Info (332119):     0.044               0.000 rx_input_clock[3] 
+    Info (332119):     0.079               0.000 input_clock_125 
+    Info (332119):     0.135               0.000 input_clock_40 
+    Info (332119):     0.137               0.000 input_clock_50 
+    Info (332119):     0.166               0.000 altera_reserved_tck 
+    Info (332119):     3.414               0.000 tx_output_clock[3] 
+    Info (332119):     3.433               0.000 tx_output_clock[1] 
     Info (332119):     3.456               0.000 tx_output_clock[2] 
     Info (332119):     3.468               0.000 tx_output_clock[0] 
-Info (332146): Worst-case recovery slack is 0.431
+Info (332146): Worst-case recovery slack is 0.535
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.431               0.000 input_clock_50 
-    Info (332119):     1.285               0.000 input_clock_125 
-    Info (332119):     2.203               0.000 rx_input_clock[0] 
-    Info (332119):     2.477               0.000 rx_input_clock[1] 
-    Info (332119):     2.980               0.000 rx_input_clock[3] 
-    Info (332119):     3.403               0.000 rx_input_clock[2] 
-    Info (332119):    11.650               0.000 input_clock_40 
-    Info (332119):    91.374               0.000 altera_reserved_tck 
-Info (332146): Worst-case removal slack is 0.103
+    Info (332119):     0.535               0.000 input_clock_50 
+    Info (332119):     1.126               0.000 input_clock_125 
+    Info (332119):     1.944               0.000 rx_input_clock[0] 
+    Info (332119):     2.459               0.000 rx_input_clock[1] 
+    Info (332119):     2.804               0.000 rx_input_clock[2] 
+    Info (332119):     3.278               0.000 rx_input_clock[3] 
+    Info (332119):    12.434               0.000 input_clock_40 
+    Info (332119):    92.430               0.000 altera_reserved_tck 
+Info (332146): Worst-case removal slack is 0.113
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.103               0.000 rx_input_clock[1] 
-    Info (332119):     0.202               0.000 rx_input_clock[2] 
-    Info (332119):     0.254               0.000 rx_input_clock[3] 
-    Info (332119):     0.257               0.000 input_clock_125 
-    Info (332119):     0.273               0.000 rx_input_clock[0] 
-    Info (332119):     0.337               0.000 altera_reserved_tck 
-    Info (332119):     0.387               0.000 input_clock_50 
-    Info (332119):     0.569               0.000 input_clock_40 
-Info (332146): Worst-case minimum pulse width slack is 2.835
+    Info (332119):     0.113               0.000 rx_input_clock[0] 
+    Info (332119):     0.254               0.000 input_clock_125 
+    Info (332119):     0.274               0.000 input_clock_40 
+    Info (332119):     0.277               0.000 rx_input_clock[1] 
+    Info (332119):     0.285               0.000 rx_input_clock[3] 
+    Info (332119):     0.286               0.000 rx_input_clock[2] 
+    Info (332119):     0.342               0.000 altera_reserved_tck 
+    Info (332119):     0.411               0.000 input_clock_50 
+Info (332146): Worst-case minimum pulse width slack is 2.837
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     2.835               0.000 rx_input_clock[0] 
-    Info (332119):     2.839               0.000 rx_input_clock[2] 
-    Info (332119):     2.844               0.000 rx_input_clock[1] 
-    Info (332119):     2.844               0.000 rx_input_clock[3] 
-    Info (332119):     3.211               0.000 input_clock_125 
-    Info (332119):     9.178               0.000 input_clock_50 
-    Info (332119):    11.723               0.000 input_clock_40 
+    Info (332119):     2.837               0.000 rx_input_clock[1] 
+    Info (332119):     2.837               0.000 rx_input_clock[3] 
+    Info (332119):     2.840               0.000 rx_input_clock[0] 
+    Info (332119):     2.854               0.000 rx_input_clock[2] 
+    Info (332119):     3.204               0.000 input_clock_125 
+    Info (332119):     9.180               0.000 input_clock_50 
+    Info (332119):    11.720               0.000 input_clock_40 
     Info (332119):    12.491               0.000 external_clock_40 
-    Info (332119):    49.175               0.000 altera_reserved_tck 
+    Info (332119):    49.174               0.000 altera_reserved_tck 
 Info (332114): Report Metastability: Found 1603 synchronizer chains.
     Info (332114): Worst-Case MTBF of Design is 1e+09 years or 3.15e+16 seconds.
     Info (332114): Typical MTBF of Design is 1e+09 years or 3.15e+16 seconds.
@@ -2058,7 +2058,7 @@ Info (332114): Report Metastability: Found 1603 synchronizer chains.
     Info (332114): Number of Synchronizer Chains Found: 1603
     Info (332114): Shortest Synchronizer Chain: 2 Registers
     Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 0.048
-    Info (332114): Worst Case Available Settling Time: 6.597 ns
+    Info (332114): Worst Case Available Settling Time: 7.315 ns
     Info (332114): 
     Info (332114): Worst-Case MTBF values are calculated based on the worst-case silicon characteristics, with worst-case operating conditions.
     Info (332114):   - Under worst-case conditions, an increase of 100ps in available settling time will increase MTBF values by a factor of 32.7
@@ -2069,9 +2069,9 @@ Info (332107): Report TCCS:
 Info (332102): Design is not fully constrained for setup requirements
 Info (332102): Design is not fully constrained for hold requirements
 Info: Quartus Prime TimeQuest Timing Analyzer was successful. 0 errors, 16 warnings
-    Info: Peak virtual memory: 2434 megabytes
-    Info: Processing ended: Mon Jul 15 17:03:09 2019
-    Info: Elapsed time: 00:00:44
-    Info: Total CPU time (on all processors): 00:01:10
+    Info: Peak virtual memory: 2425 megabytes
+    Info: Processing ended: Tue Mar 10 17:36:05 2020
+    Info: Elapsed time: 00:00:40
+    Info: Total CPU time (on all processors): 00:01:03
 
 

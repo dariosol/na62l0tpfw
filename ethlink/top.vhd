@@ -160,6 +160,7 @@ architecture rtl of top is
 
 --startRUN, internal timestamp clock signals
    signal s_BURST                          : std_logic;
+   signal s_BURSTERROR                     : std_logic_vector(5 downto 0);      
    signal s_startRUN                       : std_logic;
    signal s_internal_timestamp             : std_logic_vector(29 downto 0);
    signal s_internal_timestamp125          : std_logic_vector(29 downto 0);
@@ -418,6 +419,7 @@ architecture rtl of top is
 	BCRST           : in std_logic;
 	ECRST           : in std_logic;
 	BURST           : out std_logic;
+        BURSTERROR      : out std_logic_vector(5 downto 0);
 	CHOKE           : in std_logic_vector(13 downto 0);
 	ERROR           : in std_logic_vector(13 downto 0);
 	CHOKEMASK       : in std_logic_vector(13 downto 0);
@@ -1003,7 +1005,7 @@ begin
       BCRST 		  => BCRST,
       startRUN            => s_startRUN,
       BURST   		  => s_BURST,
-
+      BURSTERROR          => s_BURSTERROR,
       Led1                => Led1,
       Led3                => Led3,
       FAKECHOKE           => s_FAKECHOKE,
@@ -1153,7 +1155,7 @@ begin
 
       MEPNum                             => s_MEPNum,
       CounterLTU                         => s_CounterLTU,
-      TRIGGERERROR                       => s_TRIGGERERROR or s_error_randomintensity,  
+      TRIGGERERROR                       => s_TRIGGERERROR or s_error_randomintensity or s_BURSTERROR,  
       ETHLINKERROR                       => s_ETHLINKERROR,
       Fixed_Latency_i                    => s_Fixed_Latency_o,
       
@@ -1183,7 +1185,6 @@ begin
       FAKEERROR                          => s_FAKEERROR,
       FAKECHOKE                          => s_FAKECHOKE
       );
-
 
    process(s_locked,s_locked40,TTC_READY,QPLL_LOCKED,QPLL_ERROR)
    begin

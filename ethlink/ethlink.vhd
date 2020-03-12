@@ -5867,7 +5867,7 @@ begin
 		  r.headermode(0)               :='1';
 		  r.headermode(1)               :='1';
 		  r.headermode(2)               :='1';
-        r.errorchecktimestamp         := (others =>'0');  
+                  r.errorchecktimestamp         := (others =>'0');  
 		  r.old_number_of_primitives            := (others=>"00000000000000000000000000000000");
 		  r.number_of_primitives            := (others=>"00000000000000000000000000000000");
 		  r.ETHLINKERROR                    := SLV(0,32);
@@ -5900,8 +5900,11 @@ begin
 		  n.ERRORFIFOON.inputs.aclr      := '1';
 		  n.CHOKEFIFOON.inputs.aclr      := '1';
 		  n.FIFOPACKETS.inputs.aclr      := '1';
-		  
 		  r.timerdebug                   := 0;
+                  n.FIFOPACKETS.inputs.aclr :='1';
+                  for index in 0 to ethlink_NODES -2 loop
+                    n.FIFODelay(index).inputs.aclr :='1';
+                  end loop;
 		  
 	       else
 --EOB--
@@ -5941,10 +5944,10 @@ begin
 
 		  
 		  if ro.timer = 20000 then
-		     n.FIFOPACKETS.inputs.aclr :='1';
-                     for index in 0 to ethlink_NODES -2 loop
-			n.FIFODelay(index).inputs.aclr :='1';
-		     end loop;
+		 --    n.FIFOPACKETS.inputs.aclr :='1';
+                 --    for index in 0 to ethlink_NODES -2 loop
+		 --       n.FIFODelay(index).inputs.aclr :='1';
+		 --    end loop;
 
 		     r.sob_data_send             :='0';	
 		     r.timer := 0;	
