@@ -1,17 +1,17 @@
- -- Copyright (C) 2017  Intel Corporation. All rights reserved.
+ -- Copyright (C) 2019  Intel Corporation. All rights reserved.
  -- Your use of Intel Corporation's design tools, logic functions 
- -- and other software and tools, and its AMPP partner logic 
+ -- and other software and tools, and any partner logic 
  -- functions, and any output files from any of the foregoing 
  -- (including device programming or simulation files), and any 
  -- associated documentation or information are expressly subject 
  -- to the terms and conditions of the Intel Program License 
  -- Subscription Agreement, the Intel Quartus Prime License Agreement,
- -- the Intel MegaCore Function License Agreement, or other 
- -- applicable license agreement, including, without limitation, 
- -- that your use is for the sole purpose of programming logic 
- -- devices manufactured by Intel and sold by Intel or its 
- -- authorized distributors.  Please refer to the applicable 
- -- agreement for further details.
+ -- the Intel FPGA IP License Agreement, or other applicable license
+ -- agreement, including, without limitation, that your use is for
+ -- the sole purpose of programming logic devices manufactured by
+ -- Intel and sold by Intel or its authorized distributors.  Please
+ -- refer to the applicable agreement for further details, at
+ -- https://fpgasoftware.intel.com/eula.
  -- 
  -- This is a Quartus Prime output file. It is for reporting purposes only, and is
  -- not intended for use as a Quartus Prime input file. This file cannot be used
@@ -84,7 +84,7 @@
  -- Pin directions (input, output or bidir) are based on device operating in user mode.
  ---------------------------------------------------------------------------------
 
-Quartus Prime Version 16.1.2 Build 203 01/18/2017 SJ Standard Edition
+Quartus Prime Version 18.1.1 Build 646 04/11/2019 SJ Standard Edition
 CHIP  "top"  ASSIGNED TO AN: EP4SGX530KH40C2
 
 Pin Name/Usage               : Location  : Dir.   : I/O Standard      : Voltage : I/O Bank  : User Assignment
@@ -255,7 +255,7 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : AD9       :        :                   :      
 RESERVED_INPUT_WITH_WEAK_PULLUP : AD10      :        :                   :         : 5C        :                
 VREFB5CN0                    : AD11      : power  :                   :         : 5C        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AD12      :        :                   :         : 5A        :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : AD13      :        :                   :         : 5A        :                
+LKrNIMCalib                  : AD13      : input  : 2.5 V             :         : 5A        : N              
 VCCPD4A                      : AD14      : power  :                   : 2.5V    : 4A        :                
 OTG_D[2]                     : AD15      : bidir  : 1.8 V             :         : 4A        : Y              
 VCCPD4B                      : AD16      : power  :                   : 2.5V    : 4B        :                
@@ -743,7 +743,7 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : AT29      :        :                   :      
 ENET_RX_D[0][4]              : AT30      : input  : 2.5 V             :         : 2A        : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : AT31      :        :                   :         : 2A        :                
 ENET_RX_D[0][1]              : AT32      : input  : 2.5 V             :         : 2A        : Y              
-LKrNIMCalib                  : AT33      : input  : 2.5 V             :         : 2A        : N              
+RESERVED_INPUT_WITH_WEAK_PULLUP : AT33      :        :                   :         : 2A        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AT34      :        :                   :         : 2A        :                
 VCCIO2A                      : AT35      : power  :                   : 2.5V    : 2A        :                
 GXB_NC                       : AT36      :        :                   :         : QL0       :                

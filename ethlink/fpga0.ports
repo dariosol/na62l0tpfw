@@ -1,5 +1,5 @@
-# Name	direction	bits	Handshake_from_circuit	Handshake_from_workstation
-number_of_triggers	i	32	
-status               o  32
-status125            o  32
-data_in              i  32
+# Name  direction       bits    Handshake_from_circuit  Handshake_from_workstation
+number_of_triggers     i        32
+status                o       32
+status125             o       32
+data_in               i       32
