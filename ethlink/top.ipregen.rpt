@@ -1,6 +1,6 @@
 IP Upgrade report for top
-Fri Jan 18 09:17:49 2019
-Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Standard Edition
+Thu Apr 29 14:13:25 2021
+Quartus Prime Version 18.1.1 Build 646 04/11/2019 SJ Standard Edition
 
 
 ---------------------
@@ -16,28 +16,28 @@ Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Standard Edition
 ----------------
 ; Legal Notice ;
 ----------------
-Copyright (C) 2016  Intel Corporation. All rights reserved.
+Copyright (C) 2019  Intel Corporation. All rights reserved.
 Your use of Intel Corporation's design tools, logic functions 
-and other software and tools, and its AMPP partner logic 
+and other software and tools, and any partner logic 
 functions, and any output files from any of the foregoing 
 (including device programming or simulation files), and any 
 associated documentation or information are expressly subject 
 to the terms and conditions of the Intel Program License 
 Subscription Agreement, the Intel Quartus Prime License Agreement,
-the Intel MegaCore Function License Agreement, or other 
-applicable license agreement, including, without limitation, 
-that your use is for the sole purpose of programming logic 
-devices manufactured by Intel and sold by Intel or its 
-authorized distributors.  Please refer to the applicable 
-agreement for further details.
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
 
 
 
 +--------------------------------------------------------------------------------+
 ; IP Upgrade Summary                                                             ;
 +------------------------------+-------------------------------------------------+
-; IP Components Upgrade Status ; Passed - Fri Jan 18 09:17:49 2019               ;
-; Quartus Prime Version        ; 16.1.0 Build 196 10/24/2016 SJ Standard Edition ;
+; IP Components Upgrade Status ; Passed - Thu Apr 29 14:13:25 2021               ;
+; Quartus Prime Version        ; 18.1.1 Build 646 04/11/2019 SJ Standard Edition ;
 ; Revision Name                ; top                                             ;
 ; Top-level Entity Name        ; top                                             ;
 ; Family                       ; Stratix IV                                      ;
@@ -49,16 +49,16 @@ agreement for further details.
 +---------------------+-------------------+---------+------------------------------------------------------------------------+---------------------------------------------+------------------------------------------------------------------------+---------+
 ; Entity Name         ; Component Name    ; Version ; Original Source File                                                   ; Generation File Path                        ; New Source File                                                        ; Message ;
 +---------------------+-------------------+---------+------------------------------------------------------------------------+---------------------------------------------+------------------------------------------------------------------------+---------+
-; TemperatureSensor   ; altera_temp_sense ; 14.1    ; ../TemperatureSensor/TemperatureSensor/synthesis/TemperatureSensor.qip ; ../TemperatureSensor/TemperatureSensor.qsys ; ../TemperatureSensor/TemperatureSensor/synthesis/TemperatureSensor.qip ;         ;
-; altpll_refclk2      ; ALTPLL            ; 13.0    ; altpll_refclk2.qip                                                     ; altpll_refclk2.vhd                          ; altpll_refclk2.qip                                                     ;         ;
-; altfifoMTPnum       ; FIFO              ; 13.0    ; ../mac/altfifoMTPnum.qip                                               ; ../mac/altfifoMTPnum.vhd                    ; ../mac/altfifoMTPnum.qip                                               ;         ;
-; altsendfifo         ; FIFO              ; 13.0    ; ../mac/altsendfifo.qip                                                 ; ../mac/altsendfifo.vhd                      ; ../mac/altsendfifo.qip                                                 ;         ;
-; altfifopackets      ; FIFO              ; 13.0    ; ../mac/altfifopackets.qip                                              ; ../mac/altfifopackets.vhd                   ; ../mac/altfifopackets.qip                                              ;         ;
-; altFIFODELAY        ; FIFO              ; 13.0    ; ../mac/altFIFODELAY.qip                                                ; ../mac/altFIFODELAY.vhd                     ; ../mac/altFIFODELAY.qip                                                ;         ;
-; altFIFOtstmp        ; FIFO              ; 13.0    ; ../mac/altFIFOtstmp.qip                                                ; ../mac/altFIFOtstmp.vhd                     ; ../mac/altFIFOtstmp.qip                                                ;         ;
-; altfifodetectorfarm ; FIFO              ; 13.0    ; ../mac/altfifodetectorfarm.qip                                         ; ../mac/altfifodetectorfarm.vhd              ; ../mac/altfifodetectorfarm.qip                                         ;         ;
-; altfifo2trigger     ; FIFO              ; 13.0    ; ../mac/altfifo2trigger.qip                                             ; ../mac/altfifo2trigger.vhd                  ; ../mac/altfifo2trigger.qip                                             ;         ;
-; altpll40MHz         ; ALTPLL            ; 13.0    ; altpll40MHz.qip                                                        ; altpll40MHz.vhd                             ; altpll40MHz.qip                                                        ;         ;
+; TemperatureSensor   ; altera_temp_sense ; 16.1    ; ../TemperatureSensor/TemperatureSensor/synthesis/TemperatureSensor.qip ; ../TemperatureSensor/TemperatureSensor.qsys ; ../TemperatureSensor/TemperatureSensor/synthesis/TemperatureSensor.qip ;         ;
+; altpll_refclk2      ; ALTPLL            ; 16.1    ; altpll_refclk2.qip                                                     ; altpll_refclk2.vhd                          ; altpll_refclk2.qip                                                     ;         ;
+; altfifoMTPnum       ; FIFO              ; 16.1    ; ../mac/altfifoMTPnum.qip                                               ; ../mac/altfifoMTPnum.vhd                    ; ../mac/altfifoMTPnum.qip                                               ;         ;
+; altsendfifo         ; FIFO              ; 16.1    ; ../mac/altsendfifo.qip                                                 ; ../mac/altsendfifo.vhd                      ; ../mac/altsendfifo.qip                                                 ;         ;
+; altfifopackets      ; FIFO              ; 16.1    ; ../mac/altfifopackets.qip                                              ; ../mac/altfifopackets.vhd                   ; ../mac/altfifopackets.qip                                              ;         ;
+; altFIFODELAY        ; FIFO              ; 16.1    ; ../mac/altFIFODELAY.qip                                                ; ../mac/altFIFODELAY.vhd                     ; ../mac/altFIFODELAY.qip                                                ;         ;
+; altFIFOtstmp        ; FIFO              ; 16.1    ; ../mac/altFIFOtstmp.qip                                                ; ../mac/altFIFOtstmp.vhd                     ; ../mac/altFIFOtstmp.qip                                                ;         ;
+; altfifodetectorfarm ; FIFO              ; 16.1    ; ../mac/altfifodetectorfarm.qip                                         ; ../mac/altfifodetectorfarm.vhd              ; ../mac/altfifodetectorfarm.qip                                         ;         ;
+; altfifo2trigger     ; FIFO              ; 16.1    ; ../mac/altfifo2trigger.qip                                             ; ../mac/altfifo2trigger.vhd                  ; ../mac/altfifo2trigger.qip                                             ;         ;
+; altpll40MHz         ; ALTPLL            ; 16.1    ; altpll40MHz.qip                                                        ; altpll40MHz.vhd                             ; altpll40MHz.qip                                                        ;         ;
 +---------------------+-------------------+---------+------------------------------------------------------------------------+---------------------------------------------+------------------------------------------------------------------------+---------+
 
 
@@ -68,69 +68,69 @@ agreement for further details.
 Info (11902): Backing up file "../TemperatureSensor/TemperatureSensor.qsys" to "../TemperatureSensor/TemperatureSensor.BAK.qsys"
 Info (11902): Backing up file "../TemperatureSensor/TemperatureSensor/synthesis/TemperatureSensor.vhd" to "../TemperatureSensor/TemperatureSensor.BAK.vhd"
 Info (11837): Started upgrading IP component altera_temp_sense with file "../TemperatureSensor/TemperatureSensor.qsys"
-Info: 2019.01.18.09:17:31 Info: Starting to upgrade the IP cores in the Qsys system
-Info: 2019.01.18.09:17:31 Info: Finished upgrading the ip cores
-Info: 2019.01.18.09:17:37 Info: Saving generation log to /home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor
-Info: 2019.01.18.09:17:37 Info: Starting: Create simulation model
-Info: 2019.01.18.09:17:37 Info: Loading TemperatureSensor
-Info: 2019.01.18.09:17:37 Info: Reading input file
-Info: 2019.01.18.09:17:37 Info: Adding temp_sense_0 [altera_temp_sense 16.1]
-Info: 2019.01.18.09:17:37 Info: Parameterizing module temp_sense_0
-Info: 2019.01.18.09:17:37 Info: Building connections
-Info: 2019.01.18.09:17:37 Info: Parameterizing connections
-Info: 2019.01.18.09:17:37 Info: Validating
-Info: 2019.01.18.09:17:37 Info: Done reading input file
-Info: 2019.01.18.09:17:37 Info: TemperatureSensor: Generating TemperatureSensor "TemperatureSensor" for SIM_VHDL
-Info: 2019.01.18.09:17:37 Info: temp_sense_0: "TemperatureSensor" instantiated altera_temp_sense "temp_sense_0"
-Info: 2019.01.18.09:17:37 Info: TemperatureSensor: Done "TemperatureSensor" with 2 modules, 2 files
-Info: 2019.01.18.09:17:37 Info: qsys-generate succeeded.
-Info: 2019.01.18.09:17:37 Info: Finished: Create simulation model
-Info: 2019.01.18.09:17:37 Info: Starting: Create Modelsim Project.
-Info: 2019.01.18.09:17:37 Info: sim-script-gen --spd=/home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/TemperatureSensor.spd --output-directory=/home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/simulation
-Info: 2019.01.18.09:17:37 Info: Doing: ip-make-simscript --spd=/home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/TemperatureSensor.spd --output-directory=/home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/simulation
-Info: 2019.01.18.09:17:38 Info: Generating the following file(s) for MODELSIM simulator in /home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/simulation
-Info: 2019.01.18.09:17:38 Info:     mentor
-Info: 2019.01.18.09:17:38 Info: Skipping VCS script generation since VHDL file $QUARTUS_INSTALL_DIR/eda/sim_lib
-Info: 2019.01.18.09:17:38 Info: Generating the following file(s) for VCSMX simulator in /home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/simulation
-Info: 2019.01.18.09:17:38 Info:     synopsys/vcsmx
-Info: 2019.01.18.09:17:38 Info:     synopsys/vcsmx
-Info: 2019.01.18.09:17:38 Info: Generating the following file(s) for NCSIM simulator in /home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/simulation
-Info: 2019.01.18.09:17:38 Info:     cadence
-Info: 2019.01.18.09:17:38 Info:     cadence
-Info: 2019.01.18.09:17:38 Info:     cadence
-Info: 2019.01.18.09:17:38 Info:     1 .cds.lib files in cadence/cds_libs
-Info: 2019.01.18.09:17:38 Info: Generating the following file(s) for RIVIERA simulator in /home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/simulation
-Info: 2019.01.18.09:17:38 Info:     aldec
-Info: 2019.01.18.09:17:38 Info: For information on how to simulate your IP, see the explanatory comments in the simulator-specific subdirectories under /home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/simulation
-Info: 2019.01.18.09:17:38 Info: Regenerate these scripts whenever you make any change to any Quartus-generated IP in your project.
-Info: 2019.01.18.09:17:38 Info: Finished: Create Modelsim Project.
-Info: 2019.01.18.09:17:38 Info: Starting: Create block symbol file (.bsf)
-Info: 2019.01.18.09:17:38 Info: Loading TemperatureSensor
-Info: 2019.01.18.09:17:38 Info: Reading input file
-Info: 2019.01.18.09:17:38 Info: Adding temp_sense_0 [altera_temp_sense 16.1]
-Info: 2019.01.18.09:17:38 Info: Parameterizing module temp_sense_0
-Info: 2019.01.18.09:17:38 Info: Building connections
-Info: 2019.01.18.09:17:38 Info: Parameterizing connections
-Info: 2019.01.18.09:17:38 Info: Validating
-Info: 2019.01.18.09:17:38 Info: Done reading input file
-Info: 2019.01.18.09:17:38 Info: qsys-generate succeeded.
-Info: 2019.01.18.09:17:38 Info: Finished: Create block symbol file (.bsf)
-Info: 2019.01.18.09:17:38 Info:
-Info: 2019.01.18.09:17:38 Info: Starting: Create HDL design files for synthesis
-Info: 2019.01.18.09:17:38 Info: Loading TemperatureSensor
-Info: 2019.01.18.09:17:38 Info: Reading input file
-Info: 2019.01.18.09:17:38 Info: Adding temp_sense_0 [altera_temp_sense 16.1]
-Info: 2019.01.18.09:17:38 Info: Parameterizing module temp_sense_0
-Info: 2019.01.18.09:17:38 Info: Building connections
-Info: 2019.01.18.09:17:38 Info: Parameterizing connections
-Info: 2019.01.18.09:17:39 Info: Validating
-Info: 2019.01.18.09:17:39 Info: Done reading input file
-Info: 2019.01.18.09:17:39 Info: TemperatureSensor: Generating TemperatureSensor "TemperatureSensor" for QUARTUS_SYNTH
-Info: 2019.01.18.09:17:39 Info: temp_sense_0: Generating top-level entity TemperatureSensor_temp_sense_0.
-Info: 2019.01.18.09:17:39 Info: temp_sense_0: "TemperatureSensor" instantiated altera_temp_sense "temp_sense_0"
-Info: 2019.01.18.09:17:39 Info: TemperatureSensor: Done "TemperatureSensor" with 2 modules, 2 files
-Info: 2019.01.18.09:17:39 Info: qsys-generate succeeded.
-Info: 2019.01.18.09:17:39 Info: Finished: Create HDL design files for synthesis
+Info: 2021.04.29.14:13:05 Info: Starting to upgrade the IP cores in the Platform Designer system
+Info: 2021.04.29.14:13:06 Info: Finished upgrading the ip cores
+Info: 2021.04.29.14:13:11 Info: Saving generation log to /home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor
+Info: 2021.04.29.14:13:11 Info: Starting: Create simulation model
+Info: 2021.04.29.14:13:11 Info: Loading TemperatureSensor
+Info: 2021.04.29.14:13:12 Info: Reading input file
+Info: 2021.04.29.14:13:12 Info: Adding temp_sense_0 [altera_temp_sense 18.1]
+Info: 2021.04.29.14:13:12 Info: Parameterizing module temp_sense_0
+Info: 2021.04.29.14:13:12 Info: Building connections
+Info: 2021.04.29.14:13:12 Info: Parameterizing connections
+Info: 2021.04.29.14:13:12 Info: Validating
+Info: 2021.04.29.14:13:12 Info: Done reading input file
+Info: 2021.04.29.14:13:12 Info: TemperatureSensor: Generating TemperatureSensor "TemperatureSensor" for SIM_VHDL
+Info: 2021.04.29.14:13:12 Info: temp_sense_0: "TemperatureSensor" instantiated altera_temp_sense "temp_sense_0"
+Info: 2021.04.29.14:13:12 Info: TemperatureSensor: Done "TemperatureSensor" with 2 modules, 2 files
+Info: 2021.04.29.14:13:12 Info: qsys-generate succeeded.
+Info: 2021.04.29.14:13:12 Info: Finished: Create simulation model
+Info: 2021.04.29.14:13:12 Info: Starting: Create Modelsim Project.
+Info: 2021.04.29.14:13:12 Info: sim-script-gen --spd=/home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/TemperatureSensor.spd --output-directory=/home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/simulation
+Info: 2021.04.29.14:13:12 Info: Doing: ip-make-simscript --spd=/home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/TemperatureSensor.spd --output-directory=/home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/simulation
+Info: 2021.04.29.14:13:13 Info: Generating the following file(s) for MODELSIM simulator in /home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/simulation
+Info: 2021.04.29.14:13:13 Info:     mentor
+Info: 2021.04.29.14:13:13 Info: Skipping VCS script generation since VHDL file $QUARTUS_INSTALL_DIR/eda/sim_lib
+Info: 2021.04.29.14:13:13 Info: Generating the following file(s) for VCSMX simulator in /home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/simulation
+Info: 2021.04.29.14:13:13 Info:     synopsys/vcsmx
+Info: 2021.04.29.14:13:13 Info:     synopsys/vcsmx
+Info: 2021.04.29.14:13:13 Info: Generating the following file(s) for NCSIM simulator in /home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/simulation
+Info: 2021.04.29.14:13:13 Info:     cadence
+Info: 2021.04.29.14:13:13 Info:     cadence
+Info: 2021.04.29.14:13:13 Info:     cadence
+Info: 2021.04.29.14:13:13 Info:     1 .cds.lib files in cadence/cds_libs
+Info: 2021.04.29.14:13:13 Info: Generating the following file(s) for RIVIERA simulator in /home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/simulation
+Info: 2021.04.29.14:13:13 Info:     aldec
+Info: 2021.04.29.14:13:13 Info: For information on how to simulate your IP, see the explanatory comments in the simulator-specific subdirectories under /home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/simulation
+Info: 2021.04.29.14:13:13 Info: Regenerate these scripts whenever you make any change to any Quartus-generated IP in your project.
+Info: 2021.04.29.14:13:13 Info: Finished: Create Modelsim Project.
+Info: 2021.04.29.14:13:13 Info: Starting: Create block symbol file (.bsf)
+Info: 2021.04.29.14:13:13 Info: Loading TemperatureSensor
+Info: 2021.04.29.14:13:13 Info: Reading input file
+Info: 2021.04.29.14:13:13 Info: Adding temp_sense_0 [altera_temp_sense 18.1]
+Info: 2021.04.29.14:13:13 Info: Parameterizing module temp_sense_0
+Info: 2021.04.29.14:13:13 Info: Building connections
+Info: 2021.04.29.14:13:13 Info: Parameterizing connections
+Info: 2021.04.29.14:13:13 Info: Validating
+Info: 2021.04.29.14:13:13 Info: Done reading input file
+Info: 2021.04.29.14:13:14 Info: qsys-generate succeeded.
+Info: 2021.04.29.14:13:14 Info: Finished: Create block symbol file (.bsf)
+2021.04.29.14:13:14 Info:
+Info: 2021.04.29.14:13:14 Info: Starting: Create HDL design files for synthesis
+Info: 2021.04.29.14:13:14 Info: Loading TemperatureSensor
+Info: 2021.04.29.14:13:14 Info: Reading input file
+Info: 2021.04.29.14:13:14 Info: Adding temp_sense_0 [altera_temp_sense 18.1]
+Info: 2021.04.29.14:13:14 Info: Parameterizing module temp_sense_0
+Info: 2021.04.29.14:13:14 Info: Building connections
+Info: 2021.04.29.14:13:14 Info: Parameterizing connections
+Info: 2021.04.29.14:13:14 Info: Validating
+Info: 2021.04.29.14:13:14 Info: Done reading input file
+Info: 2021.04.29.14:13:14 Info: TemperatureSensor: Generating TemperatureSensor "TemperatureSensor" for QUARTUS_SYNTH
+Info: 2021.04.29.14:13:14 Info: temp_sense_0: Generating top-level entity TemperatureSensor_temp_sense_0.
+Info: 2021.04.29.14:13:14 Info: temp_sense_0: "TemperatureSensor" instantiated altera_temp_sense "temp_sense_0"
+Info: 2021.04.29.14:13:14 Info: TemperatureSensor: Done "TemperatureSensor" with 2 modules, 2 files
+Info: 2021.04.29.14:13:14 Info: qsys-generate succeeded.
+Info: 2021.04.29.14:13:14 Info: Finished: Create HDL design files for synthesis
 Info (11902): Backing up file "altpll_refclk2.vhd" to "altpll_refclk2.BAK.vhd"
 Info (11837): Started upgrading IP component ALTPLL with file "altpll_refclk2.vhd"
 Info (11902): Backing up file "../mac/altfifoMTPnum.vhd" to "../mac/altfifoMTPnum.BAK.vhd"
@@ -159,11 +159,11 @@ Info (11131): Completed upgrading IP component FIFO with file "../mac/altFIFOtst
 Info (11131): Completed upgrading IP component FIFO with file "../mac/altfifodetectorfarm.vhd"
 Info (11131): Completed upgrading IP component FIFO with file "../mac/altfifo2trigger.vhd"
 Info (11131): Completed upgrading IP component ALTPLL with file "altpll40MHz.vhd"
-Info (23030): Evaluation of Tcl script /home/na62torino/altera/16.1/quartus/common/tcl/internal/ip_regen/ip_regen.tcl was successful
+Info (23030): Evaluation of Tcl script /home/na62torino/intelFPGA/18.1/quartus/common/tcl/internal/ip_regen/ip_regen.tcl was successful
 Info: Quartus Prime Shell was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 1175 megabytes
-    Info: Processing ended: Fri Jan 18 09:17:50 2019
-    Info: Elapsed time: 00:00:33
-    Info: Total CPU time (on all processors): 00:01:13
+    Info: Peak virtual memory: 1176 megabytes
+    Info: Processing ended: Thu Apr 29 14:13:26 2021
+    Info: Elapsed time: 00:00:37
+    Info: Total CPU time (on all processors): 00:01:16
 
 

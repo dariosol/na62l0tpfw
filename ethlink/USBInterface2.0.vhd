@@ -110,7 +110,9 @@ entity USBinterface is
       FAKECHOKE                    : out std_logic_vector(13 downto 0);
       FAKEERROR                    : out std_logic_vector(13 downto 0);
       activetriggers               : out std_logic_vector(31 downto 0);
-      NPrimitiveForRandom          : out std_logic_vector(31 downto 0)
+      NPrimitiveForRandom          : out std_logic_vector(31 downto 0);
+      CheckEndOfExtraction         : out std_logic;
+      MergedFifoChoke              : out std_logic
       );
 
    
@@ -665,7 +667,8 @@ begin
    Periodic_EndTime0          <= s_parameters(8) ;
    Random_Triggerword         <= s_parameters(9) ;
    Random_Period              <= s_parameters(10);
-   Delaydeliveryprimitive     <= s_parameters(11);
+   Delaydeliveryprimitive     <= '0' & s_parameters(11)(30 downto 0);
+   CheckEndOfExtraction       <= s_parameters(11)(31);
    Random_StartTime           <= s_parameters(12);
    Random_EndTime             <= s_parameters(13);
    Offset(0)                  <= s_parameters(14);
@@ -705,7 +708,7 @@ begin
    CHOKEMASK                    <= s_parameters(104)(13 downto 0);
    ERRORMASK                    <= s_parameters(104)(27 downto 14);
    
-  
+   MergedFifoChoke              <= s_parameters(104)(31);
    
    Timecut(0)                   <= s_parameters(105)(15 downto 0);
    Timecut(1)                   <= s_parameters(106)(15 downto 0);

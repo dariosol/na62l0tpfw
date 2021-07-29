@@ -1,8 +1,8 @@
 set_global_assignment -entity "TemperatureSensor" -library "TemperatureSensor" -name IP_TOOL_NAME "Qsys"
-set_global_assignment -entity "TemperatureSensor" -library "TemperatureSensor" -name IP_TOOL_VERSION "16.1"
+set_global_assignment -entity "TemperatureSensor" -library "TemperatureSensor" -name IP_TOOL_VERSION "18.1"
 set_global_assignment -entity "TemperatureSensor" -library "TemperatureSensor" -name IP_TOOL_ENV "Qsys"
 set_global_assignment -library "TemperatureSensor" -name SOPCINFO_FILE [file join $::quartus(qip_path) "../../TemperatureSensor.sopcinfo"]
-set_global_assignment -entity "TemperatureSensor" -library "TemperatureSensor" -name SLD_INFO "QSYS_NAME TemperatureSensor HAS_SOPCINFO 1 GENERATION_ID 1547799459"
+set_global_assignment -entity "TemperatureSensor" -library "TemperatureSensor" -name SLD_INFO "QSYS_NAME TemperatureSensor HAS_SOPCINFO 1 GENERATION_ID 1619698394"
 set_global_assignment -library "TemperatureSensor" -name MISC_FILE [file join $::quartus(qip_path) "../TemperatureSensor.cmp"]
 set_global_assignment -library "TemperatureSensor" -name SLD_FILE [file join $::quartus(qip_path) "TemperatureSensor.debuginfo"]
 set_global_assignment -entity "TemperatureSensor" -library "TemperatureSensor" -name IP_TARGETED_DEVICE_FAMILY "Stratix IV"
@@ -15,7 +15,7 @@ set_global_assignment -entity "TemperatureSensor" -library "TemperatureSensor" -
 set_global_assignment -entity "TemperatureSensor" -library "TemperatureSensor" -name IP_COMPONENT_REPORT_HIERARCHY "On"
 set_global_assignment -entity "TemperatureSensor" -library "TemperatureSensor" -name IP_COMPONENT_INTERNAL "Off"
 set_global_assignment -entity "TemperatureSensor" -library "TemperatureSensor" -name IP_COMPONENT_VERSION "MS4w"
-set_global_assignment -entity "TemperatureSensor" -library "TemperatureSensor" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTU0Nzc5OTQ1OQ==::QXV0byBHRU5FUkFUSU9OX0lE"
+set_global_assignment -entity "TemperatureSensor" -library "TemperatureSensor" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTYxOTY5ODM5NA==::QXV0byBHRU5FUkFUSU9OX0lE"
 set_global_assignment -entity "TemperatureSensor" -library "TemperatureSensor" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfRkFNSUxZ::U3RyYXRpeCBJVg==::QXV0byBERVZJQ0VfRkFNSUxZ"
 set_global_assignment -entity "TemperatureSensor" -library "TemperatureSensor" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0U=::RVA0U0dYNTMwS0g0MEMy::QXV0byBERVZJQ0U="
 set_global_assignment -entity "TemperatureSensor" -library "TemperatureSensor" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfU1BFRURHUkFERQ==::Mg==::QXV0byBERVZJQ0VfU1BFRURHUkFERQ=="
@@ -23,11 +23,11 @@ set_global_assignment -entity "TemperatureSensor" -library "TemperatureSensor" -
 set_global_assignment -entity "TemperatureSensor" -library "TemperatureSensor" -name IP_COMPONENT_PARAMETER "QVVUT19DTEtfQ0xPQ0tfRE9NQUlO::LTE=::QXV0byBDTE9DS19ET01BSU4="
 set_global_assignment -entity "TemperatureSensor" -library "TemperatureSensor" -name IP_COMPONENT_PARAMETER "QVVUT19DTEtfUkVTRVRfRE9NQUlO::LTE=::QXV0byBSRVNFVF9ET01BSU4="
 set_global_assignment -entity "TemperatureSensor_temp_sense_0" -library "TemperatureSensor" -name IP_COMPONENT_NAME "VGVtcGVyYXR1cmVTZW5zb3JfdGVtcF9zZW5zZV8w"
-set_global_assignment -entity "TemperatureSensor_temp_sense_0" -library "TemperatureSensor" -name IP_COMPONENT_DISPLAY_NAME "QWx0ZXJhIFRlbXBlcmF0dXJlIFNlbnNvcg=="
+set_global_assignment -entity "TemperatureSensor_temp_sense_0" -library "TemperatureSensor" -name IP_COMPONENT_DISPLAY_NAME "VGVtcGVyYXR1cmUgU2Vuc29yIEludGVsIEZQR0EgSVA="
 set_global_assignment -entity "TemperatureSensor_temp_sense_0" -library "TemperatureSensor" -name IP_COMPONENT_REPORT_HIERARCHY "Off"
 set_global_assignment -entity "TemperatureSensor_temp_sense_0" -library "TemperatureSensor" -name IP_COMPONENT_INTERNAL "Off"
 set_global_assignment -entity "TemperatureSensor_temp_sense_0" -library "TemperatureSensor" -name IP_COMPONENT_AUTHOR "QWx0ZXJhIENvcnBvcmF0aW9u"
-set_global_assignment -entity "TemperatureSensor_temp_sense_0" -library "TemperatureSensor" -name IP_COMPONENT_VERSION "MTYuMQ=="
+set_global_assignment -entity "TemperatureSensor_temp_sense_0" -library "TemperatureSensor" -name IP_COMPONENT_VERSION "MTguMQ=="
 set_global_assignment -entity "TemperatureSensor_temp_sense_0" -library "TemperatureSensor" -name IP_COMPONENT_DESCRIPTION "VGhlIEFsdGVyYSBUZW1wZXJhdHVyZSBTZW5zb3IgbWVnYWZ1bmN0aW9uIGNvbmZpZ3VyZXMgdGhlIHRlbXBlcmF0dXJlIHNlbnNpbmcgZGlvZGUgKFRTRCkgIGJsb2NrIHRvIHV0aWxpemUgdGhlIHRlbXBlcmF0dXJlIG1lYXN1cmVtZW50IGZlYXR1cmUgaW4gdGhlIEZQR0Eu"
 set_global_assignment -entity "TemperatureSensor_temp_sense_0" -library "TemperatureSensor" -name IP_COMPONENT_PARAMETER "REVWSUNFX0ZBTUlMWQ==::U3RyYXRpeCBJVg==::REVWSUNFX0ZBTUlMWQ=="
 set_global_assignment -entity "TemperatureSensor_temp_sense_0" -library "TemperatureSensor" -name IP_COMPONENT_PARAMETER "Q0JYX0FVVE9fQkxBQ0tCT1g=::QUxM::Q0JYX0FVVE9fQkxBQ0tCT1g="
@@ -46,5 +46,5 @@ set_global_assignment -library "TemperatureSensor" -name VHDL_FILE [file join $:
 set_global_assignment -library "TemperatureSensor" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/TemperatureSensor_temp_sense_0.v"]
 
 set_global_assignment -entity "TemperatureSensor_temp_sense_0" -library "TemperatureSensor" -name IP_TOOL_NAME "altera_temp_sense"
-set_global_assignment -entity "TemperatureSensor_temp_sense_0" -library "TemperatureSensor" -name IP_TOOL_VERSION "16.1"
+set_global_assignment -entity "TemperatureSensor_temp_sense_0" -library "TemperatureSensor" -name IP_TOOL_VERSION "18.1"
 set_global_assignment -entity "TemperatureSensor_temp_sense_0" -library "TemperatureSensor" -name IP_TOOL_ENV "Qsys"

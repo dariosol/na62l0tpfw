@@ -9,7 +9,7 @@ use work.GLOBALS.all;
 -- with the TTC, an external NIM adaptor to receive LKr calibration signals, a
 -- usb interface created with the "tmu" project, temperature sensor.
 
-
+--
 entity top is
    port
       (
@@ -202,6 +202,7 @@ architecture rtl of top is
    signal s_ERROR_OFF                      : std_LOGIC;
    signal s_ERROR_ON                       : std_LOGIC;
    signal s_CHOKE_signal                   : std_logic_vector(13 downto 0); --which detector is in ch/er
+   signal s_CHOKE_integral                 : std_logic_vector(13 downto 0); --which detector is in ch/er
    signal s_ERROR_signal                   : std_logic_vector(13 downto 0); 
    signal s_n_of_choke                     : std_logic_vector(31 downto 0);
    signal s_n_of_error                     : std_logic_vector(31 downto 0);
@@ -342,7 +343,8 @@ architecture rtl of top is
    signal s_ERRORMASK                      : std_logic_vector(13 downto 0);
    signal s_FAKECHOKE                      : std_logic_vector(13 downto 0);
    signal s_FAKEERROR                      : std_logic_vector(13 downto 0);
-   
+   signal s_MergedFifoChoke                : std_logic;
+   signal s_MergedFifoAlmostFull           : std_logic;
 --Vector with time cuts respect to the reference detector
    signal s_timecut                        : vector16bit_t(0 to ethlink_NODES -2); 
 
@@ -371,7 +373,9 @@ architecture rtl of top is
    signal s_error_randomintensity  : std_logic_vector(4 downto 0);
 ------------------------------------------------------------------------
 
-
+--signal EndOfExtraction:
+   signal s_EEout : std_logic;
+   signal s_CheckEndOfExtraction: std_logic;
 --Component declarations:
    --Handle the temperature measurement:
    --Also when the cooling in the electronic barack is off, the FPGA never goes
@@ -429,6 +433,7 @@ architecture rtl of top is
 	led1            : out std_logic;
 	led3            : out std_logic;
 	CHOKE_signal    : out std_logic_vector(13 downto 0);
+        CHOKE_integral  : out std_logic_vector(13 downto 0);    
 	ERROR_signal    : out std_logic_vector(13 downto 0);
 	CHOKE_ON        : out std_logic;
 	ERROR_ON	: out std_logic;
@@ -620,8 +625,9 @@ architecture rtl of top is
 	 Dataformat                   : out std_logic_vector(31 downto 0);
 	 FAKECHOKE                    : out std_logic_vector(13 downto 0);
 	 FAKEERROR                    : out std_logic_vector(13 downto 0);
-         NPrimitiveForRandom          : out std_logic_vector(31 downto 0)
-	 
+         NPrimitiveForRandom          : out std_logic_vector(31 downto 0);
+	 CheckEndOfExtraction         : out std_logic;
+         MergedFifoChoke              : out std_logic
 	 );
    end component;
 
@@ -667,7 +673,17 @@ architecture rtl of top is
 
 end component;
 
-
+component EndOfExtraction is
+   port(
+      reset               : in std_logic;
+      EE                  : in std_logic;  -- 40 MHz
+      clkB                : in std_logic;  -- 125 MHz
+      EEout               : out std_logic; -- 125 MHz
+      -------
+      BURST               : in STD_LOGIC
+      
+      );
+end component;
 
 begin
  
@@ -681,6 +697,7 @@ begin
 
 -- component port map
 
+   
    TemperatureSensor_inst : TemperatureSensor port map (
     clk => s_clk40,
     ce  => s_ce_temp,
@@ -771,7 +788,7 @@ begin
       inputs.MEPEventNumber                    => s_MEPEventNumber , 
       inputs.Fixed_Latency                     => s_Fixed_Latency,	
       inputs.activate_clock20MHz               => s_activateclock20MHz,
-      					       
+     					       
       inputs.primitiveID_t0                    => s_primitive_t0,--trigger
       inputs.primitiveID_t1                    => s_primitive_t1,--trigger
       inputs.primitiveID_t2                    => s_primitive_t2,--trigger
@@ -815,6 +832,7 @@ begin
       inputs.trigger_signal                    => s_trigger_signal ,
       inputs.ERROR_signal                      => s_ERROR_signal   ,
       inputs.CHOKE_signal                      => s_CHOKE_signal   ,
+      inputs.CHOKE_integral                    => s_CHOKE_integral   ,      
 --Stefan port
       inputs.rit_port                          => s_rit,
       
@@ -822,7 +840,7 @@ begin
       inputs.CHOKE_ON                          => s_CHOKE_ON,
       inputs.ERROR_OFF                         => s_ERROR_OFF,
       inputs.ERROR_ON                          => S_ERROR_ON,
-      				               
+      inputs.MergedFifoAlmostFull              => s_MergedFifoAlmostFull,
       inputs.active_triggers                   => s_activetriggers,
       inputs.activate_synch                    =>  s_activatesynchtrigger,
       inputs.activate_SOBEOBtrigger            => s_activateSOBEOB,
@@ -870,7 +888,7 @@ begin
       outputs.randomtriggercounter             => s_randomtriggercounter,
       outputs.randomintensitycounter            => s_randomintensitycounter,
       -----------			       
-      inputs.activate_primitives               => s_activateprimitives,
+      inputs.activate_primitives               => (s_activateprimitives and not(s_EEout)),
       inputs.delay_set                         => s_offset,
       inputs.maximum_delay_detector            => s_maximum_delay_detector,
       inputs.Calib_Latency                     => s_Calib_Latency,
@@ -930,6 +948,7 @@ begin
       inputs.MTPNUMREF                          => s_MTPNUMREF,
       inputs.timecut                            => s_timecut,
       inputs.delaydeliveryprimitive             => s_delaydeliveryprimitive,
+      inputs.MergedFifoChoke                    => s_MergedFifoChoke,
       outputs.timestamp_out                     => s_timestamp_out ,
       outputs.finetime_ref_out                  => s_finetime_ref_out,
       outputs.finetime0_out                     => s_finetime_out0,	
@@ -957,7 +976,8 @@ begin
       outputs.TRIGGERERROR                      => s_TRIGGERERROR,
       outputs.control_signal                    => s_control_signal,
       outputs.triggerflag                       => s_triggerflag,
-      outputs.delaydeliveryoutput               => s_delaydeliveryoutput
+      outputs.delaydeliveryoutput               => s_delaydeliveryoutput,
+      outputs.MergedFifoAlmostFull              => s_MergedFifoAlmostFull
       );
 
 
@@ -985,9 +1005,10 @@ begin
 
 
 
-
+--To receive LKr Calibration input via TTL signals:
+   --NIM signals from LKr are converted in TTL before feeding the L0TP.
    CDC_inst2 : NIMInterface port map (
-      reset          	=> '0',
+      reset          	=> NOT(CPU_RESET_n),
       CalibNimIn        => DetectorNim0, --Modificato l'imput
 					     --LKrNimCalib, poiche' non
 					     --funzionava (sempre alto).
@@ -997,6 +1018,20 @@ begin
       CalibNimOut       => s_calibration_NIM
       
       );
+
+
+   
+--To flag the End of extraction signal enters in LKrNimCalib that now works
+--If burst is on and EE received, I must stop triggers from primitives
+   EndOfExtraction_inst : EndOfExtraction port map(
+     reset =>  NOT(CPU_RESET_n) or NOT(s_CheckEndOfExtraction),
+     EE    => DetectorNim1,
+     clkB  => s_clk125,
+     EEout => s_EEout,
+     BURST => s_BURST
+     );
+   
+   
 
    ALTTTC_inst : altTTC port map(
       clk40      	  => s_clk40, --to sample SOB/EOB TTCrx
@@ -1043,6 +1078,7 @@ begin
       activateCHOKE       => s_activateCHOKE,
       activateERROR       => s_activateERROR,
       CHOKE_signal        => s_CHOKE_signal ,
+      CHOKE_integral      => s_CHOKE_integral ,
       ERROR_signal        => s_ERROR_signal ,
       CHOKE_ON            => s_CHOKE_ON     , 
       CHOKE_OFF           => s_CHOKE_OFF    ,
@@ -1183,7 +1219,9 @@ begin
       delaydeliveryprimitive             => s_delaydeliveryprimitive, --to set register
       dataformat                         => s_dataformat,
       FAKEERROR                          => s_FAKEERROR,
-      FAKECHOKE                          => s_FAKECHOKE
+      FAKECHOKE                          => s_FAKECHOKE,
+      CheckEndOfExtraction               => s_CheckEndOfExtraction,
+      MergedFifoChoke                    => s_MergedFifoChoke
       );
 
    process(s_locked,s_locked40,TTC_READY,QPLL_LOCKED,QPLL_ERROR)

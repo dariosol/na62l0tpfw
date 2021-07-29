@@ -2,7 +2,7 @@ Info: Starting: Create simulation model
 Info: qsys-generate /home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor.qsys --simulation=VHDL --allow-mixed-language-simulation --output-directory=/home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/simulation --family="Stratix IV" --part=EP4SGX530KH40C2
 Progress: Loading TemperatureSensor/TemperatureSensor.qsys
 Progress: Reading input file
-Progress: Adding temp_sense_0 [altera_temp_sense 16.1]
+Progress: Adding temp_sense_0 [altera_temp_sense 18.1]
 Progress: Parameterizing module temp_sense_0
 Progress: Building connections
 Progress: Parameterizing connections
@@ -36,7 +36,7 @@ Info: Starting: Create block symbol file (.bsf)
 Info: qsys-generate /home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor.qsys --block-symbol-file --output-directory=/home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor --family="Stratix IV" --part=EP4SGX530KH40C2
 Progress: Loading TemperatureSensor/TemperatureSensor.qsys
 Progress: Reading input file
-Progress: Adding temp_sense_0 [altera_temp_sense 16.1]
+Progress: Adding temp_sense_0 [altera_temp_sense 18.1]
 Progress: Parameterizing module temp_sense_0
 Progress: Building connections
 Progress: Parameterizing connections
@@ -49,7 +49,7 @@ Info: Starting: Create HDL design files for synthesis
 Info: qsys-generate /home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor.qsys --synthesis=VHDL --output-directory=/home/na62torino/Data/na62l0tpfw/TemperatureSensor/TemperatureSensor/synthesis --family="Stratix IV" --part=EP4SGX530KH40C2
 Progress: Loading TemperatureSensor/TemperatureSensor.qsys
 Progress: Reading input file
-Progress: Adding temp_sense_0 [altera_temp_sense 16.1]
+Progress: Adding temp_sense_0 [altera_temp_sense 18.1]
 Progress: Parameterizing module temp_sense_0
 Progress: Building connections
 Progress: Parameterizing connections

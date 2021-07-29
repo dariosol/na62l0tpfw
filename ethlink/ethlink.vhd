@@ -172,7 +172,8 @@ package component_ethlink is
       control_signal          : std_logic;
       
       --CHOKE ERROR
-      CHOKE_signal            : std_logic_vector(13 downto 0)        ;--
+      CHOKE_signal            : std_logic_vector(13 downto 0)        ;
+      CHOKE_integral          : std_logic_vector(13 downto 0)        ;
       ERROR_signal            : std_logic_vector(13 downto 0)        ;--	                                                                     
       CHOKE_OFF               : std_logic                            ;--
       CHOKE_ON                : std_logic                            ;--
@@ -210,7 +211,7 @@ package component_ethlink is
  
 --------------- Stefan signal
       rit_port       : std_logic;
-	
+      MergedFifoAlmostFull : std_logic;
    end record;
 
 --
@@ -649,7 +650,13 @@ architecture rtl of ethlink is
       periodic_signal1        : std_logic                            ;
       random_signal           : std_logic                            ;
       calib_signal            : std_logic_vector (6 downto 0)        ;
-      CHOKE_signal            : std_logic_vector(13 downto 0)        ;
+      CHOKE_signal            : std_logic_vector(15 downto 0)        ;-- two
+                                                                      -- more
+                                                                      -- bit to
+                                                                      -- encode
+                                                                      -- the
+                                                                      -- L0TP Autochoke
+      CHOKE_integral          : std_logic_vector(14 downto 0)        ;
       ERROR_signal            : std_logic_vector(13 downto 0)        ;
       
       CHOKE_ON                : std_logic; 
@@ -693,7 +700,7 @@ architecture rtl of ethlink is
       MACReady                : std_logic;
       temperature             : std_logic_vector(7 downto 0);
       MTPTimestamp_out        : vector24bit_t(0 to ethlink_NODES -2);
-      
+      MergedFifoAlmostFull    : std_logic;
    end record;
    
    
@@ -876,6 +883,7 @@ architecture rtl of ethlink is
 	 random_signal           => '0',
 	 calib_signal            => (others => '0'),
 	 CHOKE_signal            => (others => '0'),
+	 CHOKE_integral          => (others => '0'),
 	 ERROR_signal            => (others => '0'),
 	 
 	 CHOKE_OFF                => '0',
@@ -912,7 +920,8 @@ architecture rtl of ethlink is
 	 addressfarm              => (others=>'0'),
          MACReady                 => '1',
 	 temperature              => (others =>'0'),
-         MTPTimestamp_out         => (others => "000000000000000000000000")
+          MTPTimestamp_out         => (others => "000000000000000000000000"),
+          MergedFifoAlmostFull   =>'0'
 	 );
 
    type reglist_t is record
@@ -1373,7 +1382,10 @@ begin
 	 r.clk125.periodic_signal1     	   := i.periodic_signal1   ;	
 	 r.clk125.random_signal     	   := i.random_signal      ;	
 	 r.clk125.calib_signal             := i.calib_signal       ;  
-	 r.clk125.CHOKE_signal             := i.CHOKE_signal       ;  
+	 r.clk125.CHOKE_signal             := ro.clk125.MergedFifoAlmostFull & not(ro.clk125.MACReady) & i.CHOKE_signal;--bit 14 indicates L0TP auto choke
+                                                                                       --
+
+         r.clk125.CHOKE_integral           := not(ro.clk125.MACReady) & i.CHOKE_integral;--bit 14 indicates L0TP auto choke  
 	 r.clk125.ERROR_signal             := i.ERROR_signal       ;  
 
 	 -- Parte Stefan test registro
@@ -1383,7 +1395,7 @@ begin
 	 r.clk125.CHOKE_ON                 := i.CHOKE_ON  or (not(ro.clk125.MACReady));    
 	 r.clk125.ERROR_ON                 := i.ERROR_ON          ;  
 	 r.clk125.ERROR_OFF                := i.ERROR_OFF         ;  
-	 
+	 r.clk125.MergedFifoAlmostFull     := i.MergedFifoAlmostFull;
 	 
 	 r.clk125.ntriggers_predownscaling           := i.ntriggers_predownscaling; --NO CUT (75 ns or less) 
 	 r.clk125.ntriggers_postdownscaling          := i.ntriggers_postdownscaling; --(>75 ns)
@@ -3036,7 +3048,7 @@ begin
 	       r.chokeOff_data125(159 downto 152)   := (others=>'0')          ;
 	       r.chokeOff_data125(151 downto 146)   := "100101"               ; --TW
 	       r.chokeOff_data125(145 downto  34)   := (others=>'0')          ;			
-	       r.chokeOff_data125(33 downto 18)     := SLV(ro.CHOKE_signal,16); -- event triggerword
+	       r.chokeOff_data125(33 downto 18)     := SLV(ro.CHOKE_integral,16); -- event triggerword
 	       r.chokeOff_data125(17 downto 10)     := X"A0"                  ; --data type		
 	    end if; --end choke off
 	    
@@ -4457,8 +4469,10 @@ begin
 	       n.LATENCYRAM.inputs.address_b := std_logic_vector(ro.latencyreadaddressb(14 downto 0));
 	       n.LATENCYRAM.inputs.wren_b    :='1'; --Because it is a TDP ram, RDW done calling old data --PERMETTE DI RESETTARE
 	       n.LATENCYRAM.inputs.data_b    :=(others =>'0');
-	       n.SENDRAM.inputs.address_b := std_logic_vector(ro.latencyreadaddressb(9 downto 0));
-	       n.SENDRAM.inputs.data_b    := (others =>'0');
+	       n.SENDRAM.inputs.address_b    := std_logic_vector(ro.latencyreadaddressb(9 downto 0));
+	       n.SENDRAM.inputs.data_b       := (others =>'0');
+               n.SENDRAM.inputs.wren_b       :='1';
+               
 	       r.sentCHOKE_ON   := '0';
 	       r.sentCHOKE_OFF  := '1';
                r.sentERROR_ON   := '0';

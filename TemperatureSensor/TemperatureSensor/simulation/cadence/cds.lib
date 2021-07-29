@@ -14,7 +14,6 @@ DEFINE altera_ver             ./libraries/altera_ver/
 DEFINE lpm_ver                ./libraries/lpm_ver/                      
 DEFINE sgate_ver              ./libraries/sgate_ver/                    
 DEFINE altera_mf_ver          ./libraries/altera_mf_ver/                
-DEFINE altera_lnsim_ver       ./libraries/altera_lnsim_ver/             
 DEFINE stratixiv_hssi_ver     ./libraries/stratixiv_hssi_ver/           
 DEFINE stratixiv_pcie_hip_ver ./libraries/stratixiv_pcie_hip_ver/       
 DEFINE stratixiv_ver          ./libraries/stratixiv_ver/                

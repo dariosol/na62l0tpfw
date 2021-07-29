@@ -29,6 +29,7 @@ entity altTTC is
 	 ERROR_ON   		 : out std_logic;	 
 	 ERROR_OFF   	 : out std_logic;		 
 	 CHOKE_signal    : out std_logic_vector(13 downto 0);
+         CHOKE_integral  : out std_logic_vector(13 downto 0);   
 	 ERROR_signal    : out std_logic_vector(13 downto 0);
 	 activateCHOKE   : in std_logic;
 	 activateERROR   : in std_logic;
@@ -39,7 +40,7 @@ entity altTTC is
 end altTTC;
 
 architecture rtl of altTTC is
-   type FSMChoke_t is (Idle,Chokestate,Dead_time0,Dead_time1,Dead_time2,Dead_time3);
+   type FSMChoke_t is (Idle,Idle2,Chokestate,Dead_time0,Dead_time1,Dead_time2,Dead_time3);
    type FSMERROR_t is (Idle,ERRORstate,Dead_time0,Dead_time1);
    type FSMBurst_t is (Idle,Burststate,Dead_time0,Dead_time1,Dead_time2,Dead_time3);
 
@@ -59,13 +60,9 @@ architecture rtl of altTTC is
    signal s_ERROR           : std_logic_vector(13 downto 0);
    signal s_FAKECHOKE       : std_logic_vector(13 downto 0);
    signal s_FAKEERROR       : std_logic_vector(13 downto 0);            
-   signal CHOKE_s1          : std_logic_vector(13 downto 0);
    signal CHOKE_s2          : std_logic_vector(13 downto 0);
-   signal ERROR_s1          : std_logic_vector(13 downto 0);
+   signal s_CHOKEIntegral   : std_logic_vector(13 downto 0);         
    signal ERROR_s2          : std_logic_vector(13 downto 0);
-   signal s_CHOKEMASK       : std_logic_vector(13 downto 0);
-   signal s_ERRORMASK       : std_logic_vector(13 downto 0);
-
    signal s_ECRST           : std_logic;
    signal s_BCRST           : std_logic;
 begin
@@ -81,8 +78,7 @@ begin
 process(clk40, reset,CHOKE,ERROR,FAKECHOKE,FAKEERROR,CHOKEMASK,ERRORMASK) is
  begin
     if(reset = '1') then
-         CHOKE_s1    <= (others=>'0');
-         ERROR_s1    <= (others=>'0');           
+
 	 CHOKE_s2    <= (others=>'0');
          ERROR_s2    <= (others=>'0');           
          
@@ -90,8 +86,7 @@ process(clk40, reset,CHOKE,ERROR,FAKECHOKE,FAKEERROR,CHOKEMASK,ERRORMASK) is
          s_FAKECHOKE <= (others=>'0');
          
     elsif (clk40='1' and clk40'event)  then
-         s_CHOKEMASK <= CHOKEMASK;
-         s_ERRORMASK <= ERRORMASK;
+
          CHOKE_s2  <= CHOKE and CHOKEMASK;
          ERROR_s2  <= ERROR and ERRORMASK;
 	 
@@ -99,21 +94,7 @@ process(clk40, reset,CHOKE,ERROR,FAKECHOKE,FAKEERROR,CHOKEMASK,ERRORMASK) is
          s_FAKECHOKE <= FAKECHOKE;
        end if;
  end process;
---
---
--- process(clk40, reset) is
--- begin
---    if(rising_edge(clk40)) then
---       if(reset = '1') then
---          ERROR_s1 <= (others=>'0');
---          ERROR_s2 <= (others=>'0');
---       else
---          ERROR_s1 <= s_ERROR;
---          ERROR_s2 <= ERROR_s1;
---       end if;
---    end if;
--- end process;
---
+
 
    P1: PROCESS(clk40,s_ECRST,s_BCRST,startRUN)
    begin
@@ -162,7 +143,18 @@ process(clk40, reset,CHOKE,ERROR,FAKECHOKE,FAKEERROR,CHOKEMASK,ERRORMASK) is
 	    when idle =>
 	       if activateCHOKE ='1' then --FROM USB
 		  if (CHOKE_s2 or s_FAKECHOKE) = "00000000000000"   then
-		     FSMChoke <= Idle;
+		     FSMChoke <= Idle2;
+		  else
+		     FSMChoke <= Chokestate;
+		  end if;
+	       else
+		  FSMChoke <= Idle;
+	       end if;
+
+              when idle2 =>
+	       if activateCHOKE ='1' then --FROM USB
+		  if (CHOKE_s2 or s_FAKECHOKE) = "00000000000000"   then
+		     FSMChoke <= Idle2;
 		  else
 		     FSMChoke <= Chokestate;
 		  end if;
@@ -235,25 +227,256 @@ process(clk40, reset,CHOKE,ERROR,FAKECHOKE,FAKEERROR,CHOKEMASK,ERRORMASK) is
    begin
       s_CHOKE_ON  <='0';
       s_CHOKE_OFF <='1';
+      s_CHOKEIntegral <= (others=>'0');      
       case FSMChoke is
 	 when idle =>
 	    s_CHOKE_ON  <='0';
 	    s_CHOKE_OFF <='1';
+            s_CHOKEIntegral <=  s_CHOKEIntegral;
+
+        when idle2 =>
+           s_CHOKE_ON  <='0';
+           s_CHOKE_OFF <='1';
+           s_CHOKEIntegral <=  (others=>'0');
+           
 	 when Chokestate =>
 	    s_CHOKE_ON  <='1';
 	    s_CHOKE_OFF <='0';
+           
+            if(CHOKE_s2(0)='1') then
+              s_CHOKEIntegral(0)<='1';
+            end if;
+            if(CHOKE_s2(1)='1') then
+              s_CHOKEIntegral(1)<='1';
+            end if;
+            if(CHOKE_s2(2)='1') then
+              s_CHOKEIntegral(2)<='1';
+            end if;
+            if(CHOKE_s2(3)='1') then
+              s_CHOKEIntegral(3)<='1';
+            end if;
+            if(CHOKE_s2(4)='1') then
+              s_CHOKEIntegral(4)<='1';
+            end if;
+            if(CHOKE_s2(5)='1') then
+              s_CHOKEIntegral(5)<='1';
+            end if;
+            if(CHOKE_s2(6)='1') then
+              s_CHOKEIntegral(6)<='1';
+            end if;
+            if(CHOKE_s2(7)='1') then
+              s_CHOKEIntegral(7)<='1';
+            end if;
+            if(CHOKE_s2(8)='1') then
+              s_CHOKEIntegral(8)<='1';
+            end if;
+            if(CHOKE_s2(9)='1') then
+              s_CHOKEIntegral(9)<='1';
+            end if;
+            if(CHOKE_s2(10)='1') then
+              s_CHOKEIntegral(10)<='1';
+            end if;
+            if(CHOKE_s2(11)='1') then
+              s_CHOKEIntegral(11)<='1';
+            end if;
+            if(CHOKE_s2(12)='1') then
+              s_CHOKEIntegral(12)<='1';
+            end if;
+            if(CHOKE_s2(13)='1') then
+              s_CHOKEIntegral(13)<='1';
+            end if;
+                
+              
+                                                        
+              
 	 when Dead_time0 =>
 	    s_CHOKE_ON  <='1';
 	    s_CHOKE_OFF <='0';
+
+            if(CHOKE_s2(0)='1') then
+              s_CHOKEIntegral(0)<='1';
+            end if;
+            if(CHOKE_s2(1)='1') then
+              s_CHOKEIntegral(1)<='1';
+            end if;
+            if(CHOKE_s2(2)='1') then
+              s_CHOKEIntegral(2)<='1';
+            end if;
+            if(CHOKE_s2(3)='1') then
+              s_CHOKEIntegral(3)<='1';
+            end if;
+            if(CHOKE_s2(4)='1') then
+              s_CHOKEIntegral(4)<='1';
+            end if;
+            if(CHOKE_s2(5)='1') then
+              s_CHOKEIntegral(5)<='1';
+            end if;
+            if(CHOKE_s2(6)='1') then
+              s_CHOKEIntegral(6)<='1';
+            end if;
+            if(CHOKE_s2(7)='1') then
+              s_CHOKEIntegral(7)<='1';
+            end if;
+            if(CHOKE_s2(8)='1') then
+              s_CHOKEIntegral(8)<='1';
+            end if;
+            if(CHOKE_s2(9)='1') then
+              s_CHOKEIntegral(9)<='1';
+            end if;
+            if(CHOKE_s2(10)='1') then
+              s_CHOKEIntegral(10)<='1';
+            end if;
+            if(CHOKE_s2(11)='1') then
+              s_CHOKEIntegral(11)<='1';
+            end if;
+            if(CHOKE_s2(12)='1') then
+              s_CHOKEIntegral(12)<='1';
+            end if;
+            if(CHOKE_s2(13)='1') then
+              s_CHOKEIntegral(13)<='1';
+            end if;
+
 	 when Dead_time1 =>
 	    s_CHOKE_ON  <='1';
 	    s_CHOKE_OFF <='0';
+
+            if(CHOKE_s2(0)='1') then
+              s_CHOKEIntegral(0)<='1';
+            end if;
+            if(CHOKE_s2(1)='1') then
+              s_CHOKEIntegral(1)<='1';
+            end if;
+            if(CHOKE_s2(2)='1') then
+              s_CHOKEIntegral(2)<='1';
+            end if;
+            if(CHOKE_s2(3)='1') then
+              s_CHOKEIntegral(3)<='1';
+            end if;
+            if(CHOKE_s2(4)='1') then
+              s_CHOKEIntegral(4)<='1';
+            end if;
+            if(CHOKE_s2(5)='1') then
+              s_CHOKEIntegral(5)<='1';
+            end if;
+            if(CHOKE_s2(6)='1') then
+              s_CHOKEIntegral(6)<='1';
+            end if;
+            if(CHOKE_s2(7)='1') then
+              s_CHOKEIntegral(7)<='1';
+            end if;
+            if(CHOKE_s2(8)='1') then
+              s_CHOKEIntegral(8)<='1';
+            end if;
+            if(CHOKE_s2(9)='1') then
+              s_CHOKEIntegral(9)<='1';
+            end if;
+            if(CHOKE_s2(10)='1') then
+              s_CHOKEIntegral(10)<='1';
+            end if;
+            if(CHOKE_s2(11)='1') then
+              s_CHOKEIntegral(11)<='1';
+            end if;
+            if(CHOKE_s2(12)='1') then
+              s_CHOKEIntegral(12)<='1';
+            end if;
+            if(CHOKE_s2(13)='1') then
+              s_CHOKEIntegral(13)<='1';
+            end if;
+
 	 when Dead_time2 =>
 	    s_CHOKE_ON  <='1';
 	    s_CHOKE_OFF <='0';
+
+            if(CHOKE_s2(0)='1') then
+              s_CHOKEIntegral(0)<='1';
+            end if;
+            if(CHOKE_s2(1)='1') then
+              s_CHOKEIntegral(1)<='1';
+            end if;
+            if(CHOKE_s2(2)='1') then
+              s_CHOKEIntegral(2)<='1';
+            end if;
+            if(CHOKE_s2(3)='1') then
+              s_CHOKEIntegral(3)<='1';
+            end if;
+            if(CHOKE_s2(4)='1') then
+              s_CHOKEIntegral(4)<='1';
+            end if;
+            if(CHOKE_s2(5)='1') then
+              s_CHOKEIntegral(5)<='1';
+            end if;
+            if(CHOKE_s2(6)='1') then
+              s_CHOKEIntegral(6)<='1';
+            end if;
+            if(CHOKE_s2(7)='1') then
+              s_CHOKEIntegral(7)<='1';
+            end if;
+            if(CHOKE_s2(8)='1') then
+              s_CHOKEIntegral(8)<='1';
+            end if;
+            if(CHOKE_s2(9)='1') then
+              s_CHOKEIntegral(9)<='1';
+            end if;
+            if(CHOKE_s2(10)='1') then
+              s_CHOKEIntegral(10)<='1';
+            end if;
+            if(CHOKE_s2(11)='1') then
+              s_CHOKEIntegral(11)<='1';
+            end if;
+            if(CHOKE_s2(12)='1') then
+              s_CHOKEIntegral(12)<='1';
+            end if;
+            if(CHOKE_s2(13)='1') then
+              s_CHOKEIntegral(13)<='1';
+            end if;
+
 	 when Dead_time3 =>
 	    s_CHOKE_ON  <='1';
 	    s_CHOKE_OFF <='0';
+            
+            if(CHOKE_s2(0)='1') then
+              s_CHOKEIntegral(0)<='1';
+            end if;
+            if(CHOKE_s2(1)='1') then
+              s_CHOKEIntegral(1)<='1';
+            end if;
+            if(CHOKE_s2(2)='1') then
+              s_CHOKEIntegral(2)<='1';
+            end if;
+            if(CHOKE_s2(3)='1') then
+              s_CHOKEIntegral(3)<='1';
+            end if;
+            if(CHOKE_s2(4)='1') then
+              s_CHOKEIntegral(4)<='1';
+            end if;
+            if(CHOKE_s2(5)='1') then
+              s_CHOKEIntegral(5)<='1';
+            end if;
+            if(CHOKE_s2(6)='1') then
+              s_CHOKEIntegral(6)<='1';
+            end if;
+            if(CHOKE_s2(7)='1') then
+              s_CHOKEIntegral(7)<='1';
+            end if;
+            if(CHOKE_s2(8)='1') then
+              s_CHOKEIntegral(8)<='1';
+            end if;
+            if(CHOKE_s2(9)='1') then
+              s_CHOKEIntegral(9)<='1';
+            end if;
+            if(CHOKE_s2(10)='1') then
+              s_CHOKEIntegral(10)<='1';
+            end if;
+            if(CHOKE_s2(11)='1') then
+              s_CHOKEIntegral(11)<='1';
+            end if;
+            if(CHOKE_s2(12)='1') then
+              s_CHOKEIntegral(12)<='1';
+            end if;
+            if(CHOKE_s2(13)='1') then
+              s_CHOKEIntegral(13)<='1';
+            end if;
+
       end case;
    end process;
 
@@ -334,7 +557,7 @@ process(clk40, reset,CHOKE,ERROR,FAKECHOKE,FAKEERROR,CHOKEMASK,ERRORMASK) is
  Led3           <= not(s_BURST) ; --Led of EOB
  CHOKE_signal   <= CHOKE_s2     ;
  ERROR_signal   <= ERROR_s2     ;
-
+ CHOKE_integral <= s_CHOKEIntegral;
 
 
 END RTL;

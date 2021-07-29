@@ -118,6 +118,7 @@ package component_trigger is
       --------------------------------- CUTS
       timecut                        : vector16bit_t(0 to ethlink_NODES -2);   
       delaydeliveryprimitive         : std_logic_vector(31 downto 0);
+      MergedFifoChoke                : std_logic;
    end record;
 
    type trigger_outputs_t is record        
@@ -154,7 +155,7 @@ package component_trigger is
       -------------------------------------- DEBUG:
       TRIGGERERROR               : std_logic_vector(31 downto 0);
       delaydeliveryoutput     : std_logic_vector(31 downto 0);
-      
+      MergedFifoAlmostFull : std_logic;
    end record;
 
    type trigger_t is record
@@ -182,9 +183,8 @@ use work.userlib.all;
 use work.globals.all;
 use work.component_trigger.all;
 use work.component_fifo2trigger.all;
-use work.component_fifo1trigger.all;
+use work.component_mergedfifo.all;
 use work.component_ram2trigger.all;
-use work.component_ram1trigger.all;
 use work.component_TriggerLUT.all;
 use work.component_calibfifo.all;
 use work.component_fifoMTPnum.all;
@@ -319,7 +319,7 @@ architecture rtl of trigger is
       delaydeliveryprimitive       : std_logic_vector(31 downto 0);
       delaydeliveryoutput          : std_logic_vector(31 downto 0);
       oldaddress_out               : std_logic_vector(32 downto 0);
-      
+      MergedFifoAlmostFull         : std_logic;
    end record;
 
    constant reglist_clk125_default : reglist_clk125_t :=
@@ -419,7 +419,8 @@ architecture rtl of trigger is
 	 tmpfinetime_ref_in       => (others=>'0'),
 	 delaydeliveryprimitive   => (others=>'0'),
 	 delaydeliveryoutput      => (others=>'0'),
-	 oldaddress_out           => (others=>'0')
+	 oldaddress_out           => (others=>'0'),
+         MergedFifoAlmostFull     => '0'
 	 );
 
 
@@ -450,18 +451,16 @@ architecture rtl of trigger is
 
    type resetlist_t is record
       clk40 	: std_logic;
-      clk50 	: std_logic;
       clk125 	: std_logic;
    end record;
 
    type netlist_t is record
       clk125        : std_logic; -- for procedures with MAC
       clk40         : std_logic; -- for synch trigger
-      clk50         : std_logic; 
       rst           : resetlist_t;
       REFERENCEFIFO : fifo2trigger_t; --fifo for saving timestamp
-      MERGEDFIFO    : fifo2trigger_t; --fifo for saving timestamp
       CONTROLFIFO   : fifo2trigger_t; --fifo for saving timestamp
+      MERGEDFIFO    : mergedfifo_t; --fifo for saving timestamp
       alignRAM      : ram2trigger_vector_t(0 to ethlink_NODES - 2); -- ram for the realignment of primitives.
       LUT           : TriggerLUT_t;
       FIFOCALIB     : calibfifo_vector_t(0 to ethlink_NODES - 2); --Calibration Fifo
@@ -497,7 +496,7 @@ begin
 	 outputs=>allcmps.REFERENCEFIFO.outputs
 	 );
    
-   MERGEDFIFO: fifo2trigger port map
+   MERGEDFIFO_init: mergedfifo port map
       (
 	 inputs=>allnets.MERGEDFIFO.inputs,
 	 outputs=>allcmps.MERGEDFIFO.outputs
@@ -668,7 +667,8 @@ begin
 	 o.primitiveID2_t                                 := ro.clk125.primitiveID2_t;
 
 	 o.primitiveID_c                                  := ro.clk125.primitiveID_c ;
-	 o.delaydeliveryoutput                            := r.clk125.delaydeliveryoutput;	
+         o.delaydeliveryoutput                            := r.clk125.delaydeliveryoutput;
+         o.MergedFifoAlmostFull                           := ro.clk125.MergedFifoAlmostFull;   
 	 --------------------------------------------------------
 --MAIN LOOK UP TABLE	
 	 
@@ -1055,8 +1055,17 @@ begin
 	    when SelectData =>	
 	       
 
-               
+              if(n.MERGEDFIFO.outputs.wrusedw > X"1F39" and i.MergedFifoChoke='1') then --8000 words
+                 r.MergedFifoAlmostFull :='1';              
 
+              elsif(n.MERGEDFIFO.outputs.wrusedw < X"1D40" and i.MergedFifoChoke='1' and ro.MergedFifoAlmostFull='1') then--7488 words
+                 r.MergedFifoAlmostFull :='0';
+              else
+                 r.MergedFifoAlmostFull :='0';
+              end if;
+
+
+              
 	       	if n.MERGEDFIFO.outputs.wrfull ='1' then
 		   r.TRIGGERERROR := ro.TRIGGERERROR OR SLV(8,32);
 		end if;
@@ -1069,7 +1078,11 @@ begin
 		     if UINT(n.REFERENCEFIFO.outputs.q(37 downto 5)) < UINT(n.CONTROLFIFO.outputs.q(37 downto 5)) then
 			n.MERGEDFIFO.inputs.data(37 downto 0) := n.REFERENCEFIFO.outputs.q(37 downto 0);
 			n.MERGEDFIFO.inputs.data(39 downto 38) := "01";
-			n.MERGEDFIFO.inputs.wrreq :='1';
+
+                        if(ro.MergedFifoAlmostFull ='0') then
+                          n.MERGEDFIFO.inputs.wrreq :='1';
+                        end if;
+                        
 			r.readfiforeference := '1';
 			r.readfifocontrol := '0';
                         r.nprimitiveref := ro.nprimitiveref +1; 
@@ -1078,7 +1091,9 @@ begin
 		     elsif UINT(n.CONTROLFIFO.outputs.q(37 downto 5)) < UINT(n.REFERENCEFIFO.outputs.q(37 downto 5)) then
 			n.MERGEDFIFO.inputs.data(37 downto 0) := n.CONTROLFIFO.outputs.q(37 downto 0);
 			n.MERGEDFIFO.inputs.data(39 downto 38) := "10";
-			n.MERGEDFIFO.inputs.wrreq :='1';
+			if(ro.MergedFifoAlmostFull ='0') then
+                          n.MERGEDFIFO.inputs.wrreq :='1';
+                        end if;
 			r.readfiforeference := '0';
 			r.readfifocontrol := '1';
                         r.nprimitivecontrol := ro.nprimitivecontrol +1; 
@@ -1087,7 +1102,11 @@ begin
 		     elsif UINT(n.CONTROLFIFO.outputs.q(37 downto 5)) = UINT(n.REFERENCEFIFO.outputs.q(37 downto 5)) then
 			n.MERGEDFIFO.inputs.data(37 downto 0) := n.REFERENCEFIFO.outputs.q(37 downto 0);
 			n.MERGEDFIFO.inputs.data(39 downto 38) := "11";
-			n.MERGEDFIFO.inputs.wrreq :='1';
+
+			if(ro.MergedFifoAlmostFull ='0') then
+                          n.MERGEDFIFO.inputs.wrreq :='1';
+                        end if;
+
 			r.readfiforeference := '1';
 			r.readfifocontrol := '1';
                         r.nprimitiveref := ro.nprimitiveref +1; 
@@ -1099,7 +1118,11 @@ begin
 		     if n.REFERENCEFIFO.outputs.q(37 downto 6) < n.CONTROLFIFO.outputs.q(37 downto 6) then
 			n.MERGEDFIFO.inputs.data(37 downto 0) := n.REFERENCEFIFO.outputs.q(37 downto 0);
 			n.MERGEDFIFO.inputs.data(39 downto 38) := "01";
-			n.MERGEDFIFO.inputs.wrreq :='1';
+
+			if(ro.MergedFifoAlmostFull ='0') then
+                          n.MERGEDFIFO.inputs.wrreq :='1';
+                        end if;
+
 			r.readfiforeference := '1';
                         r.nprimitiveref := ro.nprimitiveref +1; 
 			r.readfifocontrol := '0';
@@ -1108,7 +1131,11 @@ begin
 		     elsif UINT(n.CONTROLFIFO.outputs.q(37 downto 6)) < UINT(n.REFERENCEFIFO.outputs.q(37 downto 6)) then
 			n.MERGEDFIFO.inputs.data(37 downto 0) := n.CONTROLFIFO.outputs.q(37 downto 0);
 			n.MERGEDFIFO.inputs.data(39 downto 38) := "10";
-			n.MERGEDFIFO.inputs.wrreq :='1';
+
+			if(ro.MergedFifoAlmostFull ='0') then
+                          n.MERGEDFIFO.inputs.wrreq :='1';
+                        end if;
+
 			r.readfiforeference := '0';
 			r.readfifocontrol := '1';
                         r.nprimitivecontrol := ro.nprimitivecontrol +1; 
@@ -1117,7 +1144,11 @@ begin
 		     elsif UINT(n.CONTROLFIFO.outputs.q(37 downto 6)) = UINT(n.REFERENCEFIFO.outputs.q(37 downto 6)) then
 			n.MERGEDFIFO.inputs.data(37 downto 0) := n.REFERENCEFIFO.outputs.q(37 downto 0);
 			n.MERGEDFIFO.inputs.data(39 downto 38) := "11";
-			n.MERGEDFIFO.inputs.wrreq :='1';
+
+                        if(ro.MergedFifoAlmostFull ='0') then
+                          n.MERGEDFIFO.inputs.wrreq :='1';
+                        end if;
+
 			r.readfiforeference := '1';
                         r.nprimitiveref := ro.nprimitiveref +1; 
 			r.readfifocontrol := '1';
@@ -1130,7 +1161,11 @@ begin
 		     if n.REFERENCEFIFO.outputs.q(37 downto 7) < n.CONTROLFIFO.outputs.q(37 downto 7) then
 			n.MERGEDFIFO.inputs.data(37 downto 0) := n.REFERENCEFIFO.outputs.q(37 downto 0);
 			n.MERGEDFIFO.inputs.data(39 downto 38) := "01";
-			n.MERGEDFIFO.inputs.wrreq :='1';
+
+			if(ro.MergedFifoAlmostFull ='0') then
+                          n.MERGEDFIFO.inputs.wrreq :='1';
+                        end if;
+
 			r.readfiforeference := '1';
                         r.nprimitiveref := ro.nprimitiveref +1; 
 			r.readfifocontrol := '0';
@@ -1148,7 +1183,11 @@ begin
 		     elsif UINT(n.CONTROLFIFO.outputs.q(37 downto 7)) = UINT(n.REFERENCEFIFO.outputs.q(37 downto 7)) then
 			n.MERGEDFIFO.inputs.data(37 downto 0) := n.REFERENCEFIFO.outputs.q(37 downto 0);
 			n.MERGEDFIFO.inputs.data(39 downto 38) := "11";
-			n.MERGEDFIFO.inputs.wrreq :='1';
+
+		        if(ro.MergedFifoAlmostFull ='0') then
+                          n.MERGEDFIFO.inputs.wrreq :='1';
+                        end if;
+
 			r.readfiforeference := '1';
 			r.readfifocontrol := '1';
                         r.nprimitiveref := ro.nprimitiveref +1; 
@@ -1161,7 +1200,10 @@ begin
 		     if UINT(n.REFERENCEFIFO.outputs.q(37 downto 8)) < UINT(n.CONTROLFIFO.outputs.q(37 downto 8)) then
 			n.MERGEDFIFO.inputs.data(37 downto 0) := n.REFERENCEFIFO.outputs.q(37 downto 0);
 			n.MERGEDFIFO.inputs.data(39 downto 38) := "01";
-			n.MERGEDFIFO.inputs.wrreq :='1';
+			if(ro.MergedFifoAlmostFull ='0') then
+                          n.MERGEDFIFO.inputs.wrreq :='1';
+                        end if;
+
 			r.readfiforeference := '1';
 			r.readfifocontrol := '0';
                         r.nprimitiveref := ro.nprimitiveref +1; 
@@ -1179,7 +1221,10 @@ begin
 		     elsif UINT(n.CONTROLFIFO.outputs.q(37 downto 8)) = UINT(n.REFERENCEFIFO.outputs.q(37 downto 8)) then
 			n.MERGEDFIFO.inputs.data(37 downto 0) := n.REFERENCEFIFO.outputs.q(37 downto 0);
 			n.MERGEDFIFO.inputs.data(39 downto 38) := "11";
-			n.MERGEDFIFO.inputs.wrreq :='1';
+			if(ro.MergedFifoAlmostFull ='0') then
+                          n.MERGEDFIFO.inputs.wrreq :='1';
+                        end if;
+
 			r.readfiforeference := '1';
 			r.readfifocontrol := '1';
                         r.nprimitiveref := ro.nprimitiveref +1; 
@@ -1191,7 +1236,10 @@ begin
 	       elsif ro.nprimitivereffinish ='1' and ro.nprimitivecontrolfinish='0' then 
 		  n.MERGEDFIFO.inputs.data(37 downto 0) := n.CONTROLFIFO.outputs.q(37 downto 0);
 		  n.MERGEDFIFO.inputs.data(39 downto 38) := "10";
-		  n.MERGEDFIFO.inputs.wrreq :='1';
+		  if(ro.MergedFifoAlmostFull ='0') then
+                    n.MERGEDFIFO.inputs.wrreq :='1';
+                  end if;
+
 		  r.readfiforeference := '0';
 		  r.readfifocontrol := '1';
                   r.nprimitivecontrol := ro.nprimitivecontrol +1; 
@@ -1201,7 +1249,10 @@ begin
 	       elsif ro.nprimitivereffinish ='0' and ro.nprimitivecontrolfinish='1' then 
 		  n.MERGEDFIFO.inputs.data(37 downto 0) := n.REFERENCEFIFO.outputs.q(37 downto 0);
 		  n.MERGEDFIFO.inputs.data(39 downto 38) := "01";
-		  n.MERGEDFIFO.inputs.wrreq :='1';
+		  if(ro.MergedFifoAlmostFull ='0') then
+                    n.MERGEDFIFO.inputs.wrreq :='1';
+                  end if;
+
 		  r.readfiforeference := '1';
 		  r.readfifocontrol := '0';
                   r.nprimitiveref := ro.nprimitiveref +1; 
@@ -2085,7 +2136,6 @@ begin
       SubMain(i, ri, ro, o, r, n);
       SubReset(i, ri, ro, o, r, n);
       
-      -- clock domain: clk50
       SubReceive(i, ri.clk125, ro.clk125, o, r.clk125, n);
       SubReadFifo(i, ri.clk125, ro.clk125, o, r.clk125, n);
       SubReadRam(i, ri.clk125, ro.clk125, o, r.clk125, n);

@@ -3,63 +3,63 @@ Timing Analyzer Summary
 ------------------------------------------------------------
 
 Type  : Slow 900mV 85C Model Setup 'input_clock_125'
-Slack : -0.464
-TNS   : -253.435
+Slack : -0.556
+TNS   : -442.087
 
 Type  : Slow 900mV 85C Model Setup 'input_clock_50'
-Slack : 0.007
-TNS   : 0.000
+Slack : -0.174
+TNS   : -0.322
 
 Type  : Slow 900mV 85C Model Setup 'tx_output_clock[0]'
-Slack : 0.056
+Slack : 0.041
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Setup 'tx_output_clock[1]'
-Slack : 0.110
+Slack : 0.095
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Setup 'tx_output_clock[3]'
-Slack : 0.111
+Slack : 0.125
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Setup 'tx_output_clock[2]'
-Slack : 0.141
+Slack : 0.158
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Setup 'rx_input_clock[1]'
 Slack : 0.172
 TNS   : 0.000
 
-Type  : Slow 900mV 85C Model Setup 'rx_input_clock[0]'
-Slack : 0.177
-TNS   : 0.000
-
 Type  : Slow 900mV 85C Model Setup 'rx_input_clock[3]'
-Slack : 0.179
+Slack : 0.183
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Setup 'rx_input_clock[2]'
-Slack : 0.185
+Slack : 0.184
+TNS   : 0.000
+
+Type  : Slow 900mV 85C Model Setup 'rx_input_clock[0]'
+Slack : 0.189
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Setup 'input_clock_40'
-Slack : 7.213
+Slack : 7.816
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Setup 'altera_reserved_tck'
-Slack : 46.873
-TNS   : 0.000
-
-Type  : Slow 900mV 85C Model Hold 'rx_input_clock[3]'
-Slack : 0.094
-TNS   : 0.000
-
-Type  : Slow 900mV 85C Model Hold 'rx_input_clock[2]'
-Slack : 0.102
+Slack : 46.495
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Hold 'rx_input_clock[1]'
-Slack : 0.112
+Slack : 0.033
+TNS   : 0.000
+
+Type  : Slow 900mV 85C Model Hold 'rx_input_clock[2]'
+Slack : 0.060
+TNS   : 0.000
+
+Type  : Slow 900mV 85C Model Hold 'rx_input_clock[3]'
+Slack : 0.099
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Hold 'input_clock_125'
@@ -67,127 +67,127 @@ Slack : 0.192
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Hold 'rx_input_clock[0]'
-Slack : 0.217
-TNS   : 0.000
-
-Type  : Slow 900mV 85C Model Hold 'input_clock_50'
-Slack : 0.240
+Slack : 0.231
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Hold 'input_clock_40'
-Slack : 0.275
+Slack : 0.276
+TNS   : 0.000
+
+Type  : Slow 900mV 85C Model Hold 'input_clock_50'
+Slack : 0.276
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Hold 'altera_reserved_tck'
-Slack : 0.324
-TNS   : 0.000
-
-Type  : Slow 900mV 85C Model Hold 'tx_output_clock[1]'
-Slack : 3.707
+Slack : 0.325
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Hold 'tx_output_clock[3]'
-Slack : 3.712
+Slack : 3.697
+TNS   : 0.000
+
+Type  : Slow 900mV 85C Model Hold 'tx_output_clock[1]'
+Slack : 3.708
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Hold 'tx_output_clock[2]'
-Slack : 3.748
+Slack : 3.733
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Hold 'tx_output_clock[0]'
-Slack : 3.755
+Slack : 3.756
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Recovery 'input_clock_50'
-Slack : -0.588
-TNS   : -3.529
+Slack : -0.525
+TNS   : -2.592
 
 Type  : Slow 900mV 85C Model Recovery 'input_clock_125'
-Slack : -0.275
-TNS   : -1.488
+Slack : 0.126
+TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Recovery 'rx_input_clock[1]'
-Slack : 1.192
+Slack : 1.491
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Recovery 'rx_input_clock[2]'
-Slack : 1.791
+Slack : 1.665
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Recovery 'rx_input_clock[0]'
-Slack : 1.870
+Slack : 1.676
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Recovery 'rx_input_clock[3]'
-Slack : 1.956
+Slack : 2.188
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Recovery 'input_clock_40'
-Slack : 8.077
+Slack : 8.257
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Recovery 'altera_reserved_tck'
-Slack : 93.886
-TNS   : 0.000
-
-Type  : Slow 900mV 85C Model Removal 'rx_input_clock[2]'
-Slack : 0.388
+Slack : 93.677
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Removal 'input_clock_125'
-Slack : 0.460
-TNS   : 0.000
-
-Type  : Slow 900mV 85C Model Removal 'input_clock_50'
-Slack : 0.484
-TNS   : 0.000
-
-Type  : Slow 900mV 85C Model Removal 'rx_input_clock[0]'
-Slack : 0.494
+Slack : 0.467
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Removal 'rx_input_clock[1]'
-Slack : 0.509
+Slack : 0.502
+TNS   : 0.000
+
+Type  : Slow 900mV 85C Model Removal 'rx_input_clock[0]'
+Slack : 0.558
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Removal 'rx_input_clock[3]'
-Slack : 0.513
-TNS   : 0.000
-
-Type  : Slow 900mV 85C Model Removal 'input_clock_40'
-Slack : 0.515
+Slack : 0.583
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Removal 'altera_reserved_tck'
-Slack : 0.646
+Slack : 0.585
+TNS   : 0.000
+
+Type  : Slow 900mV 85C Model Removal 'input_clock_50'
+Slack : 0.674
+TNS   : 0.000
+
+Type  : Slow 900mV 85C Model Removal 'rx_input_clock[2]'
+Slack : 0.723
+TNS   : 0.000
+
+Type  : Slow 900mV 85C Model Removal 'input_clock_40'
+Slack : 1.377
+TNS   : 0.000
+
+Type  : Slow 900mV 85C Model Minimum Pulse Width 'rx_input_clock[0]'
+Slack : 3.024
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Minimum Pulse Width 'rx_input_clock[3]'
 Slack : 3.034
 TNS   : 0.000
 
-Type  : Slow 900mV 85C Model Minimum Pulse Width 'rx_input_clock[2]'
-Slack : 3.035
-TNS   : 0.000
-
 Type  : Slow 900mV 85C Model Minimum Pulse Width 'rx_input_clock[1]'
 Slack : 3.036
 TNS   : 0.000
 
-Type  : Slow 900mV 85C Model Minimum Pulse Width 'rx_input_clock[0]'
-Slack : 3.037
+Type  : Slow 900mV 85C Model Minimum Pulse Width 'rx_input_clock[2]'
+Slack : 3.036
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Minimum Pulse Width 'input_clock_125'
-Slack : 3.159
+Slack : 3.158
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Minimum Pulse Width 'input_clock_50'
-Slack : 9.248
+Slack : 9.252
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Minimum Pulse Width 'input_clock_40'
-Slack : 11.720
+Slack : 11.723
 TNS   : 0.000
 
 Type  : Slow 900mV 85C Model Minimum Pulse Width 'external_clock_40'
@@ -199,67 +199,67 @@ Slack : 49.202
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Setup 'input_clock_125'
-Slack : -0.256
-TNS   : -28.866
+Slack : -0.315
+TNS   : -76.073
 
 Type  : Slow 900mV 0C Model Setup 'input_clock_50'
-Slack : 0.177
+Slack : 0.041
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Setup 'tx_output_clock[0]'
-Slack : 0.180
-TNS   : 0.000
-
-Type  : Slow 900mV 0C Model Setup 'tx_output_clock[3]'
-Slack : 0.232
+Slack : 0.167
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Setup 'tx_output_clock[1]'
-Slack : 0.234
+Slack : 0.221
+TNS   : 0.000
+
+Type  : Slow 900mV 0C Model Setup 'tx_output_clock[3]'
+Slack : 0.246
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Setup 'tx_output_clock[2]'
-Slack : 0.258
+Slack : 0.275
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Setup 'rx_input_clock[1]'
-Slack : 0.467
-TNS   : 0.000
-
-Type  : Slow 900mV 0C Model Setup 'rx_input_clock[3]'
-Slack : 0.488
+Slack : 0.468
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Setup 'rx_input_clock[2]'
-Slack : 0.490
+Slack : 0.484
 TNS   : 0.000
 
-Type  : Slow 900mV 0C Model Setup 'rx_input_clock[0]'
+Type  : Slow 900mV 0C Model Setup 'rx_input_clock[3]'
 Slack : 0.493
 TNS   : 0.000
 
+Type  : Slow 900mV 0C Model Setup 'rx_input_clock[0]'
+Slack : 0.503
+TNS   : 0.000
+
 Type  : Slow 900mV 0C Model Setup 'input_clock_40'
-Slack : 7.814
+Slack : 8.404
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Setup 'altera_reserved_tck'
-Slack : 46.994
-TNS   : 0.000
-
-Type  : Slow 900mV 0C Model Hold 'rx_input_clock[3]'
-Slack : 0.056
-TNS   : 0.000
-
-Type  : Slow 900mV 0C Model Hold 'rx_input_clock[2]'
-Slack : 0.081
+Slack : 46.599
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Hold 'rx_input_clock[1]'
-Slack : 0.106
+Slack : 0.026
+TNS   : 0.000
+
+Type  : Slow 900mV 0C Model Hold 'rx_input_clock[2]'
+Slack : 0.056
+TNS   : 0.000
+
+Type  : Slow 900mV 0C Model Hold 'rx_input_clock[3]'
+Slack : 0.088
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Hold 'rx_input_clock[0]'
-Slack : 0.136
+Slack : 0.129
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Hold 'input_clock_125'
@@ -267,7 +267,7 @@ Slack : 0.192
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Hold 'input_clock_50'
-Slack : 0.218
+Slack : 0.267
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Hold 'input_clock_40'
@@ -279,15 +279,15 @@ Slack : 0.318
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Hold 'tx_output_clock[3]'
-Slack : 3.662
+Slack : 3.651
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Hold 'tx_output_clock[1]'
-Slack : 3.667
+Slack : 3.668
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Hold 'tx_output_clock[2]'
-Slack : 3.711
+Slack : 3.700
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Hold 'tx_output_clock[0]'
@@ -295,95 +295,95 @@ Slack : 3.717
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Recovery 'input_clock_50'
-Slack : -0.315
-TNS   : -1.135
+Slack : -0.296
+TNS   : -0.738
 
 Type  : Slow 900mV 0C Model Recovery 'input_clock_125'
-Slack : -0.142
-TNS   : -0.284
+Slack : 0.229
+TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Recovery 'rx_input_clock[1]'
-Slack : 1.361
+Slack : 1.598
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Recovery 'rx_input_clock[2]'
-Slack : 1.852
+Slack : 1.731
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Recovery 'rx_input_clock[0]'
-Slack : 1.937
+Slack : 1.755
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Recovery 'rx_input_clock[3]'
-Slack : 2.011
+Slack : 2.271
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Recovery 'input_clock_40'
-Slack : 8.505
+Slack : 8.668
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Recovery 'altera_reserved_tck'
-Slack : 94.155
-TNS   : 0.000
-
-Type  : Slow 900mV 0C Model Removal 'rx_input_clock[2]'
-Slack : 0.387
+Slack : 94.066
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Removal 'input_clock_125'
-Slack : 0.446
-TNS   : 0.000
-
-Type  : Slow 900mV 0C Model Removal 'input_clock_50'
-Slack : 0.468
-TNS   : 0.000
-
-Type  : Slow 900mV 0C Model Removal 'rx_input_clock[3]'
-Slack : 0.492
-TNS   : 0.000
-
-Type  : Slow 900mV 0C Model Removal 'input_clock_40'
-Slack : 0.497
+Slack : 0.454
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Removal 'rx_input_clock[1]'
-Slack : 0.497
+Slack : 0.489
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Removal 'rx_input_clock[0]'
-Slack : 0.523
+Slack : 0.538
+TNS   : 0.000
+
+Type  : Slow 900mV 0C Model Removal 'rx_input_clock[3]'
+Slack : 0.559
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Removal 'altera_reserved_tck'
-Slack : 0.616
+Slack : 0.566
 TNS   : 0.000
 
-Type  : Slow 900mV 0C Model Minimum Pulse Width 'rx_input_clock[3]'
-Slack : 3.064
+Type  : Slow 900mV 0C Model Removal 'input_clock_50'
+Slack : 0.623
 TNS   : 0.000
 
-Type  : Slow 900mV 0C Model Minimum Pulse Width 'rx_input_clock[2]'
-Slack : 3.065
+Type  : Slow 900mV 0C Model Removal 'rx_input_clock[2]'
+Slack : 0.698
 TNS   : 0.000
 
-Type  : Slow 900mV 0C Model Minimum Pulse Width 'rx_input_clock[1]'
-Slack : 3.071
+Type  : Slow 900mV 0C Model Removal 'input_clock_40'
+Slack : 1.287
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Minimum Pulse Width 'rx_input_clock[0]'
-Slack : 3.072
+Slack : 3.060
+TNS   : 0.000
+
+Type  : Slow 900mV 0C Model Minimum Pulse Width 'rx_input_clock[3]'
+Slack : 3.067
+TNS   : 0.000
+
+Type  : Slow 900mV 0C Model Minimum Pulse Width 'rx_input_clock[1]'
+Slack : 3.068
+TNS   : 0.000
+
+Type  : Slow 900mV 0C Model Minimum Pulse Width 'rx_input_clock[2]'
+Slack : 3.068
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Minimum Pulse Width 'input_clock_125'
-Slack : 3.169
+Slack : 3.168
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Minimum Pulse Width 'input_clock_50'
-Slack : 9.246
+Slack : 9.247
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Minimum Pulse Width 'input_clock_40'
-Slack : 11.743
+Slack : 11.744
 TNS   : 0.000
 
 Type  : Slow 900mV 0C Model Minimum Pulse Width 'external_clock_40'
@@ -395,79 +395,79 @@ Slack : 49.185
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Setup 'tx_output_clock[0]'
-Slack : 0.556
+Slack : 0.547
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Setup 'tx_output_clock[1]'
-Slack : 0.601
+Slack : 0.594
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Setup 'tx_output_clock[3]'
-Slack : 0.607
+Slack : 0.616
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Setup 'tx_output_clock[2]'
-Slack : 0.633
+Slack : 0.644
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Setup 'rx_input_clock[1]'
-Slack : 0.964
+Slack : 0.961
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Setup 'rx_input_clock[2]'
-Slack : 0.972
+Slack : 0.969
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Setup 'rx_input_clock[3]'
-Slack : 0.972
+Slack : 0.971
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Setup 'rx_input_clock[0]'
-Slack : 0.973
+Slack : 0.977
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Setup 'input_clock_125'
-Slack : 1.378
+Slack : 1.326
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Setup 'input_clock_50'
-Slack : 1.510
+Slack : 1.354
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Setup 'input_clock_40'
-Slack : 10.924
+Slack : 11.244
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Setup 'altera_reserved_tck'
-Slack : 48.657
+Slack : 48.396
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Hold 'rx_input_clock[0]'
-Slack : -0.455
-TNS   : -1.003
+Slack : -0.460
+TNS   : -1.031
 
 Type  : Fast 900mV 0C Model Hold 'rx_input_clock[1]'
-Slack : -0.371
-TNS   : -0.371
+Slack : -0.364
+TNS   : -0.364
 
 Type  : Fast 900mV 0C Model Hold 'rx_input_clock[2]'
-Slack : -0.059
-TNS   : -0.114
+Slack : -0.068
+TNS   : -0.132
 
 Type  : Fast 900mV 0C Model Hold 'rx_input_clock[3]'
-Slack : 0.048
+Slack : 0.050
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Hold 'input_clock_125'
-Slack : 0.101
+Slack : 0.059
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Hold 'input_clock_50'
-Slack : 0.135
+Slack : 0.143
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Hold 'input_clock_40'
-Slack : 0.150
+Slack : 0.151
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Hold 'altera_reserved_tck'
@@ -475,7 +475,7 @@ Slack : 0.165
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Hold 'tx_output_clock[3]'
-Slack : 3.423
+Slack : 3.414
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Hold 'tx_output_clock[1]'
@@ -483,7 +483,7 @@ Slack : 3.431
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Hold 'tx_output_clock[2]'
-Slack : 3.460
+Slack : 3.454
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Hold 'tx_output_clock[0]'
@@ -491,82 +491,82 @@ Slack : 3.468
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Recovery 'input_clock_50'
-Slack : 1.111
+Slack : 1.149
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Recovery 'input_clock_125'
-Slack : 1.241
+Slack : 1.565
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Recovery 'rx_input_clock[1]'
-Slack : 2.597
+Slack : 2.801
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Recovery 'rx_input_clock[0]'
-Slack : 2.990
+Slack : 2.933
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Recovery 'rx_input_clock[2]'
-Slack : 2.993
+Slack : 2.936
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Recovery 'rx_input_clock[3]'
-Slack : 3.079
+Slack : 3.213
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Recovery 'input_clock_40'
-Slack : 11.581
+Slack : 11.661
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Recovery 'altera_reserved_tck'
-Slack : 96.349
-TNS   : 0.000
-
-Type  : Fast 900mV 0C Model Removal 'rx_input_clock[2]'
-Slack : 0.197
-TNS   : 0.000
-
-Type  : Fast 900mV 0C Model Removal 'rx_input_clock[0]'
-Slack : 0.240
+Slack : 96.173
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Removal 'input_clock_125'
-Slack : 0.255
-TNS   : 0.000
-
-Type  : Fast 900mV 0C Model Removal 'input_clock_40'
-Slack : 0.267
-TNS   : 0.000
-
-Type  : Fast 900mV 0C Model Removal 'input_clock_50'
-Slack : 0.268
-TNS   : 0.000
-
-Type  : Fast 900mV 0C Model Removal 'rx_input_clock[3]'
-Slack : 0.279
+Slack : 0.256
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Removal 'rx_input_clock[1]'
-Slack : 0.282
+Slack : 0.276
+TNS   : 0.000
+
+Type  : Fast 900mV 0C Model Removal 'rx_input_clock[3]'
+Slack : 0.302
+TNS   : 0.000
+
+Type  : Fast 900mV 0C Model Removal 'rx_input_clock[0]'
+Slack : 0.309
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Removal 'altera_reserved_tck'
-Slack : 0.329
+Slack : 0.324
 TNS   : 0.000
 
-Type  : Fast 900mV 0C Model Minimum Pulse Width 'rx_input_clock[3]'
-Slack : 2.833
+Type  : Fast 900mV 0C Model Removal 'input_clock_50'
+Slack : 0.368
 TNS   : 0.000
 
-Type  : Fast 900mV 0C Model Minimum Pulse Width 'rx_input_clock[2]'
-Slack : 2.835
+Type  : Fast 900mV 0C Model Removal 'rx_input_clock[2]'
+Slack : 0.439
 TNS   : 0.000
 
-Type  : Fast 900mV 0C Model Minimum Pulse Width 'rx_input_clock[1]'
-Slack : 2.842
+Type  : Fast 900mV 0C Model Removal 'input_clock_40'
+Slack : 0.782
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Minimum Pulse Width 'rx_input_clock[0]'
+Slack : 2.837
+TNS   : 0.000
+
+Type  : Fast 900mV 0C Model Minimum Pulse Width 'rx_input_clock[1]'
+Slack : 2.841
+TNS   : 0.000
+
+Type  : Fast 900mV 0C Model Minimum Pulse Width 'rx_input_clock[3]'
+Slack : 2.842
+TNS   : 0.000
+
+Type  : Fast 900mV 0C Model Minimum Pulse Width 'rx_input_clock[2]'
 Slack : 2.843
 TNS   : 0.000
 
@@ -575,11 +575,11 @@ Slack : 3.212
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Minimum Pulse Width 'input_clock_50'
-Slack : 9.183
+Slack : 9.177
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Minimum Pulse Width 'input_clock_40'
-Slack : 11.725
+Slack : 11.724
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Minimum Pulse Width 'external_clock_40'
@@ -587,7 +587,7 @@ Slack : 12.491
 TNS   : 0.000
 
 Type  : Fast 900mV 0C Model Minimum Pulse Width 'altera_reserved_tck'
-Slack : 49.175
+Slack : 49.176
 TNS   : 0.000
 
 ------------------------------------------------------------
