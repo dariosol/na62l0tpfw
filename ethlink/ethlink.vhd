@@ -273,6 +273,7 @@ package component_ethlink is
       outerrorfifoon              : std_logic_vector(31 downto 0);
    end record;
 
+	
    type ethlink_t is record
       inputs : ethlink_inputs_t;
       outputs : ethlink_outputs_t;
@@ -4037,7 +4038,7 @@ begin
   
 		     --Data_9
 		     
-		     n.FIFOPACKETS.inputs.data( 703 downto  688)  := (others=>'0');     
+		     n.FIFOPACKETS.inputs.data( 703 downto  688)  := ro.internal_timestamp(31 downto 16);     
 		     if UINT(ro.number_of_primitives(0))-UINT(ro.old_number_of_primitives(0)) < 255 then 
 			n.FIFOPACKETS.inputs.data( 663 downto 656) :=SLV(UINT(ro.number_of_primitives(0))-UINT(ro.old_number_of_primitives(0)),8);--CHOD
 		     else
@@ -4090,7 +4091,7 @@ begin
 		     
 		     --Data_5
 		     n.FIFOPACKETS.inputs.data( 447 downto  432)  := n.SENDRAM.outputs.q_b(471 downto 456)       ; --primitive 1 A  
-		     n.FIFOPACKETS.inputs.data( 431 downto  424)  := (others=>'0')                               ;-- reserved           
+		     n.FIFOPACKETS.inputs.data( 431 downto  424)  := ro.internal_timestamp(15 downto 8)       ;-- reserved           
 		     n.FIFOPACKETS.inputs.data( 423 downto  416)  := n.SENDRAM.outputs.q_b(359 downto 352)       ; --FT G 2        	                                                   
 		     n.FIFOPACKETS.inputs.data( 415 downto  408)  := n.SENDRAM.outputs.q_b(351 downto 344)       ; --FT F 2   
 		     n.FIFOPACKETS.inputs.data( 407 downto  400)  := n.SENDRAM.outputs.q_b(343 downto 336)       ; --FT E 2
@@ -4157,7 +4158,7 @@ begin
 		     n.FIFOPACKETS.inputs.data( 47 downto  40)  := n.SENDRAM.outputs.q_b(175 downto 168);   --timestamp;
 		     n.FIFOPACKETS.inputs.data( 39 downto  32)  := n.SENDRAM.outputs.q_b(167 downto 160);   --timestamp;
 		     n.FIFOPACKETS.inputs.data( 31 downto  24)  := "00000000";--EVENTFLAG("10000000"for EOB)
-		     n.FIFOPACKETS.inputs.data( 23 downto  16)  := (others =>'0'); --reserved x me
+		     n.FIFOPACKETS.inputs.data( 23 downto  16)  := ro.internal_timestamp(7 downto 0); --reserved x me
 		     n.FIFOPACKETS.inputs.data( 15 downto  8)   := SLV(0,8); --Length of event
 		     n.FIFOPACKETS.inputs.data( 7 downto  0)    := SLV(96,8);--Length of event
 		     n.FIFOPACKETS.inputs.wrreq := '1';
@@ -4856,10 +4857,15 @@ begin
 	       else --DATA 
 		  
 		  if n.MAC(3).outputs.wready(FF_PORT)='1' and n.MAC(3).outputs.wfull(FF_PORT) ='0' then 			
-		     n.MAC(3).inputs.wdata(FF_PORT)( 63 downto  56)  := (others =>'0'); --reserved per le flag ulteriori                   
-		     n.MAC(3).inputs.wdata(FF_PORT)( 55 downto  48)  := (others =>'0'); --reserved per le flag ulteriori  
-		     n.MAC(3).inputs.wdata(FF_PORT)( 47 downto  40)  := (others =>'0'); --reserved per le flag ulteriori             
-		     n.MAC(3).inputs.wdata(FF_PORT)( 39 downto  32)  := (others =>'0'); --reserved per le flag ulteriori       	                                                   
+		     --n.MAC(3).inputs.wdata(FF_PORT)( 63 downto  56)  := (others =>'0'); --reserved per le flag ulteriori                   
+		     --n.MAC(3).inputs.wdata(FF_PORT)( 55 downto  48)  := (others =>'0'); --reserved per le flag ulteriori  
+		     --n.MAC(3).inputs.wdata(FF_PORT)( 47 downto  40)  := (others =>'0'); --reserved per le flag ulteriori             
+		     --n.MAC(3).inputs.wdata(FF_PORT)( 39 downto  32)  := (others =>'0'); --reserved per le flag ulteriori
+                                                                                        --
+           n.MAC(3).inputs.wdata(FF_PORT)( 63 downto  48)  := n.FIFOPACKETS.outputs.q(703 downto 688);
+		     n.MAC(3).inputs.wdata(FF_PORT)( 47 downto  40)  := n.FIFOPACKETS.outputs.q(431 downto 424);
+		     n.MAC(3).inputs.wdata(FF_PORT)( 39 downto  32)  := n.FIFOPACKETS.outputs.q(23 downto 16);
+                                                                                        --
 		     n.MAC(3).inputs.wdata(FF_PORT)( 31 downto  24)  := n.FIFOPACKETS.outputs.q(687 downto 680);--DPrim NewCHOD 
 		     n.MAC(3).inputs.wdata(FF_PORT)( 23 downto  16)  := n.FIFOPACKETS.outputs.q(679 downto 672);--DPrim MUV3
 		     n.MAC(3).inputs.wdata(FF_PORT)( 15 downto  8)   := n.FIFOPACKETS.outputs.q(671 downto 664);--DPrim RICH

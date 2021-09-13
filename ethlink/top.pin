@@ -255,7 +255,7 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : AD9       :        :                   :      
 RESERVED_INPUT_WITH_WEAK_PULLUP : AD10      :        :                   :         : 5C        :                
 VREFB5CN0                    : AD11      : power  :                   :         : 5C        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AD12      :        :                   :         : 5A        :                
-LKrNIMCalib                  : AD13      : input  : 2.5 V             :         : 5A        : N              
+RESERVED_INPUT_WITH_WEAK_PULLUP : AD13      :        :                   :         : 5A        :                
 VCCPD4A                      : AD14      : power  :                   : 2.5V    : 4A        :                
 OTG_D[2]                     : AD15      : bidir  : 1.8 V             :         : 4A        : Y              
 VCCPD4B                      : AD16      : power  :                   : 2.5V    : 4B        :                
@@ -292,7 +292,7 @@ VCCL_GXBR0                   : AE7       : power  :                   : 1.1V    
 VCC                          : AE8       : power  :                   : 0.9V    :           :                
 VCCIO5C                      : AE9       : power  :                   : 3.0V    : 5C        :                
 LTU1                         : AE10      : output : 3.3-V LVCMOS      :         : 5C        : Y              
-RESERVED_INPUT_WITH_WEAK_PULLUP : AE11      :        :                   :         : 5C        :                
+LKrNIMCalib                  : AE11      : input  : 2.5 V             :         : 5C        : N              
 LTU_TRIGGER                  : AE12      : output : 3.3-V LVCMOS      :         : 5A        : Y              
 LTU2                         : AE13      : output : 3.3-V LVCMOS      :         : 5A        : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : AE14      :        :                   :         : 4A        :                
