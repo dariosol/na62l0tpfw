@@ -1,5 +1,5 @@
 Assembler report for top
-Sat Aug  7 11:59:53 2021
+Tue Sep 21 13:10:29 2021
 Quartus Prime Version 18.1.1 Build 646 04/11/2019 SJ Standard Edition
 
 
@@ -39,7 +39,7 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Sat Aug  7 11:59:53 2021 ;
+; Assembler Status      ; Successful - Tue Sep 21 13:10:29 2021 ;
 ; Revision Name         ; top                                   ;
 ; Top-level Entity Name ; top                                   ;
 ; Family                ; Stratix IV                            ;
@@ -80,8 +80,8 @@ https://fpgasoftware.intel.com/eula.
 +----------------+------------------+
 ; Option         ; Setting          ;
 +----------------+------------------+
-; JTAG usercode  ; 0x159345EA       ;
-; Checksum       ; 0x159345EA       ;
+; JTAG usercode  ; 0x15697CD6       ;
+; Checksum       ; 0x15697CD6       ;
 +----------------+------------------+
 
 
@@ -91,14 +91,16 @@ https://fpgasoftware.intel.com/eula.
 Info: *******************************************************************
 Info: Running Quartus Prime Assembler
     Info: Version 18.1.1 Build 646 04/11/2019 SJ Standard Edition
-    Info: Processing started: Sat Aug  7 11:59:16 2021
+    Info: Processing started: Tue Sep 21 13:09:48 2021
 Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off top -c top
+Warning (125092): Tcl Script File altMIRRORFIFO.qip not found
+    Info (125063): set_global_assignment -name QIP_FILE altMIRRORFIFO.qip
 Info (115031): Writing out detailed assembly data for power analysis
 Info (115030): Assembler is generating device programming files
-Info: Quartus Prime Assembler was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 1746 megabytes
-    Info: Processing ended: Sat Aug  7 11:59:54 2021
-    Info: Elapsed time: 00:00:38
-    Info: Total CPU time (on all processors): 00:00:38
+Info: Quartus Prime Assembler was successful. 0 errors, 1 warning
+    Info: Peak virtual memory: 1742 megabytes
+    Info: Processing ended: Tue Sep 21 13:10:30 2021
+    Info: Elapsed time: 00:00:42
+    Info: Total CPU time (on all processors): 00:00:42
 
 
