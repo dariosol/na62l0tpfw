@@ -313,6 +313,7 @@ use work.component_fifodelay.all;
 use work.component_latencyram_2.all;
 use work.component_txport1.all;
 use work.component_fifo1trigger.all;
+use work.component_MIRRORFIFO.all;
 
 -- ethlink entity (constant)
 entity ethlink is
@@ -345,6 +346,7 @@ architecture rtl of ethlink is
    type FSMSendDebug_t is(Idle,Debug0,Debug1,Debug2,Debug3,Debug4,Debug5,Debug6,Debug7,Debug8,
 			Debug9,Debug10,Debug11,Debug12,Debug13,Debug14,Debug15,Debug16,Debug17);
    type FSMSendDetectors_t is (S0_0,S0,S1,S2,S3);
+   type FSMMirror_t is (Idle,Fill0,Fill1,Fill2,Fill3,Fill4,Fill5,Fill6,Fill7,Send);
 
    type reglist_clk40_t is record
       
@@ -500,6 +502,7 @@ architecture rtl of ethlink is
       FSMReceive32bit     : FSMReceive32bit_vector_t(0 to SGMII_NODES-2);	
       FSMSend             : FSMsend_t;
       FSMResetCounters    : FSMResetCounters_t;
+      FSMMirror           : FSMMirror_t;
       enet_FSMReceive32bit: FSMReceive32bit_vector_t(0 to RGMII_NODES- 1);
       enet_FSMReceive64bit: FSMReceive64bit_vector_t(0 to RGMII_NODES- 1);
       FSMoutputdata       : FSMoutputdata_t;
@@ -702,6 +705,17 @@ architecture rtl of ethlink is
       temperature             : std_logic_vector(7 downto 0);
       MTPTimestamp_out        : vector24bit_t(0 to ethlink_NODES -2);
       MergedFifoAlmostFull    : std_logic;
+      MirrorEnd               : std_logic;
+      framelenmirror          : std_logic_vector(10 downto 0);
+      completeword            : std_logic;
+      mirrordata0             : std_logic_vector(7 downto 0);
+      mirrordata1             : std_logic_vector(7 downto 0);
+      mirrordata2             : std_logic_vector(7 downto 0);
+      mirrordata3             : std_logic_vector(7 downto 0);
+      mirrordata4             : std_logic_vector(7 downto 0);
+      mirrordata5             : std_logic_vector(7 downto 0);
+      mirrordata6             : std_logic_vector(7 downto 0);
+      
    end record;
    
    
@@ -725,7 +739,8 @@ architecture rtl of ethlink is
 	 FSMReceive64bit        =>(others =>S0),
 	 enet_FSMReceive64bit   =>(others =>S0),
 	 FSMDelay               =>(others=>skipdata),
-	 FSMSend	        => Idle,
+          FSMSend	        => Idle,
+          FSMMirror	        => Idle,
 	 FSMResetCounters       => S0,
 	 FSMoutputdata          => Idle,
 	 FSMSendDebug           => Idle,
@@ -919,10 +934,21 @@ architecture rtl of ethlink is
 	 start_latency            =>(others => '0'),
 	 readdetector             =>(others => '0'),
 	 addressfarm              => (others=>'0'),
-         MACReady                 => '1',
-	 temperature              => (others =>'0'),
-          MTPTimestamp_out         => (others => "000000000000000000000000"),
-          MergedFifoAlmostFull   =>'0'
+         MACReady                => '1',
+	 temperature                  => (others =>'0'),
+          MTPTimestamp_out       => (others => "000000000000000000000000"),
+          MergedFifoAlmostFull   =>'0',
+          MirrorEnd              => '0',
+          framelenmirror         => (others=>'0'),
+          mirrordata0             =>(others=>'0'),
+          mirrordata1             =>(others=>'0'),
+          mirrordata2             =>(others=>'0'),
+          mirrordata3             =>(others=>'0'),
+          mirrordata4             =>(others=>'0'),
+          mirrordata5             =>(others=>'0'),
+          mirrordata6             =>(others=>'0'),
+          completeword            => '0'
+
 	 );
 
    type reglist_t is record
@@ -964,7 +990,7 @@ architecture rtl of ethlink is
       ERRORFIFOON      : fifo1trigger_t;
       CHOKEFIFOOFF     : fifo1trigger_t;
       ERRORFIFOOFF     : fifo1trigger_t;
-      
+      MIRRORFIFO       : MIRRORFIFO_t;
    end record;
 
    subtype inputs_t is ethlink_inputs_t;
@@ -1083,11 +1109,18 @@ begin
 	 outputs=>allnets.ERRORFIFOOFF.outputs
 	 ); 
    
-   
-   LatencyRam_inst: latencyram_2 port map
+  
+    LatencyRam_inst: latencyram_2 port map
       (
 	 inputs=>allnets.LATENCYRAM.inputs,
 	 outputs=>allnets.LATENCYRAM.outputs
+	 );
+
+
+      MirrorFIfo_inst: MIRRORFIFO port map
+      (
+	 inputs=>allnets.MIRRORFIFO.inputs,
+	 outputs=>allnets.MIRRORFIFO.outputs
 	 );
    
    
@@ -1277,7 +1310,7 @@ begin
 	 n.CHOKEFIFOOFF.inputs.aclr          := '0'          ;
 	 n.CHOKEFIFOOFF.inputs.wrreq         := '0'          ;
 	 n.CHOKEFIFOOFF.inputs.rdreq         := '0'          ;
-	 
+	
 	 
 	 n.ERRORFIFOOFF.inputs.wrclk         := n.clk125     ;
 	 n.ERRORFIFOOFF.inputs.rdclk         := n.clk125     ;
@@ -1297,7 +1330,12 @@ begin
 	 n.LATENCYRAM.inputs.clock_a      := n.clk125;
 	 n.LATENCYRAM.inputs.clock_b      := n.clk40;
 
-	 
+         n.MIRRORFIFO.inputs.wrclk         := n.clk125     ;
+	 n.MIRRORFIFO.inputs.rdclk         := n.clk125     ;
+	 n.MIRRORFIFO.inputs.data          := (others=>'0');
+	 n.MIRRORFIFO.inputs.aclr          := '0'          ;
+	 n.MIRRORFIFO.inputs.wrreq         := '0'          ;
+	 n.MIRRORFIFO.inputs.rdreq         := '0'          ;
 	 
 	 --AutoCHOKE:
 	 --if the ethernet to send data to PC-Farm is amlost full (3 frames)
@@ -1612,6 +1650,11 @@ begin
 	    ) is
       begin
 
+        n.MIRRORFIFO.inputs.data           :=(others=>'0');
+        n.MIRRORFIFO.inputs.aclr           :='0';
+        n.MIRRORFIFO.inputs.wrclk          :=n.clk125;
+        n.MIRRORFIFO.inputs.wrreq          :='0';
+
 	 FOR index IN 0 to SGMII_NODES-2 LOOP  --(indici 0, 1, 2)ehternet port 3 usata per spedire e non per ricevere
 	    
 	    n.FIFODELAY(index).inputs.data           :=(others=>'0');
@@ -1621,7 +1664,6 @@ begin
 	    
 	    
 	    n.MAC(index).inputs.wframelen(FF_PORT)  := SLV(1472, 11); -- UDP payload max = (46..1500)-(IP(20)+UDP(8)) = 18..1472 byte
-	    n.MAC(index).inputs.wmulticast(FF_PORT) := '0';
 	    
 	    n.MAC(index).outputs.rsrcport(FF_PORT):= SLV(2,4);
 	    if index =0 then
@@ -1676,7 +1718,12 @@ begin
 		     null;      
 		  end if; --MAC not Ready
 		  
-	       when S3_1 =>
+              when S3_1 =>
+                 if(index=1) then
+                    n.MIRRORFIFO.inputs.data  := n.MAC(index).outputs.rdata(FF_PORT);--byte 0
+                    n.MIRRORFIFO.inputs.wrreq := '1';
+                    r.MirrorEnd := '0';
+                  end if;
 		  r.data0(index) := n.MAC(index).outputs.rdata(FF_PORT); --byte 0
 		  if n.MAC(index).outputs.reoframe(FF_PORT) = '0' then
 		     n.MAC(index).inputs.rreq(FF_PORT):='1';    
@@ -1697,7 +1744,12 @@ begin
 		     r.FSMReceive32bit(index) := S2;
 		  end if;
 		  
-	       when S3_2 =>
+              when S3_2 =>
+                 if(index=1) then
+                   n.MIRRORFIFO.inputs.data  := n.MAC(index).outputs.rdata(FF_PORT);--byte 0
+                   n.MIRRORFIFO.inputs.wrreq := '1';
+                   r.MirrorEnd := '0';
+                  end if;
 		  r.data1(index) := n.MAC(index).outputs.rdata(FF_PORT); --byte 1	
 		  if n.MAC(index).outputs.reoframe(FF_PORT) = '0' then
 		     n.MAC(index).inputs.rreq(FF_PORT):='1'; 
@@ -1717,7 +1769,12 @@ begin
 		     r.FSMReceive32bit(index) := S2;
 		     r.ETHLINKERROR :=ro.ETHLINKERROR OR SLV(2,32);
 		  end if;
-	       when S3_3 =>
+              when S3_3 =>
+                 if(index=1) then
+                    n.MIRRORFIFO.inputs.data  := n.MAC(index).outputs.rdata(FF_PORT);--byte 0
+                    n.MIRRORFIFO.inputs.wrreq := '1';
+                    r.MirrorEnd := '0';
+                  end if;
 		  r.data2(index) := n.MAC(index).outputs.rdata(FF_PORT); --byte 2
 		  if n.MAC(index).outputs.reoframe(FF_PORT) = '0' then
 		     n.MAC(index).inputs.rreq(FF_PORT):='1'; 
@@ -1740,7 +1797,11 @@ begin
 		  
 	     
 	   	when S3_4 =>
-
+                  if(index=1) then
+                    n.MIRRORFIFO.inputs.data  := n.MAC(index).outputs.rdata(FF_PORT);--byte 0
+                    n.MIRRORFIFO.inputs.wrreq := '1';
+                    r.MirrorEnd := '0';
+                  end if;
 		  if ro.headermode(index) ='1' then
 		     r.headerreceived(index) := '1';
 		     r.headermode(index) :='0';
@@ -1827,6 +1888,9 @@ begin
 		  else
 		     null;
 		  end if;
+                  if(index=1) then 
+                    r.MirrorEnd := '1';
+                  end if;
 		  r.FSMReceive32bit(index) := S1;
 	    end case;
 	 END LOOP;
@@ -1850,8 +1914,8 @@ begin
 	    ) is
       begin
 
-	 
-		 FOR index IN 0 to RGMII_NODES-1 LOOP  --(4-7)ehternet port 3 usata per spedire e non per ricevere
+        
+        FOR index IN 0 to RGMII_NODES-1 LOOP  --(4-7)ehternet port 3 usata per spedire e non per ricevere
 	    
 	    n.FIFODELAY(index+3).inputs.data           :=(others=>'0');
 	    n.FIFODELAY(index+3).inputs.aclr           :='0';
@@ -1859,32 +1923,36 @@ begin
 	    n.FIFODELAY(index+3).inputs.wrreq          :='0';
 	    
 	    n.enet_MAC(index).inputs.wframelen(FF_PORT)  := SLV(1472, 11); -- UDP payload max = (46..1500)-(IP(20)+UDP(8)) = 18..1472 byte
-	    n.enet_MAC(index).inputs.wmulticast(FF_PORT) := '0';
 	    n.enet_MAC(index).outputs.rsrcport(FF_PORT):= SLV(2,4);
 
 	    if index = 0 then
-	       n.enet_MAC(index).outputs.rsrcaddr(FF_PORT)  :=SLV(8,8);
+              n.enet_MAC(index).outputs.rsrcaddr(FF_PORT)  :=SLV(8,8);
+              n.enet_MAC(index).inputs.rena(FF_PORT)       := ro.enet_rena(index);
 	    end if;
 	    if index = 1 then
-	       n.enet_MAC(index).outputs.rsrcaddr(FF_PORT) :=SLV(9,8);
+              n.enet_MAC(index).outputs.rsrcaddr(FF_PORT) :=SLV(9,8);
+              n.enet_MAC(index).inputs.rena(FF_PORT)       := ro.enet_rena(index);
 	    end if;
 	    if index = 2 then
-	       n.enet_MAC(index).outputs.rsrcaddr(FF_PORT)   :=SLV(10,8);
+	       n.enet_MAC(index).outputs.rsrcaddr(FF_PORT)  :=SLV(17,8);--MODIFIED TO DO MIRROR OF RICH
+               n.enet_MAC(index).inputs.rena(FF_PORT)       := '0'; -- I
+                                                                    -- disable
+                                                                    -- the reception
 	    end if;
 	    if index = 3 then
-	       n.enet_MAC(index).outputs.rsrcaddr(FF_PORT)   :=SLV(11,8);
+              n.enet_MAC(index).outputs.rsrcaddr(FF_PORT)   :=SLV(11,8);
+              n.enet_MAC(index).inputs.rena(FF_PORT)       := ro.enet_rena(index);
 	    end if;
 	    -- Rx FF_PORT defaults
 	    n.enet_MAC(index).inputs.rack(FF_PORT)       := '0';
 	    n.enet_MAC(index).inputs.rreq(FF_PORT)       := '0';
-	    n.enet_MAC(index).inputs.rena(FF_PORT)       := ro.enet_rena(index);
 	    n.enet_MAC(index).inputs.rclk(FF_PORT)       := n.clk125;
 	    n.enet_MAC(index).inputs.rrst(FF_PORT)       := n.rst.clk125;
 	 end loop;
 	 
 	 FOR index IN 0 to RGMII_NODES-1 LOOP  
 	    case ro.enet_FSMReceive32bit(index) is
-	        when S0 =>
+              when S0 =>
 		  if(ro.dataformat(index)='0') then --Data Format:
 						    --0: 64 bit;
 						    --1: 32 bit.
@@ -1897,8 +1965,8 @@ begin
 	       when S1 =>
 		  r.enet_rena(index):='1';
 		  r.enet_FSMReceive32bit(index) := S2;
-		  
-	       when S2 =>
+
+              when S2 =>
 		  -----	waiting for new frame:
 		  if n.enet_MAC(index).outputs.rready(FF_PORT) = '1' then
 		     if n.enet_MAC(index).outputs.reoframe(FF_PORT) = '0' then
@@ -1917,7 +1985,7 @@ begin
 		     null;      
 		  end if; 
 		  
-	       when S3_1 =>
+              when S3_1 =>
 		  r.enet_data0(index) := n.enet_MAC(index).outputs.rdata(FF_PORT); --byte 0
 		  if n.enet_MAC(index).outputs.reoframe(FF_PORT) = '0' then
 		     n.enet_MAC(index).inputs.rreq(FF_PORT):='1';    
@@ -1941,7 +2009,6 @@ begin
 		  
 	       when S3_2 =>
 		  r.enet_data1(index) := n.enet_MAC(index).outputs.rdata(FF_PORT); --byte 1
-		  
 		  if n.enet_MAC(index).outputs.reoframe(FF_PORT) = '0' then
 		     n.enet_MAC(index).inputs.rreq(FF_PORT):='1'; 
 		     r.enet_FSMReceive32bit(index):=S3_3;
@@ -1961,8 +2028,9 @@ begin
 		     r.ETHLINKERROR :=ro.ETHLINKERROR OR SLV(4,32);
 		  end if;
 		  
-	       when S3_3 =>
+              when S3_3 =>
 		  r.enet_data2(index) := n.enet_MAC(index).outputs.rdata(FF_PORT); --byte 2
+
 		  if n.enet_MAC(index).outputs.reoframe(FF_PORT) = '0' then
 		     n.enet_MAC(index).inputs.rreq(FF_PORT):='1'; 
 		     r.enet_FSMReceive32bit(index):=S3_4;
@@ -1984,7 +2052,6 @@ begin
 		  
 	       	  
 	       when S3_4 =>
-
 		 if ro.enet_headermode(index) ='1' then
 		     r.enet_headerreceived(index) := '1';
 		     r.enet_headermode(index) :='0';
@@ -2050,7 +2117,7 @@ begin
 		
 
 	       when S3_loop =>
-		 	  
+                  
 		  if n.enet_MAC(index).outputs.reoframe(FF_PORT)='0' then
 		     n.enet_MAC(index).inputs.rreq(FF_PORT):='1';
 		     r.enet_FSMReceive32bit(index) := S3_1;
@@ -2072,7 +2139,7 @@ begin
 			
 	       when S4 => --END OFF RAME
 		  if n.enet_MAC(index).outputs.rready(FF_PORT) = '1' then  
-		     n.enet_MAC(index).inputs.rack(FF_PORT) := '1';
+                    n.enet_MAC(index).inputs.rack(FF_PORT) := '1';
 		  else
 		     null;
 		  end if;
@@ -5871,7 +5938,8 @@ begin
 		  r.enet_FSMReceive32bit(2)      := S0;
 		  r.enet_FSMReceive64bit(3)      := S0;
 		  r.enet_FSMReceive32bit(3)      := S0;
-
+                  r.FSMMirror                    := Idle;
+                  
 		  r.enet_headerreceived(0)       :='0';
 		  r.enet_headerreceived(1)       :='0';
 		  r.enet_headerreceived(2)       :='0';
@@ -5920,6 +5988,7 @@ begin
 		  n.ERRORFIFOON.inputs.aclr      := '1';
 		  n.CHOKEFIFOON.inputs.aclr      := '1';
 		  n.FIFOPACKETS.inputs.aclr      := '1';
+                  n.MIRRORFIFO.inputs.aclr       := '1';
 		  r.timerdebug                   := 0;
                   n.FIFOPACKETS.inputs.aclr :='1';
                   for index in 0 to ethlink_NODES -2 loop
@@ -5986,7 +6055,220 @@ begin
 
 
 
+      --------------------------------------------------
+      --------------------------------------------------
+            ---------------------------------------------------------------
+      procedure SubMirror
+	 (variable i : in inputs_t;
+	  variable ri: in reglist_clk125_t;
+	  variable ro: in reglist_clk125_t;
+	  variable o : inout outputs_t;
+	  variable r : inout reglist_clk125_t;
+	  variable n : inout netlist_t
+	  ) is
+      begin
+	 n.MIRRORFIFO.inputs.aclr           :='0';
+	 n.MIRRORFIFO.inputs.rdclk          :=n.clk125;      
+	 n.MIRRORFIFO.inputs.rdreq          :='0';
+	 
+	 -- src/dest loopback
+         n.enet_MAC(2).outputs.rsrcaddr(FF_PORT)  :=SLV(17,8);
+	 n.enet_MAC(2).inputs.wdestaddr(FF_PORT)  := x"0a"; 
+	 n.enet_MAC(2).inputs.wdestport(FF_PORT)  := SLV(2,4);
+	 n.enet_MAC(2).inputs.wtxclr(FF_PORT)     := '0';
+	 n.enet_MAC(2).inputs.wena(FF_PORT)       := '1';
+	 n.enet_MAC(2).inputs.wclk(FF_PORT)       := n.clk125;
+	 n.enet_MAC(2).inputs.wrst(FF_PORT)       := n.rst.clk125; 
+	 n.enet_MAC(2).inputs.wdata(FF_PORT)      :=(others =>'0');
+	 n.enet_MAC(2).inputs.wreq(FF_PORT)       := '0';
+	 n.enet_MAC(2).inputs.wtxreq(FF_PORT)     := '0';
+			 
+	 case ro.FSMMirror is
+	    when idle =>
+              r.mirrordata0  := (others => '0');
+              r.mirrordata1  := (others => '0');
+              r.mirrordata2  := (others => '0');
+              r.mirrordata3  := (others => '0');
+              r.mirrordata4  := (others => '0');
+              r.mirrordata5  := (others => '0');
+              r.mirrordata6  := (others => '0');
+              r.completeword :='0';
+              
+              if (n.MIRRORFIFO.outputs.rdempty ='0') then
+                n.MIRRORFIFO.inputs.rdreq :='1';
+                r.framelenmirror := SLV(UINT(ro.framelenmirror)+1,11); --1
+                r.FSMMirror      := Fill0;
+		  
+	       elsif(ro.MirrorEnd = '1' and UINT(ro.framelenmirror) > 0) then
+                 r.FSMMirror      := Fill7;
+                 
+               else
+                 r.FSMMirror      := Idle;
+               end if;
+		  
+           when Fill0 =>
+              r.mirrordata0 :=  n.MIRRORFIFO.outputs.q; -- 1 byte
+              
+              if (n.MIRRORFIFO.outputs.rdempty ='0') then -- still copying              
+                n.MIRRORFIFO.inputs.rdreq :='1';
+                r.framelenmirror := SLV(UINT(ro.framelenmirror)+1,11);--2
+                r.FSMMirror :=Fill1;
+                
+              elsif(ro.MirrorEnd = '1' and UINT(ro.framelenmirror) > 0) then
+                r.FSMMirror      := Fill7;   
+              else
+                r.FSMMirror      := Fill0;
+              end if;
 
+           when Fill1 =>
+              r.mirrordata1 :=  n.MIRRORFIFO.outputs.q; -- 1 byte
+
+              if (n.MIRRORFIFO.outputs.rdempty ='0') then -- still copying              
+                n.MIRRORFIFO.inputs.rdreq :='1';
+                r.framelenmirror := SLV(UINT(ro.framelenmirror)+1,11);--3
+                r.FSMMirror :=Fill2;
+                
+              elsif(ro.MirrorEnd = '1' and UINT(ro.framelenmirror) > 0) then
+                r.FSMMirror      := Fill7;   
+              else
+                r.FSMMirror      := Fill1;
+              end if;
+
+
+           when Fill2 =>
+              r.mirrordata2:=  n.MIRRORFIFO.outputs.q; -- 1 byte
+
+              if (n.MIRRORFIFO.outputs.rdempty ='0') then -- still copying              
+                n.MIRRORFIFO.inputs.rdreq :='1';
+                r.framelenmirror := SLV(UINT(ro.framelenmirror)+1,11);--4
+                r.FSMMirror :=Fill3;
+                
+              elsif(ro.MirrorEnd = '1' and UINT(ro.framelenmirror) > 0) then
+                r.FSMMirror      := Fill7;   
+              else
+                r.FSMMirror      := Fill2;
+              end if;
+
+                 
+           when Fill3 =>
+              r.mirrordata3:=  n.MIRRORFIFO.outputs.q; -- 1 byte
+
+              if (n.MIRRORFIFO.outputs.rdempty ='0') then -- still copying              
+                n.MIRRORFIFO.inputs.rdreq :='1';
+                r.framelenmirror := SLV(UINT(ro.framelenmirror)+1,11);--5
+                r.FSMMirror :=Fill4;
+                
+              elsif(ro.MirrorEnd = '1' and UINT(ro.framelenmirror) > 0) then
+                r.FSMMirror      := Fill7;   
+              else
+                r.FSMMirror      := Fill3;
+              end if;
+
+
+           when Fill4 =>
+              r.mirrordata4:=  n.MIRRORFIFO.outputs.q; -- 1 byte
+
+              if (n.MIRRORFIFO.outputs.rdempty ='0') then -- still copying              
+                n.MIRRORFIFO.inputs.rdreq :='1';
+                r.framelenmirror := SLV(UINT(ro.framelenmirror)+1,11);--6  
+                r.FSMMirror :=Fill5;
+                
+              elsif(ro.MirrorEnd = '1' and UINT(ro.framelenmirror) > 0) then
+                r.FSMMirror      := Fill7;   
+              else
+                r.FSMMirror      := Fill4;
+              end if;
+
+           when Fill5 =>
+              r.mirrordata5:=  n.MIRRORFIFO.outputs.q; -- 1 byte
+
+              if (n.MIRRORFIFO.outputs.rdempty ='0') then -- still copying              
+                n.MIRRORFIFO.inputs.rdreq :='1';
+                r.framelenmirror := SLV(UINT(ro.framelenmirror)+1,11);--7
+                r.FSMMirror :=Fill6;
+                
+              elsif(ro.MirrorEnd = '1' and UINT(ro.framelenmirror) > 0) then
+                r.FSMMirror      := Fill7;   
+              else
+                r.FSMMirror      := Fill5;
+              end if;
+              
+              
+           when Fill6 =>
+              r.mirrordata6:=  n.MIRRORFIFO.outputs.q; -- 1 byte
+
+              if (n.MIRRORFIFO.outputs.rdempty ='0') then -- still copying              
+                n.MIRRORFIFO.inputs.rdreq :='1';
+                r.framelenmirror := SLV(UINT(ro.framelenmirror)+1,11);--8
+                r.FSMMirror :=Fill7;
+                r.completeword :='1';
+              elsif(ro.MirrorEnd = '1' and UINT(ro.framelenmirror) > 0) then
+                r.FSMMirror      := Fill7;   
+              else
+                r.FSMMirror      := Fill6;
+              end if;
+              
+              
+           when Fill7 =>
+              if n.enet_MAC(2).outputs.wready(FF_PORT)='1' and n.enet_MAC(2).outputs.wfull(FF_PORT) ='0' then 
+
+                if(ro.completeword='1') then
+                  n.enet_MAC(2).inputs.wdata(FF_PORT)(63 downto 56)  := n.MIRRORFIFO.outputs.q;  
+                else
+                  n.enet_MAC(2).inputs.wdata(FF_PORT)(63 downto 56)  := (others=>'0');  
+                end if;
+
+                n.enet_MAC(2).inputs.wdata(FF_PORT)(55 downto 48):= ro.mirrordata6;
+                n.enet_MAC(2).inputs.wdata(FF_PORT)(47 downto 40):= ro.mirrordata5;
+                n.enet_MAC(2).inputs.wdata(FF_PORT)(39 downto 32):= ro.mirrordata4;
+   
+                n.enet_MAC(2).inputs.wdata(FF_PORT)(31 downto 24):= ro.mirrordata3;
+                n.enet_MAC(2).inputs.wdata(FF_PORT)(23 downto 16):= ro.mirrordata2;
+                n.enet_MAC(2).inputs.wdata(FF_PORT)(15 downto 8) := ro.mirrordata1;
+                n.enet_MAC(2).inputs.wdata(FF_PORT)(7 downto 0)  := ro.mirrordata0;
+                n.enet_MAC(2).inputs.wreq(FF_PORT):= '1';
+
+                if (n.MIRRORFIFO.outputs.rdempty ='0') then -- still copying              
+                  n.MIRRORFIFO.inputs.rdreq :='1';
+                  r.completeword :='0';
+                  r.FSMMirror :=Fill0;
+                  r.mirrordata0  := (others => '0');
+                  r.mirrordata1  := (others => '0');
+                  r.mirrordata2  := (others => '0');
+                  r.mirrordata3  := (others => '0');
+                  r.mirrordata4  := (others => '0');
+                  r.mirrordata5  := (others => '0');
+                  r.mirrordata6  := (others => '0');
+                  
+                elsif(ro.MirrorEnd = '1' and UINT(ro.framelenmirror) > 0) then
+                  r.FSMMirror      := Send;   
+                else
+                  r.FSMMirror      := Idle;
+                end if;
+
+              elsif n.enet_MAC(2).outputs.wready(FF_PORT)='0'  then
+                r.FSMMirror := Fill7;
+              else
+                r.FSMMirror :=  Idle;
+              end if;                  
+              
+              
+           when Send =>
+              n.enet_MAC(2).inputs.wframelen(FF_PORT) := SLV(64+UINT(ro.framelenmirror),11);
+              n.enet_MAC(2).inputs.wtxreq(FF_PORT) := '1';
+              r.framelenmirror  := (others => '0');
+              r.mirrordata0 := (others => '0');
+              r.mirrordata1 := (others => '0');
+              r.mirrordata2 := (others => '0');
+              r.mirrordata3 := (others => '0');
+              r.mirrordata4 := (others => '0');
+              r.mirrordata5 := (others => '0');
+              r.mirrordata6 := (others => '0');
+              r.FSMMirror :=  Idle;
+         end case;
+      end procedure;         
+-----------------------------------------------
+------------------------------------------------
 
       variable i : inputs_t;
       variable ri: reglist_t;
@@ -6032,6 +6314,7 @@ begin
       SubSendDETECTORS(i,ri.clk40, ro.clk40, o, r.clk40, n);
       SubGeneratePackets(i,ri.clk125, ro.clk125, o, r.clk125, n);
       SubSendFARM(i,ri.clk125, ro.clk125, o, r.clk125, n);
+      SubMirror(i,ri.clk125, ro.clk125, o, r.clk125, n);
       Clock20MHz(i, ri.clk40, ro.clk40, o, r.clk40, n);
       ResetCounters(i,ri.clk125, ro.clk125, o, r.clk125, n);
 
